@@ -1,0 +1,32 @@
+{"properties": [
+  {
+    "name": "gmail.username",
+    "type": "java.lang.String",
+    "description": "A description for 'gmail.username'"
+  },
+  {
+    "name": "gmail.password",
+    "type": "java.lang.String",
+    "description": "A description for 'gmail.password'"
+  },
+  {
+    "name": "gmail.username",
+    "type": "java.lang.String",
+    "description": "A description for 'gmail.username'"
+  },
+  {
+    "name": "gmail.password",
+    "type": "java.lang.String",
+    "description": "A description for 'gmail.password'"
+  },
+  {
+    "name": "tjtyres.password",
+    "type": "java.lang.String",
+    "description": "A description for 'tjtyres.password'"
+  },
+  {
+    "name": "tjtyres.username",
+    "type": "java.lang.String",
+    "description": "A description for 'tjtyres.username'"
+  }
+]}
