@@ -57,7 +57,7 @@ public class POSStockController {
 	//create the pos stock 
 	@RequestMapping(value="posstockquantity",method=RequestMethod.GET)
 	public String posItemCreate(HttpServletRequest request){
-		
+		String responsePage="";
 		HttpSession session=null;
 		
 		//create Session object
@@ -69,20 +69,22 @@ public class POSStockController {
 			request.setAttribute("positemstock","positemstock");
 		}
 		//RETURN TYREREG JSP PAGES 
-		return "posstock";
+		responsePage = "posstock";
 		}
 		catch(Exception e){
 			request.setAttribute("SessionTimeOut", "Should enter Username and Password");
 			//RETURN LOGIN JSP PAGES 
-			return "login";
+			responsePage= "login";
 		}
+		return responsePage;
 	}
 	@RequestMapping(value="posstockquantity",method=RequestMethod.POST)
 	public String posItemProcess(Map<String,Object> map,HttpServletRequest request, @ModelAttribute POSItemDTO positemdto,BindingResult result ){
 		//check the model class field is valid or not 
+		String responsePage="";
 			if(result.hasErrors()){
-			
-				return "admin";
+				request.setAttribute("validationFailed", "validation Failed");
+				responsePage= "posstock";
 			}
 			else{
 				
@@ -93,14 +95,15 @@ public class POSStockController {
 				}
 				catch(Exception e){
 					request.setAttribute("posstock","POS STOCK PROBLEM");
-					return "admin";
+					responsePage= "admin";
 				}
 				//set value for request attribute in global visible 
 				request.setAttribute("posstock","QUANTITY ADDING SUCESSFULLY");
 				
 				//send redirect to invoice Details pages
-				return "admin";
+				responsePage= "admin";
 		}
+			return responsePage;
 	}
 			
 	
@@ -109,6 +112,7 @@ public class POSStockController {
 		public String posItemAssign(HttpServletRequest request){
 			
 			HttpSession session=null;
+			String responsePage="";
 			
 			//create Session object
 			session=request.getSession(false);
@@ -119,22 +123,24 @@ public class POSStockController {
 				request.setAttribute("positemstock","positemstock");
 			}
 			//RETURN TYREREG JSP PAGES 
-			return "positemassign";
+			responsePage= "positemassign";
 			}
 			catch(Exception e){
 				request.setAttribute("SessionTimeOut", "Should enter Username and Password");
 				//RETURN LOGIN JSP PAGES 
-				return "login";
+				responsePage= "login";
 			}
+			return responsePage;
 		}
 		
 		//create the POS and Item Assignment  Processing  
 		@RequestMapping(value="positemassign",method=RequestMethod.POST)
 		public String posItemAssignmentProcess(Map<String,Object> map,HttpServletRequest request, @ModelAttribute POSItemDTO positemdto,BindingResult result ){
+			String responsePage="";
 			//check the model class field is valid or not 
 				if(result.hasErrors()){
 				
-					return "admin";
+					responsePage= "admin";
 				}
 				else{
 					//get AllTyre Value in Value Param 
@@ -146,14 +152,15 @@ public class POSStockController {
 						}
 						catch(Exception e){
 							request.setAttribute("posstock","POS STOCK PROBLEM");
-							return "admin";
+							responsePage= "admin";
 						}
 						//set value for request attribute in global visible 
 						request.setAttribute("posstock","POS TYRE ASSIGNMENT SUCESSFULLY");
 					
 						//send redirect to invoice Details pages
-						return "admin";
+						responsePage= "admin";
 						}
+				return responsePage;
 		}
 
 	@ModelAttribute("tyreid")
@@ -246,10 +253,11 @@ public class POSStockController {
 	
 	@RequestMapping(value="quantityadd",method=RequestMethod.POST)
 	public String quantityaddprocess(Map<String,Object> map,HttpServletRequest request, @ModelAttribute POSItemDTO positemdto,BindingResult result){
+		String responsePage="";
 		//check the model class field is valid or not 
 		if(result.hasErrors()){
 		
-			return "admin";
+			responsePage= "admin";
 		}
 		else{
 			
@@ -261,15 +269,17 @@ public class POSStockController {
 				//set value for request attribute in global visible 
 				request.setAttribute("TYREQUANTITY","SOME INTERNAL PROBLEM TRY AGIN");
 				//send redirect to invoice Details pages
-				return "admin";
+				responsePage= "admin";
 			}
 			
 			//set value for request attribute in global visible 
 			request.setAttribute("TYREQUANTITY","TYRE QUANTITY SUCCESSFULLY ADDING");
 			
 			//send redirect to invoice Details pages
-			return "admin";
+			responsePage= "admin";
 	}
+		return responsePage;
 	}
+	
 	
 }

@@ -133,7 +133,7 @@ public class UserController {
 			RoleDTO dto=new RoleDTO();
 			dto.setRole(string);
 			listrole.add(dto);
-			System.out.println(string);
+			
 		}
 		}
 		catch(Exception e){

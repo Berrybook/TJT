@@ -34,12 +34,12 @@ public class RoleController {
 		session=request.getSession(false);
 		String admin=(String) session.getAttribute("admin");
 		try{
-		//test the session is equals to admin or null if admin null then it goes to catch block
-		if(admin.equals("admin")){
-		request.setAttribute("ROLE_HOME","ROLE_REG");
+			//test the session is equals to admin or null if admin null then it goes to catch block
+			if(admin.equals("admin")){
+			request.setAttribute("ROLE_HOME","ROLE_REG");
 		}
-		//RETURN TYREREG JSP PAGES 
-		return "role";
+			//RETURN TYREREG JSP PAGES 
+			return "role";
 		}
 		catch(Exception e){
 			request.setAttribute("SessionTimeOut", "Should enter Username and Password");
