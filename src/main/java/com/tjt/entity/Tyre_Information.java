@@ -23,14 +23,6 @@ public class Tyre_Information {
 		@OnDelete(action = OnDeleteAction.CASCADE)
 		private String tyresize;
 		
-		@Column(name="price", nullable = false)
-		private Double price;
-		@Column(name="CGST", nullable = false)
-		private String CGST;
-		@Column(name="SGST", nullable = false)
-		private String SGST;
-		@Column(name="IGST", nullable = false)
-		private String IGST;
 
 
 		public String getTyrepattern() {
@@ -49,35 +41,6 @@ public class Tyre_Information {
 			this.tyresize = tyresize;
 		}
 
-		public Double getPrice() {
-			return price;
-		}
+		
 
-		public void setPrice(Double price) {
-			this.price = price;
-		}
-
-		public String getCGST() {
-			return CGST;
-		}
-
-		public void setCGST(String cGST) {
-			CGST = cGST;
-		}
-
-		public String getSGST() {
-			return SGST;
-		}
-
-		public void setSGST(String sGST) {
-			SGST = sGST;
-		}
-
-		public String getIGST() {
-			return IGST;
-		}
-
-		public void setIGST(String iGST) {
-			IGST = iGST;
-		}
 }

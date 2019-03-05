@@ -34,12 +34,12 @@ public class RoleController {
 		session=request.getSession(false);
 		String admin=(String) session.getAttribute("admin");
 		try{
-			//test the session is equals to admin or null if admin null then it goes to catch block
-			if(admin.equals("admin")){
-			request.setAttribute("ROLE_HOME","ROLE_REG");
+		//test the session is equals to admin or null if admin null then it goes to catch block
+		if(admin.equals("admin")){
+		request.setAttribute("ROLE_HOME","ROLE_REG");
 		}
-			//RETURN TYREREG JSP PAGES 
-			return "role";
+		//RETURN TYREREG JSP PAGES 
+		return "role";
 		}
 		catch(Exception e){
 			request.setAttribute("SessionTimeOut", "Should enter Username and Password");
@@ -49,23 +49,22 @@ public class RoleController {
 		
 	}
 	
+	@ResponseBody
 	@RequestMapping(value="/addrole",method=RequestMethod.POST)
-	public String tyreinfo(@ModelAttribute RoleDTO roledto,HttpServletRequest request){
-	
-		
-	
+	public String tyreinfo(@RequestBody RoleDTO roledto,HttpServletRequest request){
 		try{
 			roleservice.addrole(roledto);
 		}
 		catch(Exception e){
-			request.setAttribute("ROLE_FAIL","ROLE  UNSUCCESSFULLY REGISTARED ");
-			return "admin";
+			request.setAttribute("ROLE_FAIL","Role  Unsuccessfully Registered ");
+			return "Role  Unsuccessfully Registered ";
 		}
-		request.setAttribute("ROLE_SUCCESS","ROLE  SUCCESSFULLY REGISTARED ");
-		return "admin";
+		request.setAttribute("ROLE_SUCCESS","Role  Successfully Registered ");
+		return "Role  Successfully Registered ";
 		
 	}
 	
+	@ResponseBody
 	@RequestMapping(value="/listofrole",method=RequestMethod.GET)
 	public List<RoleDTO> listtyreinfo(){
 		List<RoleDTO> roledto = null;
@@ -78,9 +77,6 @@ public class RoleController {
 		return roledto;
 		
 	}
-	
-	
-	
 	@RequestMapping(value="/updaterole",method=RequestMethod.PUT)
 	@ResponseBody
 	public String updatetyreinfo(@ModelAttribute RoleDTO roledto){

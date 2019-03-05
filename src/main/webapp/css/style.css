@@ -13,15 +13,11 @@ html {
 
 body {
   font-size: 1.5rem;
-  
+  width:100%;
   color: red;
   background-color: #ffffff;
 }
-body::after {
-  clear: both;
-  content: "";
-  display: table;
-}
+
 
 a {
   color: #1784c7;
@@ -93,7 +89,7 @@ Header
   left: 0;
   height: 45px;
   width: 100%;
-  background:#44a0c9;
+  background:#347C98;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -659,67 +655,66 @@ Sidebar
     opacity: 1;
     visibility: visible;
   }
+
+
+
+
+
+
   
   
   
   
   
-
-      .header {
-            padding: 20px 20px;
-            background: #44a0c9;
-            height: 85px;
-            color: brown;
-        }
-
-        .footer {
-            padding: 12px 30px;
-            background: #44a0c9;
-            color: white;
-            font-size: 15px;
-            height: 90px;
-        }
+  
+  .header {
+  padding: 20px 20px;
+  background:#44a0c9;
+height:85px;
+  color:brown;
+}
 
 
 
 
-        .card-header {
-            background-color: orange;
-            height: 80px;
-        }
 
 
 
-        .cardpanel {
+
+::-webkit-scrollbar { 
+    display: none; 
+}
+
+
+
+
+
+       .cardpanel {
+            
             left: 500px;
             margin: 20px;
-            padding: 16px;
             
+            padding: 16px;
             background-color: lightblue;
-        }
-
-        .card-body{
-            background-color:lightblue;
-        }
+              }
 
 
 
+       
+
+
+ 
         
 
 
 
-        body {
-            background-color: #e6f0fa;
-            text-decoration: none;
-            display: inline-block;
-            padding: 8px 16px;
-        }
+
         
-
-
-        .previous {
-            background-color: #4CAF50;
-            color: black;
-        }
-      }
-    }
+  
+  
+  
+  
+  
+  
+  
+  

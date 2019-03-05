@@ -12,7 +12,6 @@ import com.tjt.dao.POS_DAO;
 import com.tjt.dao.ReportDAO;
 import com.tjt.dto.POS_Item_DTO;
 import com.tjt.dto.SaleReportDTO;
-import com.tjt.entity.POS_Item;
 import com.tjt.entity.POS_Table;
 import com.tjt.entity.User_Details_Table;
 
@@ -83,15 +82,10 @@ public class ReportServiceImpl implements ReportService {
 		for(Object[] invoice:liststock){
 			//KisokInvoiceDTO dto=new KisokInvoiceDTO();
 			POS_Item_DTO saleReport = new POS_Item_DTO();
-			POS_Item positem=new POS_Item();
-			POS_Table postable=new POS_Table();
-			positem.setPos_table((POS_Table) invoice[0]);
-			
-			postable=positem.getPos_table();
 			
 			
-			
-			saleReport.setPos(postable.getPos());
+	
+			saleReport.setPos((String) invoice[0]);
 			saleReport.setTyrepattern((String) invoice[1]);
 			saleReport.setTyresize((String) invoice[2]);
 			saleReport.setQuantity((Long) invoice[3]);

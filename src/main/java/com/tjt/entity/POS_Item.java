@@ -1,55 +1,38 @@
 package com.tjt.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+
 import javax.persistence.Id;
 import javax.persistence.IdClass;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.ColumnDefault;
 
 
 @Entity @IdClass(PosItemCompositeKey.class)
-@Table
+@Table(name="pos_item")
 public class POS_Item {
-
-	
 	@Id
-	@ManyToOne
-	@JoinColumns({
-		@JoinColumn(name = "tyrepattern", referencedColumnName="tyrepattern"),
-	    @JoinColumn(name="tyresize", referencedColumnName="tyresize")
-	    
-	})
-	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JsonIgnore
-	private Tyre_Information tyre;
-	
-
-	
+	@Column(name="tyrepattern",nullable=true)
+	private String tyrepattern;
 	@Id
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "pos", nullable = false)
-	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JsonIgnore
-	private POS_Table pos_table;
+	@Column(name="tyresize",nullable=true)
+	private String tyresize;
+	@Id
+	@Column(name="pos",nullable=true)
+	private String pos;
 
-	private Long quantity;
+	@ColumnDefault("0")
+	private Long quantity=0l;
+	
+	@ColumnDefault("0.0")
+	private Double MRP=0.0;
+	
+	@ColumnDefault("0.0")
+	private Double salePrice=0.0;
 	
 	
-	public POS_Table getPos_table() {
-		return pos_table;
-	}
-
-	public void setPos_table(POS_Table pos_table) {
-		this.pos_table = pos_table;
-	}
 
 	public Long getQuantity() {
 		return quantity;
@@ -58,13 +41,38 @@ public class POS_Item {
 		this.quantity = quantity;
 	}
 
-
-	public Tyre_Information getTyre() {
-		return tyre;
+	public Double getMRP() {
+		return MRP;
 	}
 
-	public void setTyre(Tyre_Information tyre) {
-		this.tyre = tyre;
+	public void setMRP(Double mRP) {
+		MRP = mRP;
+	}
+
+	public Double getSalePrice() {
+		return salePrice;
+	}
+
+	public void setSalePrice(Double salePrice) {
+		this.salePrice = salePrice;
+	}
+	public String getTyrepattern() {
+		return tyrepattern;
+	}
+	public void setTyrepattern(String tyrepattern) {
+		this.tyrepattern = tyrepattern;
+	}
+	public String getTyresize() {
+		return tyresize;
+	}
+	public void setTyresize(String tyresize) {
+		this.tyresize = tyresize;
+	}
+	public String getPos() {
+		return pos;
+	}
+	public void setPos(String pos) {
+		this.pos = pos;
 	}
 
 	

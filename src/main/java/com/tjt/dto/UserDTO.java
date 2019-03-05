@@ -1,7 +1,5 @@
 package com.tjt.dto;
 
-
-
 import org.springframework.web.multipart.MultipartFile;
 
 public class UserDTO {
@@ -10,7 +8,12 @@ public class UserDTO {
 	private Long mobilenumber;
 	private String address;
 	private String mailid;
+	private String image;
+	
 	private MultipartFile idprofe;
+	
+	
+
 	private String userName;
 	private String role;
 	private String pos;
@@ -39,12 +42,6 @@ public class UserDTO {
 		this.address = address;
 	}
 	
-	public MultipartFile getIdprofe() {
-		return idprofe;
-	}
-	public void setIdprofe(MultipartFile idprofe) {
-		this.idprofe = idprofe;
-	}
 	
 	public String getMailid() {
 		return mailid;
@@ -66,9 +63,22 @@ public class UserDTO {
 		this.role = role;
 	}
 	
+	public MultipartFile getIdprofe() {
+		return idprofe;
+	}
+	public void setIdprofe(MultipartFile idprofe) {
+		this.idprofe = idprofe;
+	}
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
+	}
 	public String getPos() {
 		return pos;
 	}
+	
 	public void setPos(String pos) {
 		this.pos = pos;
 	}

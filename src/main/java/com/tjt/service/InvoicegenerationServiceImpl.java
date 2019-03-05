@@ -1,8 +1,12 @@
 package com.tjt.service;
 
+import java.rmi.server.UID;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -14,32 +18,34 @@ import org.springframework.stereotype.Service;
 
 import com.tjt.dao.InvoiceDAO;
 import com.tjt.dao.Invoice_Items_DAO;
-import com.tjt.dao.KisokInvoiceDAO;
+import com.tjt.dao.Templet_DAO;
 import com.tjt.dao.User_Detalis_DAO;
 import com.tjt.dao.Vehicle_Invoice_DAO;
 import com.tjt.dto.InvoiceDTO;
 import com.tjt.dto.Invoice_DTO;
 import com.tjt.dto.Invoice_Items_Dto;
 import com.tjt.dto.Invoice_Vehicle_DTO;
-import com.tjt.dto.KisokInvoiceDTO;
-import com.tjt.dto.TyreInformationDTO;
+import com.tjt.dto.Pos_Item_Price_Dto_Responce;
 import com.tjt.dto.UserDTO;
 import com.tjt.entity.Invoice;
 import com.tjt.entity.Invoice_Items;
-import com.tjt.entity.KiskoInvoice;
 import com.tjt.entity.POS_Table;
+import com.tjt.entity.Templet;
+import com.tjt.entity.Tyre_Information;
 import com.tjt.entity.User_Details_Table;
 import com.tjt.entity.Vehicle_Invoice;
+import com.tjt.util.NumberToWordConverter;
 
 @Service
 @Transactional
 public class InvoicegenerationServiceImpl  implements InvoiceGenerationService {
 		
-		@Autowired
-		private KisokInvoiceDAO kisoinvoice;
 		
 		@Autowired
 		private User_Detalis_DAO userDAO;
+		
+		@Autowired
+		private Templet_DAO templet_DAO;
 		
 		@Autowired
 		private InvoiceDAO invoiceDAO;
@@ -50,191 +56,246 @@ public class InvoicegenerationServiceImpl  implements InvoiceGenerationService {
 		@Autowired
 		private Invoice_Items_DAO invoice_Item_DAO;
 		
+		@Autowired
+		private User_Detalis_DAO userdao;
 		
-		
-	@Override
-	public void InvoiceSave(KisokInvoiceDTO dto, HttpServletRequest request)throws Exception {
-		KiskoInvoice invoice=null;
-		//SalesMan_Table saletable=null;
-		User_Details_Table userTable=null;
-		
-	
-		//create SalesMan_Table Object
-		userTable=new User_Details_Table();
-		userTable.setUserid(dto.getUserid());
-		//set salesManId in SalesTable
-		//create invoiceEntity  class Object 
-		invoice=new KiskoInvoice();
-	
-		//copy invoiceDTO class Object to InvoiceEntity class Object 
-		BeanUtils.copyProperties(dto, invoice);
-		invoice.setUser_Details_Table(userTable);
-		//call DAO class save Method to store the data 
-		invoice=kisoinvoice.save(invoice);
-		//open session 
-		HttpSession session=request.getSession(false);
-		
-		//add customerId id session attribute 
-		session.setAttribute("customerId", invoice.getCustomerID());
-	}
 	
 	@Override
-	public void invoiceCreation(Invoice_DTO invoiceDto, Invoice_Items_Dto itemDto, Invoice_Vehicle_DTO vehicleDto,HttpServletRequest request) throws Exception {
+	public InvoiceDTO invoiceCreation(Invoice_DTO invoiceDto, Invoice_Items_Dto itemDto, Invoice_Vehicle_DTO vehicleDto,HttpServletRequest request) throws Exception {
 		
 		//open session 
 		HttpSession session=request.getSession(false);
-				
+			
 		//SalesMan_Table saletable=null;
 		User_Details_Table userTable=null;
-		
+		List<String> sizeList=null,patternList=null;
+		List<Double> basicPriceList=null;
 		Invoice invoice=null;
 		Vehicle_Invoice vehicleInvoice=null;
 		Invoice_Items invoiceItem=null;
+		long quantity=0l;
+		InvoiceDTO invoiceDTO=null;
+		String [] paterrns=null;
+		String [] tyresizeresult=null;
+		Double [] basicPrices=null;
+		
 		
 		//create SalesMan_Table Object
 		userTable=new User_Details_Table();
+		
 		//set UserId in SalesTable
 		userTable.setUserid(invoiceDto.getUserId());
+		//get the quantity 
+		quantity=invoiceDto.getQuantity();
+		Long quntity=0l;
+		if(quantity==1){
+			for(int i=0;i<itemDto.getBasicPrice().length;i++){
+			if(itemDto.getBasicPrice()[i]!=null){
+				quntity=quntity+1l;
+			}
+			}
+		}
+		else{
+			quntity=invoiceDto.getQuantity();
+		}
 		//create Invoice class Object 
 		invoice=new Invoice();
 		//copy Invoice_DTO class object to invoice class Object 
 		BeanUtils.copyProperties(invoiceDto, invoice);
 		invoice.setUser_Details_Table(userTable);
-		
-		
+		invoice.setQuantity(quntity);
 		//create invoice 
 		invoice=invoiceDAO.save(invoice);
+		
+		//get user object  
+		userTable=invoice.getUser_Details_Table();
+		
 		//add invoiceNumber in  session attribute 
 		session.setAttribute("invoiceNumber", invoice.getInvoice_Number());
+		session.setAttribute("userid", userTable.getUserid());
 		
 		vehicleInvoice=new Vehicle_Invoice();
-		
 		//copy Invoice_Vehicle_DTO class object to vehicleInvoice class Object 
 		BeanUtils.copyProperties(vehicleDto, vehicleInvoice);
 		vehicleInvoice.setInvoice_number(invoice);
+		
 		//create invoice 
 		vehicleInvoice=invoice_vehicle_DAO.save(vehicleInvoice);
 		//add invoiceNumber in  session attribute 
 		session.setAttribute("vehicleInvoice", vehicleInvoice.getVehicle_Invoice());
 		
-		invoiceItem=new Invoice_Items();
+		//invoiceItem=new Invoice_Items();
+		int length=itemDto.getTyre_size().length;
 		
-		/*Double basicPrice=itemDto.getBasicPrice();
-		Double SGST=0.14*basicPrice;
-		Double CGST=0.14*basicPrice;
-		Double IGST=0.28*basicPrice;
-		//copy Invoice_Vehicle_DTO class object to vehicleInvoice class Object 
-		BeanUtils.copyProperties(itemDto, invoiceItem);
-		invoiceItem.setSGST(SGST);
-		invoiceItem.setCGST(CGST);
-		invoiceItem.setIGST(IGST);*/
+		sizeList=new ArrayList<String>();
+		patternList=new ArrayList<String>();
+		basicPriceList=new ArrayList<Double>();
 		
-		int length=itemDto.getTyrepattern().length;
+		Double tyrebasicPrice=0.0;
+			if(quantity==1){
 		for(int i=0;i<length;i++){
+			
+			if(itemDto.getBasicPrice()[i]!=null){
 			Double basicPrice=itemDto.getBasicPrice()[i];
-			Double SGST=0.14*basicPrice;
-			Double CGST=0.14*basicPrice;
-			Double IGST=0.28*basicPrice;
-			//copy Invoice_Vehicle_DTO class object to vehicleInvoice class Object 
+			invoiceItem=new Invoice_Items();
+			
+			//copy Invoice_Vehicle_DTO class object to vehicleInvoice class Object not required
 			BeanUtils.copyProperties(itemDto, invoiceItem);
+			
 			invoiceItem.setBasicPrice(basicPrice);
 			invoiceItem.setTyrepattern(itemDto.getTyrepattern()[i]);
 			invoiceItem.setTyresize(itemDto.getTyre_size()[i]);
-			invoiceItem.setSGST(SGST);
-			invoiceItem.setCGST(CGST);
-			invoiceItem.setIGST(IGST);
 			invoiceItem.setSaledate(itemDto.getSaledate());
 			invoiceItem.setInvoice_Number(invoice);
+			
+			//create warranty card Id
+			 UID warentyId = new UID();
+			 String warrent=warentyId.toString();
+			 invoiceItem.setWarrantyId(warrent);
+			 
 			//create invoice_Item
 			invoiceItem=invoice_Item_DAO.save(invoiceItem);
+			
+			//set TyreSize in list
+			sizeList.add(invoiceItem.getTyresize());
+			patternList.add(invoiceItem.getTyrepattern());
+			basicPriceList.add(invoiceItem.getBasicPrice());
+			
+			tyrebasicPrice=tyrebasicPrice+invoiceItem.getBasicPrice();
+			
 			//add invoiceNumber in  session attribute 
 			session.setAttribute("invoiceItem", invoiceItem.getInvoice_Items());
-		}//for loop end 
+			
+			}		
+		}//for loop end
+			}
+			
+		else if(quantity==2){
+			for(int i=0;i<length;i++){
+				Double basicPrice=itemDto.getBasicPrice()[0];
+				invoiceItem=new Invoice_Items();
+				
+				//copy Invoice_Vehicle_DTO class object to vehicleInvoice class Object 
+				BeanUtils.copyProperties(itemDto, invoiceItem);
+				invoiceItem.setBasicPrice(basicPrice);
+				invoiceItem.setTyrepattern(itemDto.getTyrepattern()[0]);
+				invoiceItem.setTyresize(itemDto.getTyre_size()[0]);
+				invoiceItem.setSaledate(itemDto.getSaledate());
+				invoiceItem.setInvoice_Number(invoice);
+				
+				//create warranty card id
+				UID warentyId = new UID();
+				String warrent=warentyId.toString();
+				invoiceItem.setWarrantyId(warrent);
+				
+				
+				//create invoice_Item
+				invoiceItem=invoice_Item_DAO.save(invoiceItem);
+				
+				//set tyreSize In List
+				sizeList.add(invoiceItem.getTyresize());
+				patternList.add(invoiceItem.getTyrepattern());
+				basicPriceList.add(invoiceItem.getBasicPrice());
+				
+				//calculate basePrice 
+				tyrebasicPrice=tyrebasicPrice+invoiceItem.getBasicPrice();
+				
+				//add invoiceNumber in  session attribute 
+				session.setAttribute("invoiceItem", invoiceItem.getInvoice_Items());
+						
+			}//for loop end
+		}
+			
+			//set tyreSize in  ArrayList to String Array
+			tyresizeresult=new String[sizeList.size()];
+			int i=0;
+			for (String tyre : sizeList) {
+				tyresizeresult[i]=tyre;
+				i++;
+			}
+			int j=0;
+			paterrns=new String[patternList.size()];
+			for(String pattern:patternList){
+				paterrns[j]=pattern;
+				j++;
+			}
+			
+			
+			int k=0;
+			basicPrices=new Double[basicPriceList.size()];
+			for (Double double1 : basicPriceList) {
+				basicPrices[k]=double1;
+				k++;
+			}
+			String mail=userdao.userMailById(invoiceDto.getUserId());
+			NumberToWordConverter numberWord=new NumberToWordConverter();
+			
+			String total_price=Double.toString(invoice.getTotal_price());
+			
+			total_price=numberWord.NumberToWord(total_price);
+			
+			invoiceDTO=new InvoiceDTO();
+			BeanUtils.copyProperties(invoice, invoiceDTO);
+			BeanUtils.copyProperties(vehicleInvoice, invoiceDTO);
+			BeanUtils.copyProperties(invoiceItem, invoiceDTO);
+			
+			invoiceDTO.setBasicPrice(tyrebasicPrice);
+			invoiceDTO.setDiscount(invoice.getDiscount());
+			invoiceDTO.setTyresizes(tyresizeresult);
+			invoiceDTO.setTyrepatterns(paterrns);
+			invoiceDTO.setBasicPrices(basicPrices);
+			invoiceDTO.setPrice_in_word(total_price);
+			invoiceDTO.setUserMailId(mail);
+			Templet templet=null;
+			int pdfTempletId=0;
+			Optional<Templet> pdftemplet=templet_DAO.findById(pdfTempletId+1);
+			templet=pdftemplet.get();
+			String pdfTemplet=templet.getTemplet();
+			invoiceDTO.setTemplet(pdfTemplet);
+			Optional<Templet> warrentyTemplet=templet_DAO.findById(pdfTempletId+2);
+			Templet temp=warrentyTemplet.get();
+			String warrentyTemp=temp.getTemplet();
+			invoiceDTO.setWarrentyTemplet(warrentyTemp);
+			return invoiceDTO;
 	}
 	
 	
-
 	@Override
-	public InvoiceDTO InvoiceDetails(HttpServletRequest request)throws Exception  {
-		HttpSession session=null;
-		InvoiceDTO DTO=null;
-		KiskoInvoice invoice=null;
-		User_Details_Table table=null;
-		List<Object[]> listgstno=null;
-		
-		//open HttpSession 
-		 session=request.getSession(false);
-		 
-		//find HttpSession Value and store in customerId
-		Long customerId=(Long)session.getAttribute("customerId");
-		String pos=(String) session.getAttribute("pos");
-		String gstNo=null;
-		String gstAddress=null;
-		
-		try{
-		
-		listgstno=kisoinvoice.getGstNoAndGstAddress(pos);
-		for (Object[] objects : listgstno) {
-			
-			gstNo=(String) objects[0];
-			gstAddress=(String) objects[1];
-			
-		}
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
-		//Create Sales Man Table Object 
-		table=new User_Details_Table();
-		
-		//call findAll method  and store invoice details in listInvoice
-		invoice=kisoinvoice.getOne(customerId);
-		//table=invoice.getSalesman();
-		table=invoice.getUser_Details_Table();
-		//create InvoiceDTO class Object 
-		DTO=new InvoiceDTO();
-		
-		//copy InvoiceEntity class object data to invoiceDTO class Object 
-		BeanUtils.copyProperties(invoice, DTO);
-		//DTO.setSalesmanid(table.getSalesmanid());
-		DTO.setUserid(table.getUserid());
-		DTO.setGstNo(gstNo);
-		DTO.setGstAddress(gstAddress);
-		
-		return DTO;
-	}
+	public List<Pos_Item_Price_Dto_Responce> getItemPatternByPos(String posId)throws Exception{
+		List<Pos_Item_Price_Dto_Responce> itemPatternByPos=null;
+		itemPatternByPos=new ArrayList<Pos_Item_Price_Dto_Responce>();
 
-	
+		POS_Table pos_table=new POS_Table();
+		pos_table.setPos(posId);
+		
+		List<String> listPattern=invoiceDAO.allTyrePatternByPos(posId);
+		
+		Set<String > setpattern=new HashSet<String>();
+		for (String pattern : listPattern) {
+			
+			setpattern.add(pattern);
+		}
+		
+		for (String string : listPattern) {
+			Pos_Item_Price_Dto_Responce itemPattern=new Pos_Item_Price_Dto_Responce();
+			itemPattern.setPattern(string);
+			itemPatternByPos.add(itemPattern);
+		}
+		
+		return itemPatternByPos;
+	}
 	
 	@Override
-	public List<TyreInformationDTO> findTyrePattern()throws Exception {
-		List<Object[]> listObject=null;
-		List<TyreInformationDTO> listtyre=null;
+	public List<String> getItemSizeByPos(String posId,String pattern) throws Exception{
+	//	List<Pos_Item_Price_Dto_Responce> itemSizeByPosandPattern=null;
+		List<String> listSize=null;
+		//itemSizeByPosandPattern=pos_Item_DAO.listSize(posId, pattern);
+		listSize=invoiceDAO.allTyreSizeByPos(posId, pattern);
 		
-		//create ArrayList Object 
-		listtyre=new ArrayList<TyreInformationDTO>();
-		
-		//get all tyrePattern in Tire Information table 
-		listObject =invoiceDAO.allTyrePattern();
-		
-		//Iterative the listObject 
-		for(Object obj: listObject){
-			
-			//create  local TyreInforamtionDto class Object  
-			TyreInformationDTO tyreDTO=new TyreInformationDTO();
-			
-			//find tirePattern in object 
-			String tyrePattern=(String)obj;
-			
-			//set TyrePattern in TyrePatternDto class  
-			tyreDTO.setTyrepattern(tyrePattern);
-			
-			// add Tire Pattern in list 
-			listtyre.add(tyreDTO);
-		}
-		return listtyre;
+		return listSize;
 	}
-
+	
+	
 	@Override
 	public List<UserDTO> allSalesManId(String pos) throws Exception {
 		//all local variable initialize 
@@ -268,47 +329,18 @@ public class InvoicegenerationServiceImpl  implements InvoiceGenerationService {
 		}
 		return listdto;
 	}
-	
-	
-
 	@Override
-	public List<TyreInformationDTO> findTyreSize(String tyrePattern)throws Exception  {
-		List<Object[]> listObject=null;
-		List<TyreInformationDTO> listtyresize=null;
-		
-		//create ArrayList Object 
-		listtyresize=new ArrayList<TyreInformationDTO>();
-		
-		//get all tyreSize in Tire Information table 
-		listObject =invoiceDAO.allTyreSize(tyrePattern);
-		
-		//Iterative the listObject 
-		for(Object obj: listObject){
-			
-			//create  local TyreInforamtionDto class Object  
-			TyreInformationDTO tyreDTO=new TyreInformationDTO();
-			
-			//cast tireSize in object 
-			String tyresize=(String)obj;
-			
-			
-			//set TyreSize in TyrePatternDto class  
-			tyreDTO.setTyresize(tyresize);
-			
-			// add AllTireSize in list 
-			listtyresize.add(tyreDTO);
-		}
-		return listtyresize;
-	}
-
-	//Get tyrePrice in the specific tyrePattern and tyresize
-	@Override
-	public Double getTyrePrice(String tyrePattern, String tyreSize) throws Exception {
+	public Double getPriceByPatternAndSize(String pos,String tyrePattern, String tyreSize) throws Exception {
 		Double price=0.0;
+		Tyre_Information tyre=new Tyre_Information();
+		POS_Table pos_table=new POS_Table();
+		tyre.setTyrepattern(tyrePattern);
+		tyre.setTyresize(tyreSize);
+		pos_table.setPos(pos);
 		
 		//get Price 
-		price=invoiceDAO.getTyrePrice(tyrePattern, tyreSize);
-		
+		price=invoiceDAO.getPriceByPatternAndSize(tyrePattern,tyreSize, pos);
+
 		return price;
 	}
 
@@ -344,122 +376,10 @@ public class InvoicegenerationServiceImpl  implements InvoiceGenerationService {
 		return listdto;
 	}
 
-	@Override
-	public InvoiceDTO FindInvoiceById(Long customerId) throws Exception {
-		InvoiceDTO dto=null;
-		KiskoInvoice invoice=null;
-		invoice=kisoinvoice.getOne(customerId);
-		dto=new InvoiceDTO();
-		BeanUtils.copyProperties(invoice, dto);
-		return dto;
-	}
-
-	@Override
-	public String UpdateInvoiceById(InvoiceDTO dto) throws Exception {
-		
-		KiskoInvoice invoice=null;
-		User_Details_Table saletable=null;
-		
-		//create SalesMan_Table Object
-		saletable=new User_Details_Table();
-		
-		//set salesManId in SalesTable
-		saletable.setUserid(dto.getUserid());
 	
-		invoice=new KiskoInvoice();
-		BeanUtils.copyProperties(dto, invoice);
-		invoice.setUser_Details_Table(saletable);
-		
-		try{
-		invoice=kisoinvoice.save(invoice);
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
-		
-		if(invoice==null){
-			return "Invoice not update";
-		}
-		
-		
-		return "Invoice Update Sucessfully";
-	}//UpdateInvoiceById end 
 
 
 
-	@Override
-	public String getLocation(String pos) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public InvoiceDTO InvoiceDetail(HttpServletRequest request) throws Exception {
-		HttpSession session=null;
-		InvoiceDTO DTO=null;
-		Invoice invoice=null;
-		Vehicle_Invoice vehicleInvoice=null;
-		Invoice_Items invoiceItem=null;
-		User_Details_Table table=null;
-		List<Object[]> listgstno=null;
-		
-		//open HttpSession 
-		 session=request.getSession(false);
-		 
-		//find HttpSession Value and store in customerId
-		Long invoiceNumber=(Long)session.getAttribute("invoiceNumber");
-		Long vehicle_Invoice=(Long)session.getAttribute("vehicleInvoice");
-		Long invoice_Item=(Long)session.getAttribute("invoiceItem");
-		String pos=(String) session.getAttribute("pos");
-		String gstNo=null;
-		String gstAddress=null;
-
-		
-		listgstno=invoiceDAO.getGstNoAndGstAddress(pos);
-		for (Object[] objects : listgstno) {
-			
-			gstNo=(String) objects[0];
-			gstAddress=(String) objects[1];
-		}
-		
-		//Create Sales Man Table Object 
-		table=new User_Details_Table();
-		
-		//getOne  method  and store invoice details in listInvoice
-		invoice=invoiceDAO.getOne(invoiceNumber);
-		
-		//call find vehicleInvoice list
-		vehicleInvoice=invoice_vehicle_DAO.getOne(vehicle_Invoice);
-		
-		//getOne  itemInvoice 
-		invoiceItem=invoice_Item_DAO.getOne(invoice_Item);
-		
-		//table=invoice.getSalesman();
-		table=invoice.getUser_Details_Table();
-		
-		//create InvoiceDTO class Object 
-		DTO=new InvoiceDTO();
-		
-		//copy InvoiceEntity class object data to invoiceDTO class Object 
-		BeanUtils.copyProperties(invoice, DTO);
-		//DTO.setSalesmanid(table.getSalesmanid());
-		DTO.setUserid(table.getUserid());
-		DTO.setGstNo(gstNo);
-		DTO.setGstAddress(gstAddress);
-		DTO.setTyrepattern(invoiceItem.getTyrepattern());
-		DTO.setTyresize(invoiceItem.getTyresize());
-		DTO.setSGST(invoiceItem.getSGST());
-		DTO.setCGST(invoiceItem.getCGST());
-		DTO.setIGST(invoiceItem.getIGST());
-		
-		//return DTO Object 
-		return DTO;
-	}
-
-
-
-	
-	
 }//class End 
 
 

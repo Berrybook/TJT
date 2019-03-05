@@ -26,9 +26,15 @@ public class Invoice_DTO implements Serializable {
 	
 	private Double total_price;
 	
+	private Double total_cgst;
+	
+	private Double total_sgst;
+	
 	private Double total_gst;
 	
-	private Double discount;
+	private Double taxble_amount;
+	
+	private Double discount=0.0;
 	
 	private long quantity;
 	
@@ -132,12 +138,36 @@ public class Invoice_DTO implements Serializable {
 		this.userId = userId;
 	}
 
+	public Double getTotal_cgst() {
+		return total_cgst;
+	}
+
+	public void setTotal_cgst(Double total_cgst) {
+		this.total_cgst = total_cgst;
+	}
+
+	public Double getTotal_sgst() {
+		return total_sgst;
+	}
+
+	public void setTotal_sgst(Double total_sgst) {
+		this.total_sgst = total_sgst;
+	}
+
 	public String getPayment_mode() {
 		return payment_mode;
 	}
 
 	public void setPayment_mode(String payment_mode) {
 		this.payment_mode = payment_mode;
+	}
+
+	public Double getTaxble_amount() {
+		return taxble_amount;
+	}
+
+	public void setTaxble_amount(Double taxble_amount) {
+		this.taxble_amount = taxble_amount;
 	}
 
 	public Double getDiscount() {

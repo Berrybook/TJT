@@ -1,12 +1,16 @@
 package com.tjt.dto;
 
 public class POSDTO {
-	private String pos;
-	private String password;
+	
+	private String 	pos;
+	private String 	password;
 	private String  address1;
 	private String  address2;
 	private String  pincode;
 	private String cityname;
+	private String posName;
+	
+	
 	public String getPos() {
 		return pos;
 	}
@@ -43,8 +47,10 @@ public class POSDTO {
 	public void setCityname(String cityname) {
 		this.cityname = cityname;
 	}
-	
-	
-	
-	
+	public String getPosName() {
+		return posName;
+	}
+	public void setPosName(String posName) {
+		this.posName = posName;
+	}
 }

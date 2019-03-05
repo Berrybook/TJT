@@ -8,9 +8,13 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tjt.dao.POSItemDAO;
+import com.tjt.dao.POS_DAO;
 import com.tjt.dao.Tyre_DAO;
 import com.tjt.dto.TyreInformationDTO;
-import com.tjt.dto.TyreInformationDTO2;
+
+import com.tjt.entity.POS_Item;
+import com.tjt.entity.POS_Table;
 import com.tjt.entity.TyreCompositeKey;
 import com.tjt.entity.Tyre_Information;
 
@@ -19,38 +23,66 @@ public class TyreServiceImpl implements TyreService {
 	
 	@Autowired
 	private Tyre_DAO tyreDao;
+	@Autowired
+	private POSItemDAO pOSItemDAO;
+	@Autowired
+	private POS_DAO pOS_DAO;
 
 	@Override
-	public String tyreSave(TyreInformationDTO dto) throws Exception {
+	public String tyreSave(TyreInformationDTO tyreInformationDTO) throws Exception {
 		Tyre_Information tyreEntity=null;
 		String tyrepattren=null,tyresize=null;
 		Integer count=0;
-		
+		String responseResult="";
+		POS_Item pOS_Item=null;
+		//create tyreEntity Object 
 		tyreEntity=new Tyre_Information();
-		BeanUtils.copyProperties(dto, tyreEntity);
-		tyreEntity.setCGST("14");
-		tyreEntity.setIGST("28");
-		tyreEntity.setSGST("14");
-		tyrepattren=tyreEntity.getTyrepattern();
-		tyresize=tyreEntity.getTyresize();
+		
+		
+		//set TyrePattern and TyreSize 
+		tyrepattren=tyreInformationDTO.getTyrepattern().toUpperCase();
+		tyresize=tyreInformationDTO.getTyresize().toUpperCase();
+		
+		//test this value is available or not 
 		count=tyreDao.checkTyre(tyrepattren, tyresize);
+
 		if(count==0){
+			tyreEntity.setTyrepattern(tyrepattren);
+			tyreEntity.setTyresize(tyresize);
 			tyreEntity=tyreDao.save(tyreEntity);
-			return "Tyre  Sucessfully Registred";
+			
+			//get all POS 
+			List<POS_Table> lsitPos=pOS_DAO.findAll();
+			
+			for (POS_Table pos : lsitPos) {
+				pOS_Item=new POS_Item();
+				pOS_Item.setTyrepattern(tyreEntity.getTyrepattern());
+				pOS_Item.setTyresize(tyreEntity.getTyresize());
+				pOS_Item.setPos(pos.getPos());
+				//assign Item in  all POS 
+				pOSItemDAO.save(pOS_Item);
+			}
+			responseResult= "Tyre  Sucessfully Registered";
 		}
-			return "Tyre  alredy exist";
+		
+		else{
+		responseResult= "Tyre  already exist";
+		}
+		
+		return responseResult;
 	}
 
 	//List of tyre details
 	@Override
-	public List<TyreInformationDTO2> listTyre() throws Exception {
+	public List<TyreInformationDTO> listTyre() throws Exception {
 		
 		List<Tyre_Information> listEntity=null;
-		List<TyreInformationDTO2> listDto=null;
-		listDto=new ArrayList<TyreInformationDTO2>();
+		List<TyreInformationDTO> listDto=null;
+		listDto=new ArrayList<TyreInformationDTO>();
 		listEntity=tyreDao.findAll();
+		
 		for (Tyre_Information entity : listEntity) {
-			TyreInformationDTO2 dto=new TyreInformationDTO2();
+			TyreInformationDTO dto=new TyreInformationDTO();
 			BeanUtils.copyProperties(entity, dto);
 			listDto.add(dto);
 		}
@@ -73,15 +105,15 @@ public class TyreServiceImpl implements TyreService {
 	}
 
 	@Override
-	public TyreInformationDTO2 tyrelistById(String tyrepattern,String tyreSize) throws Exception {
+	public TyreInformationDTO tyrelistById(String tyrepattern,String tyreSize) throws Exception {
 		//DEclare All LocalVariable 
 		Optional<Tyre_Information> opt=null;
 		Tyre_Information listentity=null;
-		TyreInformationDTO2 listDto=null;
+		TyreInformationDTO listDto=null;
 		
 		//Create Object of TyreEntity class 
 		listentity=new Tyre_Information();
-		listDto=new TyreInformationDTO2();
+		listDto=new TyreInformationDTO();
 		
 		TyreCompositeKey key=new TyreCompositeKey();
 		key.setTyrepattern(tyrepattern);
@@ -98,15 +130,13 @@ public class TyreServiceImpl implements TyreService {
 	}
 
 	@Override
-	public String tyreUpdate(TyreInformationDTO2 dto) throws Exception {
+	public String tyreUpdate(TyreInformationDTO dto) throws Exception {
 		Tyre_Information tyreEntity=null;
 		tyreEntity=new Tyre_Information();
 		
 		//copy all value from tyreDto class Object to tyreEntity class Object
 		BeanUtils.copyProperties(dto, tyreEntity);
-		tyreEntity.setCGST("14");
-		tyreEntity.setIGST("28");
-		tyreEntity.setSGST("14");
+		
 		tyreEntity=tyreDao.save(tyreEntity);
 		//System.out.println(tyreEntity.getTyreid());
 		

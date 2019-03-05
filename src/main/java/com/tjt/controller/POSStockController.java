@@ -22,11 +22,13 @@ import com.tjt.dto.POSItemDTO;
 import com.tjt.dto.TyreInformationDTO2;
 import com.tjt.service.POSStockService;
 
+
 @Controller
 public class POSStockController {
 
 	@Autowired
 	private POSStockService stockservice; 
+	
 	
 	
 	@RequestMapping(value="stocklink",method=RequestMethod.GET)
@@ -51,7 +53,6 @@ public class POSStockController {
 			//RETURN LOGIN JSP PAGES 
 			responsePage= "login";
 		}
-		
 		return responsePage;
 	}
 	//create the pos stock 
@@ -59,7 +60,6 @@ public class POSStockController {
 	public String posItemCreate(HttpServletRequest request){
 		String responsePage="";
 		HttpSession session=null;
-		
 		//create Session object
 		session=request.getSession(false);
 		String admin=(String) session.getAttribute("admin");
@@ -78,6 +78,8 @@ public class POSStockController {
 		}
 		return responsePage;
 	}
+	
+	
 	@RequestMapping(value="posstockquantity",method=RequestMethod.POST)
 	public String posItemProcess(Map<String,Object> map,HttpServletRequest request, @ModelAttribute POSItemDTO positemdto,BindingResult result ){
 		//check the model class field is valid or not 
@@ -87,12 +89,11 @@ public class POSStockController {
 				responsePage= "posstock";
 			}
 			else{
-				
-				
 				try{
 					//Quantity add In all Tyre  from  POS-ITEM 
 					stockservice.posItemQuantityAssign(positemdto);
 				}
+				
 				catch(Exception e){
 					request.setAttribute("posstock","POS STOCK PROBLEM");
 					responsePage= "admin";
@@ -110,7 +111,7 @@ public class POSStockController {
 	//create the POS and Item Assignment  form page 
 		@RequestMapping(value="positemassign",method=RequestMethod.GET)
 		public String posItemAssign(HttpServletRequest request){
-			
+		
 			HttpSession session=null;
 			String responsePage="";
 			
@@ -146,7 +147,6 @@ public class POSStockController {
 					//get AllTyre Value in Value Param 
 					String allTyre=request.getParameter("alltyre");
 						try{
-							
 							//Assign Tyre In Each POS 
 							stockservice.posItemAssignment(positemdto, allTyre);
 						}
@@ -165,11 +165,8 @@ public class POSStockController {
 
 	@ModelAttribute("tyreid")
 	public List<TyreInformationDTO2> findTyreid(){
-		
-		
-		
 		List<TyreInformationDTO2> list=null;
-		
+
 		try{
 		//get All TyrePattern 
 		list=stockservice.listtyreid();
@@ -180,6 +177,7 @@ public class POSStockController {
 		
 		return list;
 	}
+	
 	@ModelAttribute("posid")
 	public List<POSDTO> findposid(){
 		
@@ -222,8 +220,6 @@ public class POSStockController {
 		return listtyre;
 		
 	}
-	
-	
 	@RequestMapping(value="posname/{tyreid}",method=RequestMethod.GET)
 	@ResponseBody
 	public List<String> findposname(@PathVariable("tyreid")Long tyre){
@@ -242,6 +238,8 @@ public class POSStockController {
 		return listpos;
 	}
 	
+	
+	//add quantity
 	@RequestMapping(value="quantityadd",method=RequestMethod.GET)
 	public String quantityadd(HttpServletRequest request){
 		
@@ -280,6 +278,7 @@ public class POSStockController {
 	}
 		return responsePage;
 	}
+	
 	
 	
 }

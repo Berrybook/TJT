@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,10 +33,12 @@ public class UserController {
 	@Autowired
 	private POSService pOsservice;
 	
+	
 	@RequestMapping(value="/userregistration",method=RequestMethod.GET)
-	public String UserRegistration(HttpServletRequest request ){
+	public String UserRegistration(HttpServletRequest request ,Map<String,Object> map){
 		
 		HttpSession session=null;
+		List<UserDTO> listdto=null;
 		
 		//create Session object
 		session=request.getSession(false);
@@ -43,8 +46,11 @@ public class UserController {
 		try{
 		//test the session is equals to admin or null if admin null then it goes to catch block
 		if(admin.equals("admin")){
-		request.setAttribute("user_form", "user_form");
+		request.setAttribute("userreg", "userreg");
 		}
+		listdto=userService.listUser();
+		
+		map.put("listUser", listdto);
 		 return "user_form";
 		}
 		catch(Exception e){
@@ -54,87 +60,120 @@ public class UserController {
 		
 	}//end 
 	
+	
 	@RequestMapping(value="/userregistration",method=RequestMethod.POST)
-	public String UserProcessing(@ModelAttribute UserDTO dto,HttpServletRequest request ){
+	public String UserProcessing(Map<String,Object> map,@ModelAttribute UserDTO dto,HttpServletRequest request ,BindingResult  validate) throws Exception{
 		String result=null;
+		List<UserDTO> listdto=null;
 		 try{
-			
 			 result=userService.userCreate(dto);
+			 listdto=userService.listUser();
+			 map.put("listUser", listdto);
+			 request.setAttribute("UserRegister", result);
+			 request.setAttribute("userreg", "userreg");
+			
 		 }
 		 catch(Exception e){
 			 request.setAttribute("UserRegister", result);
-			 return "admin";
+			 request.setAttribute("userreg", "userreg");
+			 return "user_form";
 		 }
-		 request.setAttribute("UserRegister", result);
-		return "admin";
+		
+		return "user_form";
 	}
-	
 	@RequestMapping(value="userAll",method=RequestMethod.GET)
-	public List<UserDTO> allUser(HttpServletRequest request,Map<String,Object> map){
+	public String allUser(HttpServletRequest request,Map<String,Object> map){
 		List<UserDTO> listdto=null;
+		
 		try{
 			listdto=userService.listUser();
-			map.put("list", listdto);
+			
+			map.put("listUser", listdto);
 		}
 		catch(Exception e){
 			map.put("list", listdto);
-			return listdto;
+			return "user_list";
 		}
-		return listdto;
+		return "user_list";
 	}
 	
-	@RequestMapping(value="userid/{userid}",method=RequestMethod.GET)
-	public UserDTO UserById(@PathVariable String userid){
-		UserDTO dto=null;
+	@RequestMapping(value="userupdate",method=RequestMethod.GET)
+	public String  UserById(HttpServletRequest request,Map<String,Object> map){
+		UserDTO userDto=null;
+		String userid=null;
+		List<UserDTO> listdto=null;
+		userid=request.getParameter("userId");
+	
 		try{
-			 dto=userService.userById(userid);
+			userDto=userService.userById(request,userid);
+			
+			 request.setAttribute("userUpdate","userUpdate");
+			 map.put("user_update", userDto);
+			 
+			 listdto=userService.listUser();
+			map.put("listUser", listdto);
+			
 		}
 		catch(Exception e){
-			return null;
+			map.put("user_update", userDto);
+			 request.setAttribute("userUpdate","userUpdate");
+			return "user_form";
 		}
-		return dto;
+		return "user_form";
 	}
 	
-	@RequestMapping(value="/userupdate",method=RequestMethod.POST)
-	public String UserUpdate(@ModelAttribute UserDTO dto,HttpServletRequest request ){
+	@RequestMapping(value="userupdate",method=RequestMethod.POST)
+	public String UserUpdate(@ModelAttribute UserDTO userDto,HttpServletRequest request,Map<String,Object>map ){
 		String result=null;
+		List<UserDTO> listdto=null;
+		String responseBody="";
 		 try{
-			 result=userService.UserUpdate(dto);
+			 
+			
+			 result=userService.UserUpdate(request,userDto);
+			 request.setAttribute("user_update_result", result);
+			 listdto=userService.listUser();
+			 map.put("listUser", listdto);
+			 responseBody= "user_form";
+			 request.setAttribute("userreg", "userreg");
 		 }
 		 catch(Exception e){
-			 request.setAttribute("UserUpdate", result);
-			 return "admin";
+			 /*request.setAttribute("UserUpdate", result);*/
+			 request.setAttribute("user_update_result", result);
+			 request.setAttribute("userreg", "userreg");
+			 responseBody= "user_form";
 		 }
-		 request.setAttribute("UserUpdate", result);
-		return "admin";
+		
+		 
+		 return responseBody;
 	}
 	
 	@RequestMapping(value="userdelete/{userid}",method=RequestMethod.GET)
-	public String UserDeleteById(@PathVariable String userid){
+	public String UserDeleteById(@PathVariable String userid,HttpServletRequest request){
 		try{
-			 userService.userById(userid);
+			 userService.userById(request,userid);
 		}
 		catch(Exception e){
-			return "unsuccessfully";
+			return "User Unsuccessfully Registered";
 		}
-		return "successfully";
+		return "User Successfully Registered";
 	}
 	
-
+	
 	@ModelAttribute("role")
-	public List<RoleDTO> findRole(HttpServletRequest request){
+	/*@RequestMapping(value="/roles",method=RequestMethod.GET)
+	@ResponseBody*/
+	public List<RoleDTO>   findRole(HttpServletRequest request){
 		List<RoleDTO> listrole=null;
 		List<String> list=null;
 		listrole=new ArrayList<RoleDTO>();
 		try{
 			list=roleService.role();
-		
-		for (String string : list) {
-			RoleDTO dto=new RoleDTO();
-			dto.setRole(string);
-			listrole.add(dto);
-			
-		}
+			for (String string : list) {
+				RoleDTO role=new RoleDTO();
+				role.setRole(string);
+				listrole.add(role)
+;			}
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -144,19 +183,22 @@ public class UserController {
 	}
 	
 	@ModelAttribute("allpos")
+	/*@RequestMapping(value="/allpos",method=RequestMethod.GET)
+	@ResponseBody*/
 	public List<POSDTO> findpos(HttpServletRequest request){
-		List<POSDTO> listdto=null;
-		
+		List<POSDTO> listos=null;
+		List<String> list=null;
+		list=new ArrayList<>();
 		try{
-			listdto=pOsservice.listPos();
-		
+			listos=pOsservice.listPos();
+			for (POSDTO posdto : listos) {
+				String pos=posdto.getPos();
+				list.add(pos);
+			}
 		}
 		catch(Exception e){
-			return listdto;
+			return listos;
 		}
-		return listdto;
+		return listos;
 	}
-	
-	
-
 }

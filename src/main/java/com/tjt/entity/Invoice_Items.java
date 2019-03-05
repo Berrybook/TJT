@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @Table(name="Invoice_Items")
 public class Invoice_Items {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long invoice_Items;
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "invoice_Number", nullable = false)
@@ -28,13 +28,8 @@ public class Invoice_Items {
 	private String tyresize;
 	@Column(name="basic_Price")
 	private Double basicPrice;
-	@Column(name="SGST")
-	private Double SGST;
-	@Column(name="CGST")
-	private Double CGST;
-	@Column(name="IGST")
-	private Double IGST;
-	
+	@Column(name="warrantyId")
+	private String  warrantyId;
 	@Column(name="sale_date")
 	private Date saledate;
 	public Long getInvoice_Items() {
@@ -57,18 +52,6 @@ public class Invoice_Items {
 	public void setBasicPrice(Double basicPrice) {
 		this.basicPrice = basicPrice;
 	}
-	public Double getSGST() {
-		return SGST;
-	}
-	public void setSGST(Double sGST) {
-		SGST = sGST;
-	}
-	public Double getCGST() {
-		return CGST;
-	}
-	public void setCGST(Double cGST) {
-		CGST = cGST;
-	}
 	public String getTyrepattern() {
 		return tyrepattern;
 	}
@@ -81,13 +64,12 @@ public class Invoice_Items {
 	public void setTyresize(String tyresize) {
 		this.tyresize = tyresize;
 	}
-	public Double getIGST() {
-		return IGST;
+	public String getWarrantyId() {
+		return warrantyId;
 	}
-	public void setIGST(Double iGST) {
-		IGST = iGST;
+	public void setWarrantyId(String warrantyId) {
+		this.warrantyId = warrantyId;
 	}
-	
 	public Date getSaledate() {
 		return saledate;
 	}

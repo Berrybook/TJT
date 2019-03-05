@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 
 import com.tjt.dto.TyreInformationDTO;
-import com.tjt.dto.TyreInformationDTO2;
 import com.tjt.service.TyreService;
 
 @Controller
@@ -25,9 +24,10 @@ public class TyreController {
 	
 	//Show Tyre Form
 	@RequestMapping(value="/tyrecreate",method=RequestMethod.GET)
-	public String tyreCreate(HttpServletRequest request){
+	public String tyreCreate(HttpServletRequest request,Map<String,Object> map){
 		
 		HttpSession session=null;
+		List<TyreInformationDTO> listDto=null;
 		String responsePage="";
 		//create Session object
 		session=request.getSession(false);
@@ -36,9 +36,13 @@ public class TyreController {
 		//test the session is equals to admin or null if admin null then it goes to catch block
 		if(admin.equals("admin")){
 		request.setAttribute("TYRE_HOME","TYRE_REG");
-		}
+		
+		listDto=tyreService.listTyre();				
+		//put listTyre into the map collection 
+		map.put("listDto", listDto);
 		//RETURN TYREREG JSP PAGES 
 		responsePage= "tyreReg";
+		}
 		}
 		catch(Exception e){
 			request.setAttribute("SessionTimeOut", "Should enter Username and Password");
@@ -52,27 +56,29 @@ public class TyreController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/tyrecreate",method=RequestMethod.POST)
 	public String tyreProcess(HttpServletRequest request,@ModelAttribute TyreInformationDTO dto,Map<String,Object>map){
-		List<TyreInformationDTO2> listDto=null;
+		List<TyreInformationDTO> listDto=null;
 		String responsePage="";
 		HttpSession session=null;
 		String result=null;
 		//create Session object
 		session=request.getSession(false);
-		listDto=(List<TyreInformationDTO2>) session.getAttribute("listtyre");
+		listDto=(List<TyreInformationDTO>) session.getAttribute("listtyre");
 		
 		try{
 			//CREATE NEW TYRE 
 			result=tyreService.tyreSave(dto);
 			request.setAttribute("TYREREGISTRATION",result);
+			request.setAttribute("TYRE_HOME","TYRE_REG");
 			listDto=tyreService.listTyre();	
 		}
 		catch(Exception e){
 			request.setAttribute("TYRE_NOT_SUCCESS"," REGISTARE FAILS,TRY AGAIN");
 			map.put("listDto", listDto);
-			responsePage= "listtyre";
+			request.setAttribute("TYRE_HOME","TYRE_REG");
+			responsePage= "tyreReg";
 		}
 		map.put("listDto", listDto);
-		responsePage= "listtyre";
+		responsePage= "tyreReg";
 		
 		//return pages 
 		return responsePage;
@@ -85,7 +91,7 @@ public class TyreController {
 		
 		String responsePage="";
 		HttpSession session=null;
-		List<TyreInformationDTO2> listDto=null;
+		List<TyreInformationDTO> listDto=null;
 		
 		//create Session object
 		session=request.getSession(false);
@@ -124,7 +130,7 @@ public class TyreController {
 	@RequestMapping(value="tyreupdate",method=RequestMethod.GET)
 	public String invoiceUpdate(Map<String ,Object> map,HttpServletRequest request ) throws Exception{
 		HttpSession session=null;
-		TyreInformationDTO2 dto=null;
+		TyreInformationDTO dto=null;
 		String tyrepattern=null;
 		String tyresize=null;
 		String responsePage="";
@@ -153,8 +159,6 @@ public class TyreController {
 			}
 			//RETURN TYREREG JSP PAGES 
 			responsePage= "tyreReg";
-			
-			return responsePage;
 		}
 		catch(Exception e){
 			request.setAttribute("SessionTimeOut", "Should enter Username and Password");
@@ -171,15 +175,12 @@ public class TyreController {
 		return responsePage;
 	}//END UPDATE TYRE 
 	
-	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/updateprocess",method=RequestMethod.POST)
-	public String InvoiceUpdateProcess(@ModelAttribute TyreInformationDTO2 dto,Map<String ,Object> map,HttpServletRequest request) {
-		List<TyreInformationDTO2> listDto=null;
-		HttpSession session=null;
+	public String InvoiceUpdateProcess(@ModelAttribute TyreInformationDTO dto,Map<String ,Object> map,HttpServletRequest request) throws Exception {
+		List<TyreInformationDTO> listDto=null;
 		String res=null;
-		//create Session object
-		session=request.getSession(false);
-		listDto=(List<TyreInformationDTO2>) session.getAttribute("listtyre");
+		String responsePage="";
+		
 		
 		try{
 		
@@ -192,34 +193,42 @@ public class TyreController {
 		 map.put("listDto", listDto);
 		 request.setAttribute("updatemode",res);
 		//RETURN ADMIN JSP PAGES 
-		 return "listtyre";
+		 request.setAttribute("TYRE_HOME","TYRE_REG");
+			responsePage= "tyreReg";
+		
 		}
 		catch(Exception e){
 
 			//SET VALUE IN  REQUEST ATTRIBUTE TO USE CONFORMATION MESSAGE TO USER 
 			request.setAttribute("updatemodefail", "TYRE_UPDATE FAIL");
+			listDto=tyreService.listTyre();
 			map.put("listDto", listDto);
-			//RETURN ADMIN JSP PAGES 
-			 return "listtyre";
+			request.setAttribute("TYRE_HOME","TYRE_REG");
+			responsePage= "tyreReg";
+			
 		}
 		
+		return responsePage;
 	}//end update
 	
 	
 		@RequestMapping(value="/tyredelete",method=RequestMethod.GET)
 		public String  tyreDelete(HttpServletRequest request){
-		 
+		 String responsePage="";
 		 String tyrepattern=request.getParameter("tyrepattern")	;
 		 String tyresize=request.getParameter("tyresize")	;
 		try{
 			tyreService.tyreDelete(tyrepattern,tyresize);
 			 request.setAttribute("deletemode", "TYRE_DELETE SUCCESS");
-			return "admin";
+			 responsePage= "admin";
 		}
 		catch(Exception e){
 			 request.setAttribute("deletemode", "TYRE_DELETE FAILED");
-			return "admin";
+			 responsePage= "admin";
 		}
+		
+		//return pages 
+		return responsePage;
 		
 	}
 	

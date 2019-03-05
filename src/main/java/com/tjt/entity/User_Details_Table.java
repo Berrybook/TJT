@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="user_details_master_table")
+
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
 public class User_Details_Table {
 	@Id
@@ -36,6 +37,9 @@ public class User_Details_Table {
 	@Lob
 	@Column(name="idprofe" )
 	private byte[] idProfe;
+	
+	@Column(name="idprofeFilename" )
+	private String idprofeFilename;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "role", nullable = false)
@@ -133,6 +137,14 @@ public class User_Details_Table {
 
 	public void setMobilenumber(Long mobilenumber) {
 		this.mobilenumber = mobilenumber;
+	}
+
+	public String getIdprofeFilename() {
+		return idprofeFilename;
+	}
+
+	public void setIdprofeFilename(String idprofeFilename) {
+		this.idprofeFilename = idprofeFilename;
 	}
 	
 	

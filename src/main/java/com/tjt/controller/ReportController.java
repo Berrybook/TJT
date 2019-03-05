@@ -26,7 +26,7 @@ public class ReportController {
 	
 	@RequestMapping(value="/Salereport",method=RequestMethod.GET)
 	public String show(HttpServletRequest request){
-		
+		String responsePage="";
 		HttpSession session=null;
 		
 		//create Session object
@@ -38,21 +38,20 @@ public class ReportController {
 			request.setAttribute("REPORT", "REPORT_PAGE");
 		}
 		//RETURN report link JSP PAGES 
-		return "reportmain";
+		responsePage= "reportmain";
 		}
 		catch(Exception e){
 			request.setAttribute("SessionTimeOut", "Should enter Username and Password");
 			//RETURN LOGIN JSP PAGES 
-			return "login";
+			responsePage= "login";
 		}
+		return responsePage;
 	}
-	
-	
-	
+
 	@RequestMapping(value="/Salereportbydate")
 	public String salereport(HttpServletRequest request){
-
-
+		
+		String responsePage="";
 		HttpSession session=null;
 		
 		//create Session object
@@ -64,20 +63,21 @@ public class ReportController {
 			request.setAttribute("REPORT", "REPORT_PAGE");
 		}
 		//RETURN report link JSP PAGES 
-		return "report";
+		responsePage= "report";
 		}
 		catch(Exception e){
 			request.setAttribute("SessionTimeOut", "Should enter Username and Password");
 			//RETURN LOGIN JSP PAGES 
-			return "login";
+			responsePage= "login";
 		}
+		return responsePage;
 	}
 	
 	
 	@RequestMapping(value="/listofsalebydate",method=RequestMethod.POST)
 	public String listofaslebydate(Map<String,Object> list,HttpServletRequest request){
 		
-		
+		String responsePage="";
 		List<SaleReportDTO> salelist = null;
 		String pos = request.getParameter("posid");
 		String saledate = request.getParameter("saledate");
@@ -88,22 +88,26 @@ public class ReportController {
 		
 		try{
 		salelist=reportservice.getSalesDetailsByDate(date,dateto,pos);
-		}
-		catch(Exception e){
-			request.setAttribute("SALESPREPORT", "SOME iNTERNAL PROBLEM ");
-			return "admin";
-		}
 		list.put("listreport", salelist);
 		request.setAttribute("REPORT", "REPORT_LIST");
 		request.setAttribute("POS", pos);
 	
-		return "report";		
+		responsePage= "report";	
+		}
+		catch(Exception e){
+			request.setAttribute("SALESPREPORT", "SOME iNTERNAL PROBLEM ");
+			responsePage= "admin";
+		}
+			
+		
+		return responsePage;
 	}
 	
 	
 	@RequestMapping(value="/listofstock",method=RequestMethod.GET)
 	public String  listofstock(Map<String,Object >map,HttpServletRequest request){
 		
+		String responsePage="";
 		HttpSession session=null;
 		List<POS_Item_DTO> list=null;
 		
@@ -118,18 +122,18 @@ public class ReportController {
 		map.put("listreport", list);
 		}
 		//RETURN TYREREG JSP PAGES 
-		return "stockreport";
+		responsePage= "stockreport";
 		}
 		catch(Exception e){
 			request.setAttribute("SessionTimeOut", "Should enter Username and Password");
 			//RETURN LOGIN JSP PAGES 
 			if(admin==null){
-			return "login";
+				responsePage= "login";
 			}
 			request.setAttribute("REPORT", "SOME iNTERNAL PROBLEM ");
-			return "admin";
+			responsePage= "admin";
 		}
-		
+		return responsePage;
 		
 	}
 

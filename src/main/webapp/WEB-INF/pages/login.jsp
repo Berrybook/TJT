@@ -24,14 +24,8 @@ height:85px;
 
 
 body {
-  background-color:#F5D1E3;
+  background-color:#e8f3ff;
 }
-
-
-
-
-
-
 .contain {
     position: absolute;
     right:30px;

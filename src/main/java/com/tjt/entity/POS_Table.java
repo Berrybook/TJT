@@ -20,6 +20,9 @@ public class POS_Table {
 		@Column(name="pos" )
 		@OnDelete(action = OnDeleteAction.CASCADE)
 		private String pos;
+		
+		@Column(name="POS_Name" )
+		private String posName;
 		@Column(name="password" )
 		private String password;
 		
@@ -31,7 +34,7 @@ public class POS_Table {
 		
 		@Column(name="pincode" )
 		private String  pincode;
-		
+
 		@ManyToOne
 		@JoinColumn(name="cityname" ,nullable=false)
 		@OnDelete(action = OnDeleteAction.CASCADE)
@@ -40,10 +43,6 @@ public class POS_Table {
 		private String gstNo;
 		@Column(name="gst_Address" ,nullable=false)
 		private String gstAddress;
-		
-		
-		
-		
 		public String getAddress1() {
 			return address1;
 		}
@@ -95,5 +94,12 @@ public class POS_Table {
 		public void setPincode(String pincode) {
 			this.pincode = pincode;
 		}
+		public String getPosName() {
+			return posName;
+		}
+		public void setPosName(String posName) {
+			this.posName = posName;
+		}
+	
 		
 }

@@ -3,6 +3,8 @@ package com.tjt.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +13,9 @@ import com.tjt.dao.Role_DAO;
 import com.tjt.dto.RoleDTO;
 import com.tjt.entity.Role_Table;
 
+
 @Service
+@Transactional
 public class RoleServiceImpl implements RoleService {
 
 	@Autowired
@@ -31,7 +35,6 @@ public class RoleServiceImpl implements RoleService {
 			
 			}
 			else{
-				System.out.println(role1);
 				listroledto.add(role1);
 			}
 			
@@ -52,15 +55,10 @@ public class RoleServiceImpl implements RoleService {
 	public void addrole(RoleDTO roledto) {
 		Role_Table roleentity = new Role_Table();
 		BeanUtils.copyProperties(roledto, roleentity);
+		roleentity.setRole(roleentity.getRole().toUpperCase());
 		roledao.save(roleentity);
 	}
 	
- 
-	
-
-
-
-
 	@Override
 	public List<RoleDTO> listOfrole() {
 		List<Role_Table> roleentity = null;
@@ -86,6 +84,7 @@ public class RoleServiceImpl implements RoleService {
 		BeanUtils.copyProperties(roledto, roleentity);
 		roledao.save(roleentity);
 	}
+	
 	@Override
 	public void deleterole(RoleDTO roledto) {
 		Role_Table roleentity = new Role_Table();

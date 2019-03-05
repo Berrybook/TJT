@@ -13,6 +13,8 @@ private Long invoice_Number;
 		this.invoice_Number = invoice_Number;
 	}
 	private String userid;
+	private Double discount=0.0;
+	private String userMailId;
 
 	private String customerName;
 
@@ -40,6 +42,11 @@ private Long invoice_Number;
 	private String tyrepattern;
 
 	private String tyresize;
+	
+	private String[] tyresizes;
+	
+	private String[] tyrepatterns;
+	private Double[] basicPrices;
 
 	private Double total_price;
 
@@ -51,17 +58,36 @@ private Long invoice_Number;
 	
 	private String gstAddress;
 	
-	private Double SGST;
+	private Double total_cgst;
 	
-	private Double CGST;
+	private Double total_sgst;
 	
-	private Double IGST;
+	private Double total_gst;
 	
+	private Double taxble_amount;
+	
+	private Double basicPrice;
+	
+	private Double[] totalbasicPrice;
+	private long quantity;
+	
+	private String price_in_word;
+	
+	private String templet;
+	
+	private String warrentyTemplet;
+
 	public String getUserid() {
 		return userid;
 	}
 	public void setUserid(String userid) {
 		this.userid = userid;
+	}
+	public String getUserMailId() {
+		return userMailId;
+	}
+	public void setUserMailId(String userMailId) {
+		this.userMailId = userMailId;
 	}
 	public String getCustomerName() {
 		return customerName;
@@ -92,6 +118,12 @@ private Long invoice_Number;
 	}
 	public void setAddress2(String address2) {
 		this.address2 = address2;
+	}
+	public Double[] getBasicPrices() {
+		return basicPrices;
+	}
+	public void setBasicPrices(Double[] basicPrices) {
+		this.basicPrices = basicPrices;
 	}
 	public String getCity() {
 		return city;
@@ -125,6 +157,12 @@ private Long invoice_Number;
 	}
 	public Long getVehiclekm() {
 		return vehiclekm;
+	}
+	public Double[] getTotalbasicPrice() {
+		return totalbasicPrice;
+	}
+	public void setTotalbasicPrice(Double[] totalbasicPrice) {
+		this.totalbasicPrice = totalbasicPrice;
 	}
 	public void setVehiclekm(Long vehiclekm) {
 		this.vehiclekm = vehiclekm;
@@ -177,22 +215,76 @@ private Long invoice_Number;
 	public void setGstAddress(String gstAddress) {
 		this.gstAddress = gstAddress;
 	}
-	public Double getSGST() {
-		return SGST;
+	public Double getTotal_cgst() {
+		return total_cgst;
 	}
-	public void setSGST(Double sGST) {
-		SGST = sGST;
+	public void setTotal_cgst(Double total_cgst) {
+		this.total_cgst = total_cgst;
 	}
-	public Double getCGST() {
-		return CGST;
+	public Double getTotal_sgst() {
+		return total_sgst;
 	}
-	public void setCGST(Double cGST) {
-		CGST = cGST;
+	public void setTotal_sgst(Double total_sgst) {
+		this.total_sgst = total_sgst;
 	}
-	public Double getIGST() {
-		return IGST;
+	public Double getTotal_gst() {
+		return total_gst;
 	}
-	public void setIGST(Double iGST) {
-		IGST = iGST;
+	public void setTotal_gst(Double total_gst) {
+		this.total_gst = total_gst;
 	}
+	public Double getTaxble_amount() {
+		return taxble_amount;
+	}
+	public void setTaxble_amount(Double taxble_amount) {
+		this.taxble_amount = taxble_amount;
+	}
+	public Double getBasicPrice() {
+		return basicPrice;
+	}
+	public void setBasicPrice(Double basicPrice) {
+		this.basicPrice = basicPrice;
+	}
+	public long getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(long quantity) {
+		this.quantity = quantity;
+	}
+	public String getPrice_in_word() {
+		return price_in_word;
+	}
+	public void setPrice_in_word(String price_in_word) {
+		this.price_in_word = price_in_word;
+	}
+	public String getTemplet() {
+		return templet;
+	}
+	public void setTemplet(String templet) {
+		this.templet = templet;
+	}
+	public String[] getTyrepatterns() {
+		return tyrepatterns;
+	}
+	public void setTyrepatterns(String[] tyrepatterns) {
+		this.tyrepatterns = tyrepatterns;
+	}
+	public String getWarrentyTemplet() {
+		return warrentyTemplet;
+	}
+	public void setWarrentyTemplet(String warrentyTemplet) {
+		this.warrentyTemplet = warrentyTemplet;
+	}
+	public String[] getTyresizes() {
+		return tyresizes;
+	}
+	public void setTyresizes(String[] tyresizes) {
+		this.tyresizes = tyresizes;
+	}
+	public Double getDiscount() {
+		return discount;
+	}
+	public void setDiscount(Double discount) {
+		this.discount = discount;
+	}	
 }

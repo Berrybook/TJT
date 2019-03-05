@@ -17,7 +17,7 @@ import javax.persistence.Table;
 public class Vehicle_Invoice {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	Long vehicle_Invoice;
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "invoice_Number", nullable = false)

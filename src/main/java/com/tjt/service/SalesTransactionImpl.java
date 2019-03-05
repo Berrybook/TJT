@@ -4,6 +4,8 @@ package com.tjt.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ import com.tjt.entity.User_Details_Table;
 
 
 @Service
+@Transactional
 public class SalesTransactionImpl implements SalesTransactionService {
 		@Autowired
      	private  SalesTransactionDAO salestransactiondao;

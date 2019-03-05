@@ -3,7 +3,8 @@ package com.tjt.dto;
 public class POSItemDTO {
 	
 	private String pos;
-	private String[] tyre;
+	private String[] tyresize;
+	private String[] tyrepattern;	
 	private Long[] quantity;
 	
 	public String getPos() {
@@ -12,17 +13,24 @@ public class POSItemDTO {
 	public void setPos(String pos) {
 		this.pos = pos;
 	}
-	public String[] getTyre() {
-		return tyre;
-	}
-	public void setTyre(String[] tyre) {
-		this.tyre = tyre;
-	}
+	
 	public Long[] getQuantity() {
 		return quantity;
 	}
 	public void setQuantity(Long[] quantity) {
 		this.quantity = quantity;
+	}
+	public String[] getTyresize() {
+		return tyresize;
+	}
+	public void setTyresize(String[] tyresize) {
+		this.tyresize = tyresize;
+	}
+	public String[] getTyrepattern() {
+		return tyrepattern;
+	}
+	public void setTyrepattern(String[] tyrepattern) {
+		this.tyrepattern = tyrepattern;
 	}
 	
 	

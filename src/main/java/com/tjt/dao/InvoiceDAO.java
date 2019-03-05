@@ -11,13 +11,6 @@ import com.tjt.entity.POS_Table;
 
 public interface InvoiceDAO extends JpaRepository<Invoice, Long> {
 	
-	@Query("SELECT t.tyrepattern FROM Tyre_Information t GROUP BY (t.tyrepattern)")
-	public List<Object[]> allTyrePattern();
-	@Query("SELECT ts.tyresize FROM Tyre_Information ts WHERE ts.tyrepattern=:tyrepattern ")
-	public List<Object[]> allTyreSize(@Param("tyrepattern")String tyrepattern);
-	@Query("SELECT ts.price FROM Tyre_Information ts WHERE ts.tyrepattern=:tyrepattern  AND ts.tyresize=:tyresize")
-	public Double getTyrePrice(@Param("tyrepattern")String tyrePattern,@Param("tyresize")String tyresize);
-	
 	
 	@Query("select ig.invoice_Number,ig.user_Details_Table,ig.saledate,ig.total_price from Invoice ig where ig.user_Details_Table IN (SELECT userid from User_Details_Table st WHERE st.pos_table=:postable)")
 	public List<Object[]> getInvoice(@Param("postable")POS_Table postable);
@@ -25,5 +18,15 @@ public interface InvoiceDAO extends JpaRepository<Invoice, Long> {
 	
 	@Query("SELECT pt.gstNo,pt.gstAddress FROM POS_Table pt WHERE pt.pos=:pos")
 	public List<Object[]> getGstNoAndGstAddress(@Param("pos")String pos);
+	
+	@Query("SELECT t.tyrepattern FROM POS_Item t where t.pos=:pos GROUP BY (t.tyrepattern)")
+	public List<String> allTyrePatternByPos(@Param("pos")String pos_table);
+	
+	
+	@Query("SELECT t.tyresize FROM POS_Item t where t.pos=:pos AND t.tyrepattern=:pattern ")
+	public List<String> allTyreSizeByPos(@Param("pos")String pos,@Param("pattern")String  pattern );
 
+	@Query("SELECT ts.salePrice FROM POS_Item ts WHERE ts.pos=:pos AND ts.tyrepattern=:pattern AND ts.tyresize=:size")
+	public Double getPriceByPatternAndSize(@Param("pattern")String  pattern,@Param("size")String  size,@Param("pos")String pos);
+	
 }

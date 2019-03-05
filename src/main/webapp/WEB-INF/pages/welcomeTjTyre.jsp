@@ -13,7 +13,7 @@
   	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-	<title>welcome tjtyre </title>
+	<title>Home Page</title>
 	
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -150,7 +150,7 @@ a {
 			<ul class="cd-top-nav">
 		
 		<li >
-					<p><a href="logout" style=" text-decoration: none;"><i class="w3-jumbo w3-spin fa fa-male"></i>Logout</a></p>
+					<p><a  href="logout" style=" text-decoration: none;"><i class="fa fa-power-off"></i>Logout</a></p>
 </li>
 	</header> 
 </nav>
@@ -161,13 +161,9 @@ a {
 			
 				<br>
 					<ul>
-					
-					
-					
-					
-							<li><a href="createinvoice" style=" text-decoration: none;">New Invoice</a></li>
+						<li><a href="createinvoice" style=" text-decoration: none;">New Invoice</a></li>
 						<li><a href="saletransaction" style=" text-decoration: none;">Sales Transaction</a></li>
-						
+						<li><a href="priceListByPos" style=" text-decoration: none;">PriceList</a></li>
 					</ul>
 				
 
@@ -177,9 +173,6 @@ a {
 		<div class="content-wrapper">
 		<br><br><br><br>
 			<c:choose>
-			<c:when test="${not empty welcome}">
-			<center><span style="text-align:center;color: blue">${welcome}</span></center>
-			</c:when>
 			<c:when test="${not empty mail}">
 			<center><span style="text-align:center;color: blue">${mail}</span></center>
 			</c:when>

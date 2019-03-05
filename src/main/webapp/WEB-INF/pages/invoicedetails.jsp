@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>TJTYRE INVOICE </title>
+<title> Confirmation</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
@@ -53,19 +53,19 @@
 </tr>
 
 <tr>
-<td colspan="3">contactNumber  :</td>
+<td colspan="3">Contact Number  :</td>
 <td>${invoice.contactNumber}</td>
 </tr>
 <tr>
-<td colspan="3">email  :</td>
+<td colspan="3">Email  :</td>
 <td>${invoice.email}</td>
 </tr>
 <tr>
-<td colspan="3">address1  :</td>
+<td colspan="3">Address  :</td>
 <td>${invoice.address1}</td>
 </tr>
 <tr>
-<td colspan="3">address2  :</td>
+<td colspan="3">Address  :</td>
 <td>${invoice.address2}</td>
 </tr>
 <tr>
@@ -73,33 +73,33 @@
 <td>${invoice.city}</td>
 </tr>
 <tr>
-<td colspan="3">vehiclemake:</td>
+<td colspan="3">Vehicle Make:</td>
 <td>${invoiceVehicle.vehiclemake}</td>
 </tr>
 <tr>
-<td colspan="3">vehiclemodel:</td>
+<td colspan="3">Vehicle Model:</td>
 <td>${invoiceVehicle.vehiclemodel}</td>
 </tr>
 <tr>
-<td colspan="3">vehiclenumber:</td>
+<td colspan="3">Vehicle Number:</td>
 <td>${invoiceVehicle.vehiclenumber}</td>
 </tr>
 <tr>
-<td colspan="3">vehiclekm:</td>
+<td colspan="3">Vehicle K.M.:</td>
 <td>${invoiceVehicle.vehiclekm}</td>
 </tr>
 <tr>
-<td colspan="3">vehicletype:</td>
+<td colspan="3">Vehicle Type:</td>
 <td>${invoiceVehicle.vehicletype}</td>
 </tr>
-<td colspan="3">tyrepattern:</td>
+<td colspan="3">Tyre Pattern:</td>
 <td>
   <c:forEach var="pattern" items="${invoiceItem.tyrepattern}">
 	<option value="">${pattern}</option>
   </c:forEach>
   </td>
 <tr>
-<td colspan="3">tyresize:</td>
+<td colspan="3">Tyre Size:</td>
 <td>
 	 <c:forEach var="size" items="${invoiceItem.tyre_size}">
 		<option value="">${size}</option>
@@ -108,15 +108,19 @@
 </tr> 
 
 <tr>
-<td colspan="3">totalprice:</td>
+<td colspan="3">Total Price:</td>
 <td>${invoice.total_price}</td>
 </tr>
 <tr>
-<td colspan="3">paymentmode:</td>
+<td colspan="3">Discount:</td>
+<td>${invoice.discount}</td>
+</tr>
+<tr>
+<td colspan="3">Payment Mode:</td>
 <td>${invoice.payment_mode}</td>
 </tr>
 <tr>
-<td colspan="3">saledate:</td>
+<td colspan="3">Date:</td>
 <td>${invoice.saledate}</td>
 </tr>
 
@@ -132,7 +136,7 @@
 <center> 
 <button type="button" class="btn btn-outline-primary"  onclick="window.location.href='invoiceedit'">Back</button>
  <button type="button" class="btn btn-outline-primary"  onclick="window.location.href='createinvoiceconform'">Generate invoice</button>
-
+</center>
 </div>
 
 </body>

@@ -17,7 +17,7 @@ import javax.persistence.Table;
 public class Invoice {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="invoice_Number")
 	Long invoice_Number;
 	
@@ -53,14 +53,26 @@ public class Invoice {
 	@Column(name="total_gst" )
 	private Double total_gst;
 	
+	@Column(name="total_sgst" )
+	private Double total_sgst;
+	
+	@Column(name="total_cgst" )
+	private Double total_cgst;
+	
+	@Column(name="taxble_amount" )
+	private Double taxble_amount;
+	
 	@Column(name="quantity" )
 	private long quantity;
 	
 	@Column(name="discount" )
-	private Double discount;
+	private Double discount=0.0;
 	
 	@Column(name="payment_mode" )
 	private String payment_mode;
+	
+	@Column(name="saledate" )
+	private Date saledate;
 	
 	public Double getTotal_gst() {
 		return total_gst;
@@ -78,8 +90,7 @@ public class Invoice {
 		this.discount = discount;
 	}
 
-	@Column(name="saledate" )
-	private Date saledate;
+	
 	
 	public Long getInvoice_Number() {
 		return invoice_Number;
@@ -163,6 +174,30 @@ public class Invoice {
 
 	public Date getSaledate() {
 		return saledate;
+	}
+
+	public Double getTaxble_amount() {
+		return taxble_amount;
+	}
+
+	public void setTaxble_amount(Double taxble_amount) {
+		this.taxble_amount = taxble_amount;
+	}
+
+	public Double getTotal_sgst() {
+		return total_sgst;
+	}
+
+	public void setTotal_sgst(Double total_sgst) {
+		this.total_sgst = total_sgst;
+	}
+
+	public Double getTotal_cgst() {
+		return total_cgst;
+	}
+
+	public void setTotal_cgst(Double total_cgst) {
+		this.total_cgst = total_cgst;
 	}
 
 	public void setSaledate(Date saledate) {

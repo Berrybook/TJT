@@ -6,13 +6,88 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="css\reset.css"> <!-- CSS reset -->
 	<link rel="stylesheet" href="css\style.css"> <!-- CSS reset -->
-	<script src="js\modernizr.js"></script> <!-- Modernizr -->
+	<script src="js\modernizr.js"></script>
+	<script src="js\validation.js"></script>
   	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-	<title>invoice generation</title>
+	<title>Invoice Generation</title>
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
+	
+	<script type="text/javascript">
+	
+        function populateDropDown() {
+
+            /* Clear the entire subjects drop down*/
+            document.getElementById("pattern").options.length = 0;
+
+            /* adding a Default "Select" option in Subjects Menu*/
+            var optn = document.createElement("OPTION");
+            optn.text = "Select";
+            pattern.options.add(optn);
+
+            /* This can be changed according to the rest of the code instead of hard coded values*/
+            var selectedIndexVal = document.getElementById("size").selectedIndex;
+            var subjectValList = document.getElementById("size").options[selectedIndexVal].value;
+            var subjectValArray = subjectValList.split(",");
+            for (var j = 0; j < subjectValArray.length; j++) {
+                var optn = document.createElement("OPTION");
+                optn.text = subjectValArray[j];
+                optn.value = subjectValArray[j];
+                pattern.options.add(optn);
+            }
+
+        }
+		
+		
+		$(document).ready(function(){
+    $("select").change(function(){
+        $(this).find("option:selected").each(function(){
+            var optionValue = $(this).attr("value");
+           
+            if(optionValue=="2"){
+               /*  $(".add").not("." + optionValue).show();
+                $("." + optionValue).show(); */
+                
+                $(".add").hide();
+				 $(".second-row").hide();
+              
+            }  else if(optionValue=="1"){
+            	$(".second-row").hide();
+                $(".add").show();
+			
+				 
+            } 
+        });
+    }).change();
+});
+
+    </script>
+	
+	
+
+	<script>
+$(function(){
+    $(".add").click(function(){
+        $("#pattern1").show();
+        $(".second-row").show();
+        
+    });
+
+
+
+ $(".add").click(function(){
+        $("#size1").show();
+    });
+
+});
+</script>
+	
+	
+	
 	
 	<style type="text/css">
 			a{
@@ -66,8 +141,8 @@ height:85px;
 
 
 .card-header{
- background-color:orange;
- height:80px;
+ background-color:#4289f4;
+ height:60px;
 
 
 }
@@ -98,9 +173,7 @@ background-color:lightblue;
 
  
         
-body {
-  background-color:#e6f0fa;
-}
+
 
 a {
     text-decoration: none;
@@ -136,7 +209,7 @@ width:100%
 			<ul class="cd-top-nav">
 		
 		<li >
-					<p><a href="logout" style=" text-decoration: none;"><i class="w3-jumbo w3-spin fa fa-male"></i>Logout</a></p>
+					<p><a  href="logout" style=" text-decoration: none;"><i class="fa fa-power-off"></i>Logout</a></p>
 </li>
 	</header> 
 </nav>
@@ -150,7 +223,7 @@ width:100%
 	
 						<li><a href="createinvoice" style=" text-decoration: none;">New Invoice</a></li>
 						<li><a href="saletransaction" style=" text-decoration: none;">Sales Transaction</a></li>
-						
+						<li><a href="priceListByPos" style=" text-decoration: none;">PriceList</a></li>
 						
 					</ul>
 				
@@ -168,12 +241,12 @@ width:100%
  
   <div id="accordion">
     <div class="card">
-      <div class="card-header">
-   <a class="collapsed card-link" data-toggle="collapse" href="#collapseOne">
+      <div class="card-header" class="collapsed card-link" data-toggle="collapse" href="#collapseOne" style="cursor: pointer;">
+  
       <font size="5px" color="white">
-         Customer  Details
+         Customer  Details <i  class='fas fa-user' style='font-size:120%;color:white;margin-left:95%;margin-top:-3%'></i>
         </font>
-        </a>
+       
       </div>
       <div id="collapseOne" class="collapse " data-parent="#accordion">
         <div class="card-body">
@@ -186,10 +259,12 @@ width:100%
                     
                            <div class="col-md-3">
                      <div class="form-group">
-                          <b><label for="salespersonid">Sales PersonID</label></b>
-                            <select class="form-control" name="userId">
+                          <b><label for="salespersonid">Salesman</label></b>
+                          
+                            <select class="form-control" name="userId" id="userId">
+                            	<option value=""> choose User</option>
                                 <c:forEach var="salesid" items="${posid}">
- 									 <option value="${salesid.userid}">${salesid.userName} (${salesid.userName})</option>
+ 									 <option value="${salesid.userid}">${salesid.userid} (${salesid.userName})</option>
    								</c:forEach>
                             </select>
                         </div>
@@ -200,7 +275,7 @@ width:100%
 
                    <div class="col-md-3">
                         <div class="form-group">
-                           <b><label for="customername">Customer Name</label></b>
+                           <b><label for="customername">Name</label></b>
                             <input type="text" class="form-control" id="customerName" placeholder="Enter CustomerName" name="customerName" value="${update.customerName }">
                         	
                          </div>
@@ -246,7 +321,7 @@ width:100%
                      </div>
                        <div class="col-md-3">
                         <div class="form-group">
-                           <b><label for="zipcode">Zip Code</label></b>
+                           <b><label for="zipcode">Pin Code</label></b>
                             <input type="text" class="form-control" id="zipcode" placeholder="Enter zipcode " name="zipcode" value="${update.zipcode}" maxlength="6" onkeypress="return isNumber(event)">
                               </div>
                     </div>
@@ -255,12 +330,12 @@ width:100%
      	 </div>
 	    </div>
     <div class="card">
-      <div class="card-header">
-        			<a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
+      <div class="card-header" class="collapsed card-link" data-toggle="collapse" href="#collapseTwo" style="cursor: pointer;">
+        			
      		  			 <font size="5px" color="white">
-      						   Vehicle Info
+      						   Vehicle Info<i class="fa fa-car" style="font-size:120%;margin-left:95%;margin-top:-3%"></i>
     		  			  </font>
-    			  </a>
+    			 
     		  </div>
     		  <div id="collapseTwo" class="collapse" data-parent="#accordion">
        			 <div class="card-body">
@@ -312,78 +387,115 @@ width:100%
         </div>
       </div>
     
-    <div class="card">
-      <div class="card-header">
-        <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
-         <font size="5px" color="white">
-         Tyres Info
-        </font>
-        </a>
+   <div class="card">
+      <div class="card-header" class="collapsed card-link" data-toggle="collapse" href="#collapseThree" style="cursor: pointer;">
+       
+         	<font size="5px" color="white">
+        	 Tyres Info <i class="fa fa-motorcycle" style="font-size:120%;margin-left:95%;margin-top:-3%"></i>
+        	</font>
+     
       </div>
       <div id="collapseThree" class="collapse" data-parent="#accordion">
-        <div class="card-body">
-         
-   <div class="cardpanel">
-            
-                
+        <div class="card-body">   
+  		 <div class="cardpanel">
                 <div class="row">
-
-
-
+                 <div class="col-md-4">
+                       		<div class="form-group">
+                          <b><label for="paymentmode">pattern</label></b>
+                         <select class="form-control" name="tyrepattern" id="tyrepattern" onchange="javascript:populateDropDown(this)">
+                                <option value="non">select pattern</option>
+                                    <c:forEach var="tyrepatn" items="${tyrepattern}">
+                				  <option value="${tyrepatn.pattern}">${tyrepatn.pattern}</option>
+                        </c:forEach>
+                                </select>
+                          	
+                        	</div>
+                 	 	</div>   
+						
+						
                    <div class="col-md-4">
-                        <div class="form-group">
-                            <div class="form-group">
-                                <b><label for="tyretype">Pattern</label></b>
-                                <select class="form-control" name="tyrepattern" id="tyrepattern">
+                       		<div class="form-group">
+                           		
+                               		 <b><label for="paymentmode">size</label></b>
+                                		
+							   
+                                <select class ="form-control" class="form-control chosen-select"id="tyresize" name="tyre_size">
+                                	<option value="">select tyresize</option>
+                                </select>
+								 
+                          		 </div>
+                        	</div>
+	
+					 <div class="col-md-3">
+					 <div class="form-group">
+					 <b><label for="paymentmode">Quantity</label></b>
+                     <select class="form-control" id="Quantity" name="Quantity">
+                      <!--<option value="0">select quantity</option>  -->
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+            
+                      </select>
+  
+   
+	</div>
+	 </div>
+	 <div class="col-md-1">
+	  
+	  <!--<button class="add material-icons" id="adds" style="margin-top:34px">add</button>-->
+	  <input type="button" class="add material-icons" style="margin-top:34px" value="add">
+
+	 </div>
+         </div>    
+		 
+			
+ <div class="row second-row">
+<div class="col-md-4" >
+<div id="pattern1" style="display:none">
+<div class="form-group">
+
+<b><label for="paymentmode">pattern</label></b>
+<select class="form-control" name="tyrepattern" id="tyrepattern1">
                                 <option value="non">select tyrepattern</option>
                                     <c:forEach var="tyrepatn" items="${tyrepattern}">
-                  <option value="${tyrepatn.tyrepattern}">${tyrepatn.tyrepattern}</option>
+                  <option value="${tyrepatn.pattern}">${tyrepatn.pattern}</option>
                         </c:forEach>
                                 </select>
 
-
-                            </div>
-                        </div>
-                    </div>
-                     <div class="col-md-4">
-                                        <div class="form-group">
-                                            <div class="form-group">
-                                                <b><label for="tyresize">Size</label></b>
-                                                
-                                                <select class="form-control" class="form-control chosen-select"  name="tyresize"  id="tyresize" >
+</div>
+</div>
+</div>
+<div class="col-md-4">
+<div id="size1" style="display:none">
+<div class="form-group">
+<b><label for="paymentmode">size</label></b>
+<select class="form-control" class="form-control chosen-select"  name="tyre_size"  id="tyresize1" >
                                                <option value="">select tyresize</option>
                                                
                                                 </select>
-                                              
-                         
-                                            </div>
-                                        </div>
-                                    </div>
-                     
-                                    
-                    
-                    <div class="col-md-4">
-                        <div class="form-group">
-                           
-                            <input type="hidden" class="form-control" id="tyreprice" name="basicPrice" placeholder=" Enter Price" onChange="return calculation()" >
-                        </div>
-                    </div>
-                   </div>
 
+</div>
+</div>
+	<div class="col-md-4">
+	<input type="hidden" class="form-control" id="tyreprice" name="basicPrice" placeholder=" Enter Price" onChange="return calculation()" >
+	<input type="hidden" class="form-control" id="tyreprice1" name="basicPrice" placeholder=" Enter Price" onChange="return calculation()" >
+	</div>
+	</div>			
+                 
+ 
+                   </div>
                 </div>
                  </div>
                 </div>
                 </div>
-
   <div class="card">
-      <div class="card-header">
-        <a class="collapsed card-link" data-toggle="collapse" href="#collapsefore">
+      <div class="card-header" class="collapsed card-link" data-toggle="collapse" href="#collapsefore" style="cursor: pointer;">
+       
          <font size="5px" color="white">
-         Payment  Info
+         Payment  Info  <i class='fas fa-copy' style='font-size:120%;margin-left:95%;margin-top:-3%'></i>
         </font>
-        </a>
+      
       </div>
-      <div id="collapsefore" class="collapse" data-parent="#accordion">
+      <div id="collapsefore" class="collapse" data-parent="#accordion" style="cursor: pointer;">
         <div class="card-body">
          
    <div class="cardpanel">
@@ -400,12 +512,15 @@ width:100%
                         <div class="form-group">
                             <div class="form-group">
                           
-                                <input type="hidden" class="form-control" id="aftergst" readonly >
-
+                                <input type="hidden" class="form-control" id="aftergst"  readonly >
+								<input type="hidden" class="form-control" id="beforgst"  readonly >
                             </div>
                              
                         <div class="form-group">
                                 <input type="hidden" class="form-control" id="totalgst" name="total_gst" readonly >
+                                <input type="hidden" class="form-control" id="cgst" name="total_cgst" readonly >
+                                <input type="hidden" class="form-control" id="sgst" name="total_sgst" readonly >
+                                <input type="hidden" class="form-control" id="taxble" name="taxble_amount" readonly >
                         </div>
                         </div>
                     </div> 
@@ -460,7 +575,7 @@ width:100%
                   
                    <div class="col-md-3">
                    <div class="form-group">
-                            <b><label for="discountamount">Discount Amount</label></b>
+                            <b><label for="discountamount">Discount</label></b>
                             <input type="text" class="form-control" id="discountshow" name="discount" placeholder="Discount Amount" value="${update.discount }" readonly >
                         </div>
                     </div>
@@ -468,12 +583,12 @@ width:100%
 					<div class="col-md-3">
                         <div class="form-group">
                             <div class="form-group">
-                                <b><label for="paymentmode">Mode of Payment</label></b>
+                                <b><label for="paymentmode">Payment</label></b>
                                 <select class="form-control" name="payment_mode">
                                     <option value="Cash">Cash</option>
-                                    <option value="Paytm">Paytm</option>
                                     <option value="UPI">UPI</option>
-                                     <option value="Credit_Card">Credit Card</option>
+                                    <option value="Paytm">Paytm</option>
+                                    <option value="CreditCard">Credit Card</option>
                                 </select>
                             </div>
                         </div>
@@ -489,10 +604,340 @@ width:100%
   </div>
 </div>
   <br>
+  <script>
+  var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth()+1;
+	var yyyy = today.getFullYear();
 
-<script type="Text/JavaScript">
-   
+	if(dd<10) {
+	    dd = '0'+dd
+	} 
+
+	if(mm<10) {
+	    mm = '0'+mm
+	} 
+	today =  yyyy+'-'+ mm + '-' + dd ;
+	document.getElementById('saledate').value  = today;
+	
+	
+</script>
+  <script>
+                    /* get tyresize when tyrepattern is select  */
+                    
+                    $(function(){
+                    	$('#tyrepattern').on('change', function(){
+                    	
+                    		var tyrepattern = $('#tyrepattern').val();
+                    	
+                    		 $.ajax({
+                    	            type: "GET",
+                    	            contentType: "application/json; charset=utf-8",
+                    	         	  datatype: "json",
+                    	            url: "${pageContext.request.contextPath}/tyresizes/"+tyrepattern+"",
+                    	            success: function (response) {
+                    	                 var tyresize="";
+                    	                 
+                    	                 if(tyrepattern=='non'){
+                    	                	 tyresize+="<option value='"+response[i]+"'>Select TyreSize</option>"
+                    	                	 $('#tyresize').empty();
+                    	                	 $('#tyresize').html(tyresize);
+                    	                	
+                    	                 }
+                    	                 else{
+                    	                 tyresize+="<option value='"+response[i]+"'>Select TyreSize</option>"
+                    	                  for(var i=0;i<response.length;i++){ 
+                    	                	 
+                    	                	 tyresize+="<option value='"+response[i]+"'>"+response[i]+"</option>"
+                    	                	 $('#tyresize').html(tyresize);
+                    	                }
+                    	                 }
+                    	                 
+                    	            },
+                    	            error: function(e){
+                    	            	
+                    	            
+                    	            	console.log("error");
+                    	            }
+                    		 });
+                            
+
+                    	})
+                    	})
+                    	
+                    	
+                    	
+                    	
+                    	 $(function(){
+                    	$('#tyresize').on('change', function(){
+                    		
+                    		/* var  tyresize = $('#tyresize option:selected').text(); 
+                    		var tyrepattern =  $('#tyrepattern option:selected').val(); */
+                    		
+                    		var tyrepattern = $('#tyrepattern').val();
+                    		var  tyresize = $('#tyresize').val(); 
+                    		var tyreprice1=$('#tyreprice1').val();
+                    	
+                    		 $.ajax({
+                    			 
+                    	            type: "GET",
+                    	            contentType: "application/json; charset=utf-8",
+                    	         	  datatype: "json",
+                    	            url: "${pageContext.request.contextPath}/tyreprice/"+tyrepattern+","+tyresize+"",
+                    	            
+                    	            success: function (result) {
+                    	            
+                    	             
+                    	                 $('#tyreprice').val(result);
+                    	            
+                    	                 var basicprice=0.0;
+                    	                 if(tyreprice1=="" && result!=""){
+                    	                	 basicprice=parseFloat(result)+tyreprice1;
+                    	                 }
+                    	                 else if(tyreprice1!="" && result==""){
+                    	                	  basicprice=result+parseFloat(tyreprice1); 
+                    	                 }
+                    	                 else{
+                    	                	 basicprice=parseFloat(result)+parseFloat(tyreprice1);
+                    	                 }
+                    	                 var cgst = basicprice*14/100;
+                     	            	var sgst =basicprice*14/100;
+                     	            	var gst=sgst+cgst;
+                    	            	
+                    	            
+                    	            	var totalprice=parseFloat(basicprice)+parseFloat(gst);
+                    	            	 var aftergst = Math.round(totalprice*100)/100;
+                    	            	 $('#discountshow').val(null);
+                       	            	$("#c1").prop("checked", false);
+                       	            	$("#c2").prop("checked", false);
+                       	            	$("#c3").prop("checked", false);
+                       	            	$("#c4").prop("checked", false);
+                       	            	$("#c5").prop("checked", false);
+                    	            
+                     	            	$('#beforgst').val(basicprice);
+                     	            	$('#totalprice').val(aftergst);
+                     	            	$('#aftergst').val(aftergst);
+                     	           		$('#totalgst').val(Math.round(gst*100)/100);
+                   	            		$('#sgst').val(Math.round(sgst*100)/100);
+                   	            		$('#cgst').val(Math.round(cgst*100)/100);
+                       	            	$('#taxble').val(basicprice);
+                    	            
+                     	          
+                    	            },
+                    	            error: function(e){
+                    	            
+                    	            	console.log("error");
+                    	            }
+                    		 });
+                            
+
+                    	})
+                    	})
+                    
+                    
+                    	$(function(){
+                        	$('#tyrepattern1').on('change', function(){
+                        		
+                        		var tyrepattern = $('#tyrepattern1').val();
+                        	
+                        		 $.ajax({
+                        	            type: "GET",
+                        	            contentType: "application/json; charset=utf-8",
+                        	         	  datatype: "json",
+                        	            url: "${pageContext.request.contextPath}/tyresizes/"+tyrepattern+"",
+                        	            success: function (response) {
+                        	                 var tyresize="";
+                        	                 
+                        	                 if(tyrepattern=='non'){
+                        	                	 tyresize+="<option value='"+response[i]+"'>Select TyreSize</option>"
+                        	                	 $('#tyresize1').empty();
+                        	                	
+                        	                	 $('#tyresize1').html(tyresize);
+                        	                	 $('#tyresize1').html(tyresize);
+                        	                	
+                        	                 }
+                        	                 else{
+                        	                 tyresize+="<option value='"+response[i]+"'>Select TyreSize</option>"
+                        	                  for(var i=0;i<response.length;i++){ 
+                        	                	 
+                        	                	 tyresize+="<option value='"+response[i]+"'>"+response[i]+"</option>"
+                        	                	 $('#tyresize1').html(tyresize);
+                        	                }
+                        	                 }
+                        	                 
+                        	            },
+                        	            error: function(e){
+                        	            
+                        	            	console.log("error");
+                        	            }
+                        		 });
+                                
+
+                        	})
+                        	})
+                        	
+                        	//get tyreprice when tyrepattern and tyreprice is selected 
+                        	
+                        	 $(function(){
+                        	$('#tyresize1').on('change', function(){
+                        		
+                        		/* var  tyresize = $('#tyresize1 option:selected').text(); 
+                        		var tyrepattern =  $('#tyrepattern1 option:selected').val(); */
+                        		
+                        		var tyrepattern = $('#tyrepattern1').val();
+                        		var  tyresize = $('#tyresize1').val(); 
+                        		var tyreprice=$('#tyreprice').val();
+                        		
+                        		 $.ajax({
+                        			 
+                        	            type: "GET",
+                        	            contentType: "application/json; charset=utf-8",
+                        	         	  datatype: "json",
+                        	            url: "${pageContext.request.contextPath}/tyreprice/"+tyrepattern+","+tyresize+"",
+                        	            
+                        	            success: function (result) {
+                        	            	
+                        	             
+                        	                 $('#tyreprice1').val(result);
+                        	                
+                        	            	var totalbaseprice=0.0;
+                        	            	if(tyreprice=="" && result!=""){
+                        	            	totalbaseprice=parseFloat(result)+ tyreprice;
+                        	            	}
+                        	            	else if(tyreprice!="" && result==""){
+                        	            		totalbaseprice=result+ parseFloat(tyreprice);
+                        	            	}
+                        	            	else{
+                        	            		totalbaseprice=parseFloat(result)+ parseFloat(tyreprice);
+                        	            	}
+                        	            	var cgst = totalbaseprice*14/100;
+                        	            	var sgst = totalbaseprice*14/100;
+                        	            	var gst=sgst+cgst;
+                        	            	debugger;
+                        	            	var totalprice=parseFloat(totalbaseprice)+parseFloat(gst);
+                        	            	 var tot2 = Math.round(totalprice*100)/100;
+                        	            	 debugger;
+                        	            	 $('#discountshow').val(null);
+                           	            	$("#c1").prop("checked", false);
+                           	            	$("#c2").prop("checked", false);
+                           	            	$("#c3").prop("checked", false);
+                           	            	$("#c4").prop("checked", false);
+                           	            	$("#c5").prop("checked", false);
+                        	            
+                         	            	$('#beforgst').val(totalbaseprice);
+                         	            	$('#totalprice').val(tot2);
+                         	            	$('#aftergst').val(tot2);
+                         	            	$('#totalgst').val(Math.round(gst*100)/100);
+                           	            	$('#sgst').val(Math.round(sgst*100)/100);
+                           	            	$('#cgst').val(Math.round(cgst*100)/100);
+                           	            	$('#taxble').val(totalbaseprice);
+                        	            
+                        	            	
+                        	            },
+                        	            error: function(e){
+                        	            	
+                        	            	
+                        	            	console.log("error");
+                        	            }
+                        		 });
+                        	})
+                        	})
+                    //tyreprice entry 
+                    $(function(){
+                    	$('#Quantity').on('change', function(){
+                    		
+                    		var  tyreprice = $('#tyreprice').val(); 
+                    		var  tyreprice1 = $('#tyreprice1').val();
+                    		var Quantity=$('#Quantity').val();
+                    		
+                    		if(Quantity==2){
+								
+              	            	var price=tyreprice*2;
+              	
+              	            	var cgst = price*14/100;
+            	            	var sgst = price*14/100;
+            	            	var gst=parseFloat(cgst)+parseFloat(sgst);
+            	        
+              	            	var totalprice=parseFloat(price)+parseFloat(gst);
+              	            	 var tot = Math.round(totalprice*100)/100;
+              	            	$('#discountshow').val(null);
+              	            	$("#c1").prop("checked", false);
+              	            	$("#c2").prop("checked", false);
+              	            	$("#c3").prop("checked", false);
+              	            	$("#c4").prop("checked", false);
+              	            	$("#c5").prop("checked", false);
+               	            	$('#aftergst').val(tot);
+               	            	$('#totalprice').val(tot);
+               	            	$('#beforgst').val(price);
+               	            	$('#totalgst').val(Math.round(gst*100)/100);
+               	            	$('#sgst').val(Math.round(sgst*100)/100);
+               	            	$('#cgst').val(Math.round(cgst*100)/100);
+               	            	$('#taxble').val(price);
+               	            	$('#tyrepattern1').val(null);
+               	            	$('#tyresize1').val(null);
+               	            	$('#tyreprice1').val(null);
+              	            	
+                    		}
+                    		else if(Quantity==1){
+                    			
+              	            	var price=tyreprice*1;
+              	            	var cgst = price*14/100;
+            	            	var sgst = price*14/100;
+            	            	var gst=sgst+cgst;
+              	            
+              	            	var totalprice=price+gst;
+              	            	 var tot1 = Math.round(totalprice*100)/100;
+              	            	$('#discountshow').val(null);
+              	            	$("#c1").prop("checked", false);
+              	            	$("#c2").prop("checked", false);
+              	            	$("#c3").prop("checked", false);
+              	            	$("#c4").prop("checked", false);
+              	            	$("#c5").prop("checked", false);
+              	            	
+               	            	$('#aftergst').val(tot1);
+               	            	$('#beforgst').val(price);
+               	            	$('#totalprice').val(tot1);
+               	            	$('#totalgst').val(Math.round(gst*100)/100);
+               	            	$('#sgst').val(Math.round(sgst*100)/100);
+               	            	$('#cgst').val(Math.round(cgst*100)/100);
+               	            	$('#taxble').val(price);
+               	            	$('#tyrepattern1').val(null);
+               	            	$('#tyresize1').val(null);
+               	            	$('#tyreprice1').val(null);
+                    		}
+                    	})
+                    	})
+                    
+                  
+                    	
+</script><div class="row">
+<div class="col-md-2"></div>
+<font color='red'> <span id="error"> </span> </font>
+</div>
+           <center>   <input type="submit" class="btn btn-danger" value="submit"></center>
+     
+</form>
+  
+                   
+
+</div>
+ 
+		<!-- .content-wrapper -->
+	</main> <!-- .cd-main-content -->
+
+
+<script src="js\jquery.menu-aim.js"></script>
+<script src="js\main.js"></script> <!-- Resource jQuery -->
+<script>
+/* Invoice Validation  */
 function  checkinvoice(){ 
+	if((document.getElementById('userId').value==""))
+	 {
+	  document.getElementById('error').innerHTML = "Please Choose UserName and Id";
+	  invoice.userId.focus();
+	  return(false);
+	 }
+	
 	if((document.getElementById('customerName').value==""))
 	 {
 	  document.getElementById('error').innerHTML = "Please Enter Customer Name";
@@ -579,14 +1024,23 @@ function  checkinvoice(){
 		  invoice.vehiclekm.focus();
 		  return(false);
 		 }
-	if((document.getElementById('tyrepattern').value==""))
+	if((document.getElementById('tyrepattern').value=="non"))
 	 {
+		
 		  document.getElementById('error').innerHTML = "please choose tyre Pattern";
-		  invoice.tyrepattern.focus();
+		
 		  return(false);
-		 }
+	}
+	if((document.getElementById('tyresize').value=="undefined"))
+	 {
+		
+		  document.getElementById('error').innerHTML = "please choose tyre size";
+		 
+		  return(false);
+	}
 	if((document.getElementById('totalprice').value<=0.0))
 	 {
+	
 		  document.getElementById('error').innerHTML = "Please choose Tyresize";
 		  invoice.vehiclekm.focus();
 		  return(false);
@@ -594,7 +1048,7 @@ function  checkinvoice(){
 	if((document.getElementById('saledate').value==""))
 	 {
 		  document.getElementById('error').innerHTML = "Please Choose Date";
-		  invoice.saledate.focus();
+		 invoice.saledate.focus();
 		  return(false);
 		 }
 	else 
@@ -602,177 +1056,41 @@ function  checkinvoice(){
 		 return(true);
 	 }
 }
-	/* <!-- For current date--> */
-	var today = new Date();
-	var dd = today.getDate();
-	var mm = today.getMonth()+1;
-	var yyyy = today.getFullYear();
 
-	if(dd<10) {
-	    dd = '0'+dd
-	} 
-
-	if(mm<10) {
-	    mm = '0'+mm
-	} 
-	today =  yyyy+'-'+ mm + '-' + dd ;
-	document.getElementById('saledate').value  = today;
-	
-  function maxLengthCheck(object) {
-    if (object.value.length > object.max.length)
-      object.value = object.value.slice(0, object.max.length)
-  }
-    
-  function isNumeric (evt) {
-    var theEvent = evt || window.event;
-    var key = theEvent.keyCode || theEvent.which;
-    key = String.fromCharCode (key);
-    var regex = /[0-9]|\./;
-    if ( !regex.test(key) ) {
-      theEvent.returnValue = false;
-      if(theEvent.preventDefault) theEvent.preventDefault();
-    }
-  }
   
+  //calculate discount without gst in basic price 
   function total() {
-	  var input = document.querySelectorAll("input[name='product']:checked")  
-	  document.getElementById('totalprice').value = document.getElementById('aftergst').value -
-	  (input.length * (input.length =50))
-	
-	 
-	document.getElementById('discountshow').value = document.getElementById('aftergst').value - document.getElementById('totalprice').value;
+	  var input = document.querySelectorAll("input[name='product']:checked") 
+	  var quantity=document.getElementById('Quantity').value;
+	  var tyreprice=document.getElementById('tyreprice').value;
+	  var tyreprice1=document.getElementById('tyreprice1').value;
 	  
+	  if(quantity==2){
+	  var taxble_amount= document.getElementById('beforgst').value -
+	  ((input.length * (input.length =50*2))/1.28);
+	  	document.getElementById('totalprice').value=total_gst(taxble_amount);
+	 
+	  	var descount = document.getElementById('aftergst').value - document.getElementById('totalprice').value;
+	  	document.getElementById('discountshow').value=parseInt(descount);
+	  }
+	  else if(quantity==1 && tyreprice1 !=""){
+		  var taxble_amount= document.getElementById('beforgst').value -
+		  ((input.length * (input.length =50*2))/1.28);
+			document.getElementById('totalprice').value=total_gst(taxble_amount);
+			
+			var descount = document.getElementById('aftergst').value - document.getElementById('totalprice').value;
+		  	document.getElementById('discountshow').value=parseInt(descount);
+	  }
+	  else{
+		  var taxble_amount= document.getElementById('beforgst').value -
+		  ((input.length * (input.length =50))/1.28);
+		  var total_price=total_gst(taxble_amount);
+		 
+		  document.getElementById('totalprice').value=total_gst(taxble_amount);
+		  var descount = document.getElementById('aftergst').value - document.getElementById('totalprice').value;
+		  	document.getElementById('discountshow').value=parseInt(descount);
+	  }
 	}
-  </script>
-  
-  
-  <script>
-  
-  function isNumber(evt) {
-	    evt = (evt) ? evt : window.event;
-	    var charCode = (evt.which) ? evt.which : evt.keyCode;
-	    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-	        return false;
-	    } 
-	    return true;
-	}
-  
 </script>
-
-
-
-
-  <script>
-                    /* get tyresize when tyrepattern is select  */
-                    
-                    $(function(){
-                    	$('#tyrepattern').on('click', function(){
-                    		debugger;
-                    		var tyrepattern = $('#tyrepattern').val();
-                    		debugger;
-                    		 $.ajax({
-                    	            type: "GET",
-                    	            contentType: "application/json; charset=utf-8",
-                    	         	  datatype: "json",
-                    	            url: "${pageContext.request.contextPath}/tyresize/"+tyrepattern+"",
-                    	            success: function (response) {
-                    	                 var tyresize="";
-                    	                 
-                    	                 if(tyrepattern=='non'){
-                    	                	 tyresize+="<option value="+response[i]+">Select TyreSize</option>"
-                    	                	 $('#tyresize').empty();
-                    	                	 $('#tyresize').html(tyresize);
-                    	                	
-                    	                 }
-                    	                 else{
-                    	                 tyresize+="<option value="+response[i]+">Select TyreSize</option>"
-                    	                  for(var i=0;i<response.length;i++){ 
-                    	                	 
-                    	                	 tyresize+="<option value="+response[i]+">"+response[i]+"</option>"
-                    	                	 $('#tyresize').html(tyresize);
-                    	                }
-                    	                 }
-                    	            	debugger;      
-                    	            },
-                    	            error: function(e){
-                    	            	
-                    	            	debugger;
-                    	            	console.log("error");
-                    	            }
-                    		 });
-                            
-
-                    	})
-                    	})
-                    	
-                    	//get tyreprice when tyrepattern and tyreprice is selected 
-                    	
-                    	 $(function(){
-                    	$('#tyresize').on('click', function(){
-                    		debugger;
-                    		var  tyresize = $('#tyresize option:selected').text(); 
-                    		var tyrepattern =  $('#tyrepattern option:selected').val();
-                    		
-                    		debugger;
-                    		 $.ajax({
-                    			 
-                    	            type: "GET",
-                    	            contentType: "application/json; charset=utf-8",
-                    	         	  datatype: "json",
-                    	            url: "${pageContext.request.contextPath}/tyreprice/"+tyrepattern+","+tyresize+"",
-                    	            
-                    	            success: function (result) {
-                    	            	debugger;
-                    	             
-                    	                 $('#tyreprice').val(result);
-                    	            	debugger;    
-                    	            	
-                    	            	var sst=result*14/100;
-                    	            	var cst=result*14/100;
-                    	            	
-                    	            	debugger;
-                    	            	var gst=sst+cst;
-                    	            	
-                    	            	debugger;
-                    	            	var totalprice=result+gst;
-                    	            	 var tot = Math.round(totalprice*100)/100;
-                    	            	 
-                    	            	$('#totalgst').val(gst);
-                     	            	$('#aftergst').val(tot);
-                     	            	$('#totalprice').val(tot);
-                    	            
-                    	            	debugger;
-                    	            },
-                    	            error: function(e){
-                    	            	
-                    	            	debugger;
-                    	            	console.log("error");
-                    	            }
-                    		 });
-                            
-
-                    	})
-                    	})
-                    
-                  
-                    	
-</script><div class="row">
-<div class="col-md-2"></div>
-<font color='red'> <span id="error"> </span> </font>
-</div>
-           <center>   <input type="submit" class="btn btn-primary" value="SUBMIT"></center>
-     
-</form>
-  
-                   
-
-</div>
- 
-		<!-- .content-wrapper -->
-	</main> <!-- .cd-main-content -->
-
-
-<script src="js\jquery.menu-aim.js"></script>
-<script src="js\main.js"></script> <!-- Resource jQuery -->
 </body>
 </html>

@@ -13,27 +13,38 @@ public class PosItemCompositeKey implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 
-	private String pos_table;
+	private String pos;
 	
-	private TyreCompositeKey tyre;
+	private String  tyrepattern;
+	
+	private String  tyresize;
 
-
-
-	public String getPos_table() {
-		return pos_table;
+	public String getPos() {
+		return pos;
 	}
 
-	public TyreCompositeKey getTyre() {
-		return tyre;
+	public void setPos(String pos) {
+		this.pos = pos;
 	}
 
-	public void setTyre(TyreCompositeKey tyre) {
-		this.tyre = tyre;
+	public String getTyrepattern() {
+		return tyrepattern;
 	}
 
-	public void setPos_table(String pos_table) {
-		this.pos_table = pos_table;
+	public void setTyrepattern(String tyrepattern) {
+		this.tyrepattern = tyrepattern;
 	}
+
+	public String getTyresize() {
+		return tyresize;
+	}
+
+	public void setTyresize(String tyresize) {
+		this.tyresize = tyresize;
+	}
+
+
+
 
 
 }

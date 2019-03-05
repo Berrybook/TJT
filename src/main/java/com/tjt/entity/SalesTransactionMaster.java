@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class SalesTransactionMaster {
 
 @Id
-@GeneratedValue(strategy=GenerationType.AUTO)
+@GeneratedValue(strategy=GenerationType.IDENTITY)
 @OnDelete(action = OnDeleteAction.CASCADE)
 private long transactionid;	
 @ManyToOne(fetch = FetchType.LAZY, optional = false)

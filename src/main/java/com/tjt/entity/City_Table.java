@@ -21,6 +21,8 @@ public class City_Table {
 	private String gstaddres;
 	@Column(name="descrption")
 	private String descrption;
+	@Column(name="state")
+	private String state;
 	public String getCityname() {
 		return cityname;
 	}
@@ -38,6 +40,12 @@ public class City_Table {
 	}
 	public void setGstaddres(String gstaddres) {
 		this.gstaddres = gstaddres;
+	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
 	}
 	public String getDescrption() {
 		return descrption;
