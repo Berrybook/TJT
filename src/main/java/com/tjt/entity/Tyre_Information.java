@@ -6,8 +6,6 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 @Entity @IdClass(TyreCompositeKey.class)
 @Table
 public class Tyre_Information {
@@ -15,12 +13,10 @@ public class Tyre_Information {
 	
 		@Id
 		@Column(name="tyrepattern")
-		@OnDelete(action = OnDeleteAction.CASCADE)
 		private String tyrepattern;
 		
 		@Id
 		@Column(name="tyresize")
-		@OnDelete(action = OnDeleteAction.CASCADE)
 		private String tyresize;
 		
 

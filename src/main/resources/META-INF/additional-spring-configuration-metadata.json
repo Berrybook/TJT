@@ -118,5 +118,30 @@
     "name": "auth",
     "type": "java.lang.String",
     "description": "A description for 'auth'"
+  },
+  {
+    "name": "mail.starttls",
+    "type": "java.lang.String",
+    "description": "A description for 'mail.starttls'"
+  },
+  {
+    "name": "mail.auth",
+    "type": "java.lang.String",
+    "description": "A description for 'mail.auth'"
+  },
+  {
+    "name": "mail.host",
+    "type": "java.lang.String",
+    "description": "A description for 'mail.host'"
+  },
+  {
+    "name": "mail.port",
+    "type": "java.lang.String",
+    "description": "A description for 'mail.port'"
+  },
+  {
+    "name": "gmai.password",
+    "type": "java.lang.String",
+    "description": "A description for 'gmai.password'"
   }
 ]}

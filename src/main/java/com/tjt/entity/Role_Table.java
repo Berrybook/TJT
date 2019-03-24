@@ -5,15 +5,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name="role_master")
 public class Role_Table {
 	@Id
 	@Column(name="role")
-	@OnDelete(action = OnDeleteAction.CASCADE)
 	private String role;
 	@Column(name="description")
 	private String Description;

@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,17 +33,12 @@ public class POSStockController {
 	@RequestMapping(value="stocklink",method=RequestMethod.GET)
 	public String stockLink(HttpServletRequest request) {
 		
-		HttpSession session=null;
 		String responsePage="";
 		
-		//create Session object
-		session=request.getSession(false);
-		String admin=(String) session.getAttribute("admin");
+	
+		
 		try{
-		//test the session is equals to admin or null if admin null then it goes to catch block
-		if(admin.equals("admin")){
-			request.setAttribute("positemstock","positemstock");
-		}
+		
 		//RETURN TYREREG JSP PAGES 
 		responsePage= "stockLink";
 		}
@@ -59,15 +53,9 @@ public class POSStockController {
 	@RequestMapping(value="posstockquantity",method=RequestMethod.GET)
 	public String posItemCreate(HttpServletRequest request){
 		String responsePage="";
-		HttpSession session=null;
-		//create Session object
-		session=request.getSession(false);
-		String admin=(String) session.getAttribute("admin");
+		
 		try{
-		//test the session is equals to admin or null if admin null then it goes to catch block
-		if(admin.equals("admin")){
-			request.setAttribute("positemstock","positemstock");
-		}
+		
 		//RETURN TYREREG JSP PAGES 
 		responsePage = "posstock";
 		}
@@ -112,17 +100,12 @@ public class POSStockController {
 		@RequestMapping(value="positemassign",method=RequestMethod.GET)
 		public String posItemAssign(HttpServletRequest request){
 		
-			HttpSession session=null;
+		
 			String responsePage="";
 			
-			//create Session object
-			session=request.getSession(false);
-			String admin=(String) session.getAttribute("admin");
+			
 			try{
-			//test the session is equals to admin or null if admin null then it goes to catch block
-			if(admin.equals("admin")){
-				request.setAttribute("positemstock","positemstock");
-			}
+			
 			//RETURN TYREREG JSP PAGES 
 			responsePage= "positemassign";
 			}

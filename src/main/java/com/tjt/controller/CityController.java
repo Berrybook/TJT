@@ -8,13 +8,13 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+
 
 import com.tjt.dto.City_DTO;
 import com.tjt.service.CityService;
@@ -87,21 +87,22 @@ public class CityController {
 			return citydto;
 			
 		}
-		
-		@ResponseBody
-		@RequestMapping(value="/deletecity/{cityname}",method=RequestMethod.DELETE)
-		public String deleteCity(@PathVariable("cityname") String cityname,HttpServletRequest request) {
-			
-			//String cityname = request.getParameter("cityname");
+		@RequestMapping(value="/deletecity",method=RequestMethod.GET)
+		public String deleteCity(HttpServletRequest request,Map<String,Object> map) throws Exception {
+			List<City_DTO> citydto = null;
+			String cityname = request.getParameter("cityname");
 			try {
 				cityservice.deleteCity(cityname);
-				request.setAttribute("delete mode", "City Deleted Successfully");
-				return "City Deleted Successfully";
+				request.setAttribute("delete_mode", "City Deleted Successfully");
+				citydto = cityservice.listcity();
+				map.put("allCity", citydto);
+				return "cityReg";
 			}
 			catch(Exception e){
-				
-				request.setAttribute("delete mode", "City Deleted Successfully");
-				return "City Deleted Successfully";
+				request.setAttribute("delete_mode", "can not be deleted as record related this city already exists");
+				citydto = cityservice.listcity();
+				map.put("allCity", citydto);
+				return "cityReg";
 						
 			}
 		}

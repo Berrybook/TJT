@@ -28,6 +28,7 @@ import com.tjt.dto.InvoiceDTO;
 import com.tjt.dto.Invoice_DTO;
 import com.tjt.dto.Invoice_Items_Dto;
 import com.tjt.dto.Invoice_Vehicle_DTO;
+import com.tjt.dto.MailConnectionproperties;
 import com.tjt.dto.Pos_Item_Price_Dto_Responce;
 import com.tjt.dto.UserDTO;
 import com.tjt.service.InvoiceGenerationService;
@@ -43,10 +44,23 @@ public class KisokInvoiceController {
 	@Autowired
 	private InvoiceGenerationService service;
 	
-	//@Value("${gmail.username}")
-	private String username=null;
-	//@Value("${gmail.password}")
-	private String password=null;
+	@Value("${mail.username}")
+	private String usernames;
+	
+	@Value("${mail.password}")
+	private String mailpassword;
+	
+	@Value("${mail.host}")
+	private String host;
+	
+	@Value("${mail.port}")
+	private String port;
+	
+	@Value("${mail.starttls}")
+	private String starttls;
+	
+	@Value("${mail.auth}")
+	private String auth;
 	
 	
 	//landing page form 
@@ -377,9 +391,18 @@ public class KisokInvoiceController {
 		 	HttpSession session=null;
 		 	String responsePage="";
 		 	InvoiceDTO invoiceDTO=null;
+		 	MailConnectionproperties properties=null;
 		 	GenerateInvoicePdfReport invoicePdfReport=null;
 		 	ByteArrayOutputStream outputStream = null;
 		 	byte[] bytes=null,warentybytes=null;
+		 	properties=new MailConnectionproperties();
+		 	properties.setAuth(auth);
+		 	properties.setHost(host);
+		 	properties.setMailpassword(mailpassword);
+		 	properties.setPort(port);
+		 	properties.setStarttls(starttls);
+		 	properties.setUsername(usernames);
+		 	
 		 	MailService mailService=new MailService();
 		 	
 		 	//create Session object
@@ -407,7 +430,7 @@ public class KisokInvoiceController {
 			try{
 			//test the session is equals to admin or null if admin null then it goes to catch block
 		
-				mailService.sendmail(request,listtattachment,username,password);
+				mailService.sendmail(request,listtattachment, properties);
 	
 				 request.setAttribute("mail","Sent mail Sucessfully");
 			responsePage= "welcomeTjTyre";

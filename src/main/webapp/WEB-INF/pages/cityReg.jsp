@@ -73,6 +73,7 @@
             <div class="content-wrapper">
             <div class="container">
             <c:if test="${not empty city_registration}"><script>popup('${city_registration}') </script></c:if>
+			<c:if test="${not empty delete_mode}"><script>popup('${delete_mode}') </script></c:if>
 			 <form action="addcity" method="POST"  name="CITYregistration" enctype="multipart/form-data"  onSubmit="return cityvalidateForm()"">
 	            
                
@@ -150,7 +151,7 @@
                                 <th>State Name</th>
 								<th>GST Number</th>
                                 <th>GST Address</th>
-								
+								<th>Delete</th>
                             </tr>
 							 </thead>
 							 <tbody>
@@ -160,7 +161,8 @@
 							<td>${city.state}</td>
 							<td>${city.gstno}</td>
 							<td>${city.gstaddres}</td>
-							<td><input type="submit" value="Done" class="btn btn-danger delete-row"></td>
+							<td><a href="deletecity?cityname=${city.cityname}"><i class="fa fa-trash w3-large  delete-row"></i></a></td>
+							
 							</tr>
 							</c:forEach>
 							

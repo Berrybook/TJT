@@ -24,16 +24,9 @@ public class SalesTransactionController {
 		//TjTyre invoiceGenerate form 
 		@RequestMapping(value="/saletransaction",method=RequestMethod.GET)
 		public String SalesTransactionForm(HttpServletRequest request){
-			HttpSession session=null;
-			
-			//create Session object
-			session=request.getSession(false);
-			String possession=(String) session.getAttribute("possession");
+		
 			try{
-			//test the session is equals to admin or null if admin null then it goes to catch block
-			if(possession.equals("possession")){
-				request.setAttribute("mode","MODE_INVOICE");
-			}
+			
 			 return "SalesTransaction";
 			}
 			catch(Exception e){

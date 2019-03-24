@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,16 +27,9 @@ public class ReportController {
 	@RequestMapping(value="/Salereport",method=RequestMethod.GET)
 	public String show(HttpServletRequest request){
 		String responsePage="";
-		HttpSession session=null;
 		
-		//create Session object
-		session=request.getSession(false);
-		String admin=(String) session.getAttribute("admin");
 		try{
-		//test the session is equals to admin or null if admin null then it goes to catch block
-		if(admin.equals("admin")){
-			request.setAttribute("REPORT", "REPORT_PAGE");
-		}
+		
 		//RETURN report link JSP PAGES 
 		responsePage= "reportmain";
 		}
@@ -52,16 +45,10 @@ public class ReportController {
 	public String salereport(HttpServletRequest request){
 		
 		String responsePage="";
-		HttpSession session=null;
-		
-		//create Session object
-		session=request.getSession(false);
-		String admin=(String) session.getAttribute("admin");
+	
+	
 		try{
-		//test the session is equals to admin or null if admin null then it goes to catch block
-		if(admin.equals("admin")){
-			request.setAttribute("REPORT", "REPORT_PAGE");
-		}
+		
 		//RETURN report link JSP PAGES 
 		responsePage= "report";
 		}
@@ -108,28 +95,21 @@ public class ReportController {
 	public String  listofstock(Map<String,Object >map,HttpServletRequest request){
 		
 		String responsePage="";
-		HttpSession session=null;
+	
 		List<POS_Item_DTO> list=null;
 		
-		//create Session object
-		session=request.getSession(false);
-		String admin=(String) session.getAttribute("admin");
+		
 		try{
-		//test the session is equals to admin or null if admin null then it goes to catch block
-		if(admin.equals("admin")){
+		
 		request.setAttribute("REPORT","STOCK REPORT");
 		list= reportservice.getStockDetails();
 		map.put("listreport", list);
-		}
+	
 		//RETURN TYREREG JSP PAGES 
 		responsePage= "stockreport";
 		}
 		catch(Exception e){
-			request.setAttribute("SessionTimeOut", "Should enter Username and Password");
-			//RETURN LOGIN JSP PAGES 
-			if(admin==null){
-				responsePage= "login";
-			}
+			
 			request.setAttribute("REPORT", "SOME iNTERNAL PROBLEM ");
 			responsePage= "admin";
 		}

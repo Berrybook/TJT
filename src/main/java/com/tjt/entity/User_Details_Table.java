@@ -9,9 +9,6 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -23,7 +20,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
 public class User_Details_Table {
 	@Id
-	@OnDelete(action = OnDeleteAction.CASCADE)
 	@Column(name="userid" )
 	private String userid;
 	@Column(name="password" ,nullable=false)

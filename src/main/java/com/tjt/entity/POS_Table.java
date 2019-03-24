@@ -18,7 +18,6 @@ public class POS_Table {
 		
 		@Id
 		@Column(name="pos" )
-		@OnDelete(action = OnDeleteAction.CASCADE)
 		private String pos;
 		
 		@Column(name="POS_Name" )

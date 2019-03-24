@@ -17,16 +17,15 @@ import javax.mail.util.ByteArrayDataSource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-
-
 import com.tjt.dto.InvoiceDTO;
+import com.tjt.dto.MailConnectionproperties;
 
 public class MailService {
 	
 	
 	
 	 //attachment send in mail 
-		public  void sendmail(HttpServletRequest request ,List<byte[]> listbytes,String username,String password) throws Exception{
+		public  void sendmail(HttpServletRequest request ,List<byte[]> listbytes,MailConnectionproperties propertie) throws Exception{
 			HttpSession session=null;
 			InvoiceDTO invoiceDTO=null;
 			mailConnection mailconnection=null;
@@ -38,9 +37,9 @@ public class MailService {
 				mailid[1]=invoiceDTO.getUserMailId();
 			//connect mail 
 			mailconnection=new mailConnection(); 
-			Session mailSession=mailconnection.mailConnect(username, password);
+			Session mailSession=mailconnection.mailConnect( propertie);
 			Message msg=new MimeMessage(mailSession);
-			msg.setFrom(new InternetAddress(username,false));
+			msg.setFrom(new InternetAddress(propertie.getUsername(),false));
 			msg.addRecipients(Message.RecipientType.TO, InternetAddress.parse(mailid[0]));
 			msg.addRecipients(Message.RecipientType.BCC, InternetAddress.parse(mailid[1]));
 			msg.setSubject("TJTyre Invoice and Warrenty ");

@@ -376,6 +376,17 @@ public class InvoicegenerationServiceImpl  implements InvoiceGenerationService {
 		return listdto;
 	}
 
+
+	@Override
+	public InvoiceDTO InvoiceDetails(Long invoiceId) throws Exception {
+		Invoice invoice=null;
+		InvoiceDTO invoiceDTO=null;
+		invoice=invoiceDAO.getOne(invoiceId);
+		invoiceDTO=new InvoiceDTO();
+		BeanUtils.copyProperties(invoice, invoiceDTO);
+		return invoiceDTO;
+	}
+
 	
 
 

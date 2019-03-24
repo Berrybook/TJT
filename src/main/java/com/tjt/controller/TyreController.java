@@ -26,15 +26,12 @@ public class TyreController {
 	@RequestMapping(value="/tyrecreate",method=RequestMethod.GET)
 	public String tyreCreate(HttpServletRequest request,Map<String,Object> map){
 		
-		HttpSession session=null;
 		List<TyreInformationDTO> listDto=null;
 		String responsePage="";
-		//create Session object
-		session=request.getSession(false);
-		String admin=(String) session.getAttribute("admin");
+		
 		try{
 		//test the session is equals to admin or null if admin null then it goes to catch block
-		if(admin.equals("admin")){
+		
 		request.setAttribute("TYRE_HOME","TYRE_REG");
 		
 		listDto=tyreService.listTyre();				
@@ -42,7 +39,7 @@ public class TyreController {
 		map.put("listDto", listDto);
 		//RETURN TYREREG JSP PAGES 
 		responsePage= "tyreReg";
-		}
+
 		}
 		catch(Exception e){
 			request.setAttribute("SessionTimeOut", "Should enter Username and Password");
@@ -96,28 +93,22 @@ public class TyreController {
 		//create Session object
 		session=request.getSession(false);
 		
-		//GET VALUE FOR SESSION ATTRIBUTE 
-		String admin=(String) session.getAttribute("admin");
+	
 		
 		try{
-			//test the session is equals to admin or null if admin null then it goes to catch block
-			if(admin.equals("admin")){
+			
 				request.setAttribute("listtyre", "LISTTYRE");
 				//get all Tyre list 
 				listDto=tyreService.listTyre();				
 				//put listTyre into the map collection 
 				map.put("listDto", listDto);
 				session.setAttribute("listtyre", listDto);
-			}
+		
 			//return tyreReg JSP page 
 			responsePage= "listtyre";
 		}
 		catch(Exception e){
-			request.setAttribute("SessionTimeOut", "Should enter Username and Password");
-			if(admin==null){
-				//RETURN LOGIN JSP PAGES 
-				responsePage= "login";
-			}
+			
 			request.setAttribute("listtyre", listDto);
 			//RETURN TYREREG JSP PAGES 
 			responsePage= "listtyre";
@@ -129,19 +120,16 @@ public class TyreController {
 	//UPDATE TYRE UPDATE FORM
 	@RequestMapping(value="tyreupdate",method=RequestMethod.GET)
 	public String invoiceUpdate(Map<String ,Object> map,HttpServletRequest request ) throws Exception{
-		HttpSession session=null;
+	
 		TyreInformationDTO dto=null;
 		String tyrepattern=null;
 		String tyresize=null;
 		String responsePage="";
 
-		//create Session object
-		session=request.getSession(false);
-		//GET VALUE FOR SESSION ATTRIBUTE 
-		String admin=(String) session.getAttribute("admin");
+		
+		
 		try{
-			//test the session is equals to admin or null if admin null then it goes to catch block
-			if(admin.equals("admin")){
+			
 				//SET JSP PAGE REQUESTED VALUE IN IN TYREPATTREN
 				tyrepattern=request.getParameter("tyrepattern")	;
 				
@@ -156,17 +144,12 @@ public class TyreController {
 				 
 				 //PUT VALUE  IN MAP COLLECTION TO USE JSP PAGE 
 				 map.put("update",dto);
-			}
+		
 			//RETURN TYREREG JSP PAGES 
 			responsePage= "tyreReg";
 		}
 		catch(Exception e){
-			request.setAttribute("SessionTimeOut", "Should enter Username and Password");
-			//CHECK ADMIN IS NULL OR NOT 
-			if(admin==null){
-				//RETURN LOGIN JSP PAGES 
-				responsePage= "login";
-			}
+			
 			request.setAttribute("updatemode", "INTERNAL PROBLEM");
 			//RETURN ADMIN JSP PAGES 
 			responsePage= "admin";

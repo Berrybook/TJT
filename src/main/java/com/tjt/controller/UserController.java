@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,17 +36,15 @@ public class UserController {
 	@RequestMapping(value="/userregistration",method=RequestMethod.GET)
 	public String UserRegistration(HttpServletRequest request ,Map<String,Object> map){
 		
-		HttpSession session=null;
+		
 		List<UserDTO> listdto=null;
 		
-		//create Session object
-		session=request.getSession(false);
-		String admin=(String) session.getAttribute("admin");
+		
+		
 		try{
-		//test the session is equals to admin or null if admin null then it goes to catch block
-		if(admin.equals("admin")){
+		
 		request.setAttribute("userreg", "userreg");
-		}
+	
 		listdto=userService.listUser();
 		
 		map.put("listUser", listdto);

@@ -34,4 +34,9 @@ public interface InvoiceGenerationService {
 	
 	//invoice Creation
 	public InvoiceDTO invoiceCreation(Invoice_DTO invoiceDto,Invoice_Items_Dto itemDto,Invoice_Vehicle_DTO vehicleDto,HttpServletRequest request)throws Exception;
+	
+	
+	//get Invoice detailsById
+	public InvoiceDTO InvoiceDetails(Long invoiceId)throws Exception;
+	
 }
