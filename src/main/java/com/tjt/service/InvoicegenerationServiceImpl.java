@@ -102,13 +102,10 @@ public class InvoicegenerationServiceImpl  implements InvoiceGenerationService {
 		invoice=new Invoice();
 		//copy Invoice_DTO class object to invoice class Object 
 		BeanUtils.copyProperties(invoiceDto, invoice);
-		invoice.setUser_Details_Table(userTable);
 		invoice.setQuantity(quntity);
 		//create invoice 
 		invoice=invoiceDAO.save(invoice);
 		
-		//get user object  
-		userTable=invoice.getUser_Details_Table();
 		
 		//add invoiceNumber in  session attribute 
 		session.setAttribute("invoiceNumber", invoice.getInvoice_Number());
@@ -146,7 +143,7 @@ public class InvoicegenerationServiceImpl  implements InvoiceGenerationService {
 			invoiceItem.setTyrepattern(itemDto.getTyrepattern()[i]);
 			invoiceItem.setTyresize(itemDto.getTyre_size()[i]);
 			invoiceItem.setSaledate(itemDto.getSaledate());
-			invoiceItem.setInvoice_Number(invoice);
+			invoiceItem.setInvoice_Number(invoice.getInvoice_Number());
 			
 			//create warranty card Id
 			 UID warentyId = new UID();
@@ -181,7 +178,7 @@ public class InvoicegenerationServiceImpl  implements InvoiceGenerationService {
 				invoiceItem.setTyrepattern(itemDto.getTyrepattern()[0]);
 				invoiceItem.setTyresize(itemDto.getTyre_size()[0]);
 				invoiceItem.setSaledate(itemDto.getSaledate());
-				invoiceItem.setInvoice_Number(invoice);
+				invoiceItem.setInvoice_Number(invoice.getInvoice_Number());
 				
 				//create warranty card id
 				UID warentyId = new UID();
@@ -361,14 +358,12 @@ public class InvoicegenerationServiceImpl  implements InvoiceGenerationService {
 			//KiskoInvoice invoice1=new KiskoInvoice();
 			Invoice invoice1=new Invoice();
 			invoice1.setInvoice_Number((Long) invoice[0]);
-			invoice1.setUser_Details_Table((User_Details_Table) invoice[1]);
+			invoice1.setUserId((String) invoice[1]);
 			invoice1.setSaledate((Date) invoice[2]);
 			invoice1.setTotal_price((Double) invoice[3]);
 			
-			User_Details_Table sale=new User_Details_Table();
-			sale=invoice1.getUser_Details_Table();
 			dto.setInvoice_Number(invoice1.getInvoice_Number());
-			dto.setUserid(sale.getUserid());
+			dto.setUserId(invoice1.getUserId());
 			dto.setSaledate(invoice1.getSaledate());
 			dto.setTotal_price(invoice1.getTotal_price());
 			listdto.add(dto);

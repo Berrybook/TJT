@@ -12,7 +12,7 @@ private Long invoice_Number;
 	public void setInvoice_Number(Long invoice_Number) {
 		this.invoice_Number = invoice_Number;
 	}
-	private String userid;
+	private String userId;
 	private Double discount=0.0;
 	private String userMailId;
 
@@ -77,12 +77,7 @@ private Long invoice_Number;
 	
 	private String warrentyTemplet;
 
-	public String getUserid() {
-		return userid;
-	}
-	public void setUserid(String userid) {
-		this.userid = userid;
-	}
+	
 	public String getUserMailId() {
 		return userMailId;
 	}
@@ -286,5 +281,11 @@ private Long invoice_Number;
 	}
 	public void setDiscount(Double discount) {
 		this.discount = discount;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}	
 }

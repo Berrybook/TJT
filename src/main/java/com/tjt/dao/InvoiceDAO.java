@@ -12,7 +12,7 @@ import com.tjt.entity.POS_Table;
 public interface InvoiceDAO extends JpaRepository<Invoice, Long> {
 	
 	
-	@Query("select ig.invoice_Number,ig.user_Details_Table,ig.saledate,ig.total_price from Invoice ig where ig.user_Details_Table IN (SELECT userid from User_Details_Table st WHERE st.pos_table=:postable)")
+	@Query("select ig.invoice_Number,ig.userId,ig.saledate,ig.total_price from Invoice ig where ig.userId IN (SELECT userid from User_Details_Table st WHERE st.pos_table=:postable)")
 	public List<Object[]> getInvoice(@Param("postable")POS_Table postable);
 	
 	

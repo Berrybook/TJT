@@ -4,12 +4,11 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+
 import javax.persistence.Table;
 
 @Entity
@@ -21,10 +20,8 @@ public class Invoice {
 	@Column(name="invoice_Number")
 	Long invoice_Number;
 	
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "userid", nullable = false)
-	
-	private User_Details_Table user_Details_Table;
+	@Column(name="userid" ,length=100)
+	private String userId;
 	
 	@Column(name="customer_name" ,length=100)
 	private String customerName;
@@ -98,14 +95,6 @@ public class Invoice {
 
 	public void setInvoice_Number(Long invoice_Number) {
 		this.invoice_Number = invoice_Number;
-	}
-
-	public User_Details_Table getUser_Details_Table() {
-		return user_Details_Table;
-	}
-
-	public void setUser_Details_Table(User_Details_Table user_Details_Table) {
-		this.user_Details_Table = user_Details_Table;
 	}
 
 	public String getCustomerName() {
@@ -219,6 +208,14 @@ public class Invoice {
 	public void setPayment_mode(String payment_mode) {
 		this.payment_mode = payment_mode;
 	}
-	
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
 	
 }
