@@ -25,8 +25,10 @@ import com.tjt.dto.InvoiceDTO;
 import com.tjt.dto.Invoice_DTO;
 import com.tjt.dto.Invoice_Items_Dto;
 import com.tjt.dto.Invoice_Vehicle_DTO;
+import com.tjt.dto.POSDTO;
 import com.tjt.dto.Pos_Item_Price_Dto_Responce;
 import com.tjt.dto.UserDTO;
+import com.tjt.entity.City_Table;
 import com.tjt.entity.Invoice;
 import com.tjt.entity.Invoice_Items;
 import com.tjt.entity.POS_Table;
@@ -380,6 +382,29 @@ public class InvoicegenerationServiceImpl  implements InvoiceGenerationService {
 		invoiceDTO=new InvoiceDTO();
 		BeanUtils.copyProperties(invoice, invoiceDTO);
 		return invoiceDTO;
+	}
+
+	@Override
+	public POSDTO getAddressofPOS(String posId) throws Exception {
+		List<Object[]> posAddress=null;
+		POSDTO postdo=new POSDTO();
+		City_Table citytable=new City_Table();
+		try{
+		posAddress=invoiceDAO.getAddressOfPOS(posId);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		for (Object[] objects : posAddress) {
+			postdo.setAddress1((String) objects[0]);
+			postdo.setPincode((String) objects[1]);
+			citytable=(City_Table) objects[2];
+			postdo.setCityname(citytable.getCityname());
+			postdo.setPosName((String) objects[3]);
+			
+		}
+		
+		return postdo;
 	}
 
 	

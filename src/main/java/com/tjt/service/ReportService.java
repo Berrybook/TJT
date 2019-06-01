@@ -13,5 +13,7 @@ public interface ReportService {
 	public List<POS_Item_DTO> getStockDetails()throws Exception ;
 
 	public List<String> getposlist();
+	
+	public List<SaleReportDTO> getSalesDetailsByMonth(String pos)throws Exception;
 
 }

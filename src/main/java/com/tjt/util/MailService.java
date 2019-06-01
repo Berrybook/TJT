@@ -39,7 +39,7 @@ public class MailService {
 			mailconnection=new mailConnection(); 
 			Session mailSession=mailconnection.mailConnect( propertie);
 			Message msg=new MimeMessage(mailSession);
-			msg.setFrom(new InternetAddress(propertie.getUsername(),false));
+			msg.setFrom(new InternetAddress("invoice@tjtyres.com",false));
 			msg.addRecipients(Message.RecipientType.TO, InternetAddress.parse(mailid[0]));
 			msg.addRecipients(Message.RecipientType.BCC, InternetAddress.parse(mailid[1]));
 			msg.setSubject("TJTyre Invoice and Warrenty ");

@@ -5,11 +5,12 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import com.tjt.dto.InvoiceDTO;
+import com.tjt.dto.POSDTO;
 
 public class PdfReposrtValueReplaceMent {
 	
-	public String pdfTemplet(InvoiceDTO invoicedto ){
-	
+	public String pdfTemplet(InvoiceDTO invoicedto,POSDTO posdto ){
+		
 	String replaceQuantity=null,replacetyresize=null,replacebasicPrice=null,rateReplace=null;
 	String templet=invoicedto.getTemplet();
 	
@@ -64,7 +65,11 @@ public class PdfReposrtValueReplaceMent {
 	Double discount=invoicedto.getDiscount();
 	
 	String discounts=Double.toString(discount);
-	String replacename=templet.replaceAll("customername",invoicedto.getCustomerName());
+	String posname=templet.replaceAll("posName", posdto.getPosName());
+	String address=posname.replaceAll("address1", posdto.getAddress1());
+	String cityName=address.replaceAll("cityname", posdto.getCityname());
+	String pincode=cityName.replaceAll("pincode", posdto.getPincode());
+	String replacename=pincode.replaceAll("customername",invoicedto.getCustomerName());
 	String replacedate=replacename.replaceAll("salesdate", salesdate);
 	String replaceInvoicenumber=replacedate.replaceAll("invoicenumber", invoiceNumber);
 	String replaceAddress=replaceInvoicenumber.replaceAll("address1", invoicedto.getAddress1());

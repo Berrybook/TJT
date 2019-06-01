@@ -12,7 +12,6 @@ import com.tjt.dao.POSItemDAO;
 import com.tjt.dao.POS_DAO;
 import com.tjt.dao.Tyre_DAO;
 import com.tjt.dto.TyreInformationDTO;
-
 import com.tjt.entity.POS_Item;
 import com.tjt.entity.POS_Table;
 import com.tjt.entity.TyreCompositeKey;

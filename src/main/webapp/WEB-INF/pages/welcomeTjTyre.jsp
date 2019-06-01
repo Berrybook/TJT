@@ -136,6 +136,14 @@ a {
 	</style>
 	
 </head>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script type="text/javascript">
+function successMessage(msg) {
+
+	swal(msg, " ", "success")
+}
+</script>
 <body>
 
 
@@ -161,15 +169,25 @@ a {
 			
 				<br>
 					<ul>
+					
 						<li><a href="createinvoice" style=" text-decoration: none;">New Invoice</a></li>
 						<li><a href="saletransaction" style=" text-decoration: none;">Sales Transaction</a></li>
 						<li><a href="priceListByPos" style=" text-decoration: none;">PriceList</a></li>
+						<li><a href="CurrentMonthsalesReport" style=" text-decoration: none;">Month Report</a></li>
+						<li><a href="requestOrderbypos?access=Create Order" style=" text-decoration: none;">Create Order</a></li>
+						<li><a href="CustomerInquaryForm" style=" text-decoration: none;">Inquiry Form</a></li>
+						<!-- <li><a href="viewOrder?access=View Order" style=" text-decoration: none;">view Order</a></li> -->
+						
 					</ul>
-				
-
 				</nav>
 			
-				
+				<c:choose>
+										<c:when test="${not empty msg}">
+											<script>
+												successMessage("${msg}")
+											</script>
+										</c:when>
+									</c:choose>
 		<div class="content-wrapper">
 		<br><br><br><br>
 			<c:choose>

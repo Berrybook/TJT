@@ -2,6 +2,7 @@ package com.tjt.service;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -115,6 +116,42 @@ public class ReportServiceImpl implements ReportService {
 		
 		
 		return listpos;
+	}
+
+	@Override
+	public List<SaleReportDTO> getSalesDetailsByMonth( String pos) throws Exception {
+		List<SaleReportDTO> listSaleReportDTO=null;
+		listSaleReportDTO=new ArrayList<SaleReportDTO>();
+		LocalDate today=LocalDate.now();
+		Date currentDate=Date.valueOf(today);
+		Date firstDateOfMonth=Date.valueOf(today.withDayOfMonth(1));
+		POS_Table postable = new POS_Table();
+		postable.setPos(pos);
+		
+		List<Object[]> allMonthReposrt=null;
+		
+		allMonthReposrt=reportdao.getSalesDetailsByMonth(firstDateOfMonth, currentDate, postable);
+		
+				for(Object[] invoice:allMonthReposrt){
+				
+					SaleReportDTO saleReport = new SaleReportDTO();
+					Date date = (Date) invoice[1];
+					
+					SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy"); 
+					 String strDate= formatter.format(date);  
+					//set saleReport value in saleReposrt DTO class    
+					saleReport.setSaledate(strDate);
+					saleReport.setUserId((String)invoice[0]);
+					
+					Double totalPrice=(Double) invoice[2];
+					totalPrice=(double)Math.round(totalPrice*100.0)/100.0;
+					saleReport.setTotprice(totalPrice);
+					saleReport.setQuantity((Long) invoice[3]);
+					//add DTO  value in list 
+					listSaleReportDTO.add(saleReport);
+				}
+		
+		return listSaleReportDTO;
 	}
 
 

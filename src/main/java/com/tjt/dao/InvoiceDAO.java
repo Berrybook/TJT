@@ -29,4 +29,6 @@ public interface InvoiceDAO extends JpaRepository<Invoice, Long> {
 	@Query("SELECT ts.salePrice FROM POS_Item ts WHERE ts.pos=:pos AND ts.tyrepattern=:pattern AND ts.tyresize=:size")
 	public Double getPriceByPatternAndSize(@Param("pattern")String  pattern,@Param("size")String  size,@Param("pos")String pos);
 	
+	@Query("SELECT pt.address1,pt.pincode,pt.city_table,pt.posName FROM POS_Table pt WHERE pt.pos=:posId")
+	public List<Object[]> getAddressOfPOS(@Param("posId")String posId);
 }

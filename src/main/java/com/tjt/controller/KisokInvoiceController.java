@@ -18,6 +18,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +30,7 @@ import com.tjt.dto.Invoice_DTO;
 import com.tjt.dto.Invoice_Items_Dto;
 import com.tjt.dto.Invoice_Vehicle_DTO;
 import com.tjt.dto.MailConnectionproperties;
+import com.tjt.dto.POSDTO;
 import com.tjt.dto.Pos_Item_Price_Dto_Responce;
 import com.tjt.dto.UserDTO;
 import com.tjt.service.InvoiceGenerationService;
@@ -84,7 +86,7 @@ public class KisokInvoiceController {
 		return responsePage;
 	}
 
-	//logout 
+	/*//logout 
 	@RequestMapping(value="/logout",method=RequestMethod.GET)
 	public String logout(HttpServletRequest request){
 		HttpSession session=null;
@@ -98,7 +100,7 @@ public class KisokInvoiceController {
 		return responsePage;
 		
 	}
-	
+	*/
 	//TjTyre invoiceGenerate form page
 	@RequestMapping(value="/createinvoice",method=RequestMethod.GET)
 	public String kisokInvoiceGenerateForm(HttpServletRequest request){
@@ -116,18 +118,23 @@ public class KisokInvoiceController {
 		}
 		return responsePage;
 	}
+	
 	//create invoice generation 
 		@RequestMapping(value="/invoicegeneration1",method=RequestMethod.POST)
 		public String invoice(Map<String,Object> map,HttpServletRequest request,@Valid @ModelAttribute Invoice_DTO dto, @ModelAttribute Invoice_Items_Dto itemdto,@ModelAttribute Invoice_Vehicle_DTO vehicledto ){
 				HttpSession session=null;
 				String responsePage="";
+				//get session 
+				session=request.getSession(false);
+				
+				String posid=(String)session.getAttribute("pos");
 				
 					try{
-						//get session 
-						session=request.getSession(false);
+						
 						session.setAttribute("invoice", dto);
 						session.setAttribute("invoiceItem",itemdto);
 						session.setAttribute("invoiceVehicle",vehicledto);
+						
 						//set value for request attribute in global visible 
 						request.setAttribute("mode","MODE_HOME");
 						map.put("invoice",dto);
@@ -179,6 +186,7 @@ public class KisokInvoiceController {
 				}
 				return responsePage;
 		}
+	
 		//final invoiceGenerate create service 
 		@RequestMapping(value="/createinvoiceconform",method=RequestMethod.GET)
 		public String kisokInvoicegenerateProcess(Map<String,Object> map,HttpServletRequest request){
@@ -191,6 +199,7 @@ public class KisokInvoiceController {
 				Invoice_Vehicle_DTO vehicleDto=null;
 		
 				session=request.getSession(false);
+				String posId=(String) session.getAttribute("pos");
 				
 				try{
 					
@@ -202,10 +211,11 @@ public class KisokInvoiceController {
 						try{
 							
 						dto=service.invoiceCreation(invoiceDto, itemDto, vehicleDto, request);
-						
+						POSDTO posdto=service.getAddressofPOS(posId);
 						map.put("result", dto);
-						
+						map.put("pos_addresses", posdto);
 						session.setAttribute("invoiceDetails", dto);
+						session.setAttribute("pos_address", posdto);
 						}
 						catch(Exception e){
 						
@@ -236,13 +246,14 @@ public class KisokInvoiceController {
 			HttpHeaders headers =null;
 			 ByteArrayInputStream bis =null;
 			session=request.getSession(false);
+			POSDTO posdto=null;
 			
 			try{
 			
 			//invoiceDTO=service.InvoiceDetail(request);
 			invoiceDTO=(InvoiceDTO) session.getAttribute("invoiceDetails");
-			
-			bis = GeneratePdfReport.invoicePdf(invoiceDTO);
+			posdto=(POSDTO) session.getAttribute("pos_address");
+			bis = GeneratePdfReport.invoicePdf(invoiceDTO,posdto);
 
 	         headers = new HttpHeaders();
 	        headers.add("Content-Disposition", "attachment; filename=invoice.pdf");
@@ -391,6 +402,13 @@ public class KisokInvoiceController {
 		 	HttpSession session=null;
 		 	String responsePage="";
 		 	InvoiceDTO invoiceDTO=null;
+		 	//get Session attribute
+		 	session=request.getSession(false);
+		 	String posId=(String) session.getAttribute("pos");
+		 	
+		 	//get the POS Address 
+		 	POSDTO posdto=service.getAddressofPOS(posId);
+		 	
 		 	MailConnectionproperties properties=null;
 		 	GenerateInvoicePdfReport invoicePdfReport=null;
 		 	ByteArrayOutputStream outputStream = null;
@@ -414,7 +432,7 @@ public class KisokInvoiceController {
 		 	List<byte[]> listtattachment=new ArrayList<byte[]>();
 		 	//invoice PDF generation service 
 	        invoicePdfReport=new GenerateInvoicePdfReport(); 
-	        invoicePdfReport.invoicePdfGeneration(invoiceDTO,outputStream);
+	        invoicePdfReport.invoicePdfGeneration(invoiceDTO,posdto,outputStream);
 	        bytes = outputStream.toByteArray();
 	        listtattachment.add(bytes);
 	 
@@ -422,7 +440,7 @@ public class KisokInvoiceController {
 	        String [] tyresize=invoiceDTO.getTyresizes();
 	        for(int i=0;i<tyresize.length;i++){
 	        invoiceDTO.setTyresize(tyresize[i]);
-	        invoicePdfReport.invoicePdfGenerationWarrenty(invoiceDTO, outputStream);
+	        invoicePdfReport.invoicePdfGenerationWarrenty(invoiceDTO,posdto, outputStream);
 			warentybytes=outputStream.toByteArray();
 			listtattachment.add(warentybytes);
 	        }
@@ -442,7 +460,14 @@ public class KisokInvoiceController {
 			}
 			return responsePage;
 	 }
-		
+	 
+	 @GetMapping("posaddress/{posid}")
+	 @ResponseBody
+	 public POSDTO address(@PathVariable("posid") String posId) throws Exception{
+		 POSDTO posdto=service.getAddressofPOS(posId);
+		 return posdto;
+	 }
+	 
 }//end Class 
 		
 

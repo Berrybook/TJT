@@ -11,18 +11,19 @@ import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.html.simpleparser.HTMLWorker;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.tjt.dto.InvoiceDTO;
+import com.tjt.dto.POSDTO;
 
 
 
 public class GenerateInvoicePdfReport {
 	
-	 public void invoicePdfGeneration(InvoiceDTO invoicedto,ByteArrayOutputStream out) {
+	 public void invoicePdfGeneration(InvoiceDTO invoicedto,POSDTO posdto,ByteArrayOutputStream out) {
 	 
 		 Document document=new Document(new Rectangle(700,700));
 		 
 try{
 	PdfReposrtValueReplaceMent pdfTemplet=new PdfReposrtValueReplaceMent();
-	 String templet=pdfTemplet.pdfTemplet(invoicedto);
+	 String templet=pdfTemplet.pdfTemplet(invoicedto,posdto);
 			    PdfWriter.getInstance(document,out);
 			    document.open();
 			    HTMLWorker htmlWorker = new HTMLWorker(document);
@@ -34,9 +35,9 @@ try{
 			 
 		 }
 	 }
-	 public  void invoicePdfGenerationWarrenty(InvoiceDTO invoicedto,ByteArrayOutputStream out) throws DocumentException, IOException {
+	 public  void invoicePdfGenerationWarrenty(InvoiceDTO invoicedto,POSDTO posdto,ByteArrayOutputStream out) throws DocumentException, IOException {
 		 WarrentyClass warrenty=new WarrentyClass();
-		 String warrentyPdf=warrenty.warrentyService(invoicedto);
+		 String warrentyPdf=warrenty.warrentyService(invoicedto,posdto);
 		 Document document=new Document(new Rectangle(700,700));
 		 PdfWriter.getInstance(document,out);
 		    document.open();

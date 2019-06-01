@@ -11,6 +11,7 @@ import javax.persistence.Id;
 
 import javax.persistence.Table;
 
+
 @Entity
 @Table(name="Invoice")
 public class Invoice {

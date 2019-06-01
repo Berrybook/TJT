@@ -27,7 +27,7 @@ public Long featchQuantity(@Param("tyrepattern")String tyrepattern,@Param("tyres
 @Query("select count(*) from POS_Item p where p.tyrepattern=:tyrepattern AND p.tyresize=:tyresize  and p.pos=:pos")
 public Integer checkTyre(@Param("tyrepattern")String tyrepattern,@Param("tyresize")String tyresize,@Param("pos")String pos);
 
-@Query("select pi.tyrepattern,pi.tyresize,pi.quantity,pi.MRP,pi.salePrice from POS_Item pi where pi.pos in (select pt.pos from POS_Table pt where pt.city_table=(select ct.cityname from City_Table ct where ct.cityname=:cityname)) group by (pi.tyrepattern,pi.tyresize,pi.quantity,pi.MRP,pi.salePrice)")
+@Query("select pi.tyrepattern,pi.tyresize,pi.quantity,pi.MRP,pi.salePrice from POS_Item pi where pi.pos in (select pt.pos from POS_Table pt where pt.city_table=(select ct.cityname from City_Table ct where ct.cityname=:cityname)) group by pi.tyrepattern,pi.tyresize,pi.quantity,pi.MRP,pi.salePrice")
 public List<Object[]> allPosItemByCity(@Param("cityname")String cityname);
 
 @Query("select pi.tyrepattern,pi.tyresize,pi.quantity,pi.MRP,pi.salePrice from POS_Item pi where pi.pos=:pos")

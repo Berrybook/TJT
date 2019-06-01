@@ -4,8 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-
-
 import com.tjt.dto.UserDTO;
 
 public interface UserService {
@@ -15,5 +13,6 @@ public interface UserService {
 		public List<UserDTO> listUser()throws Exception;	
 		public UserDTO userById(HttpServletRequest request,String userid)throws Exception;
 		public String UserUpdate(HttpServletRequest request,UserDTO dto)throws Exception;
+		public UserDTO userByIdhadhoc(String userid)throws Exception;
 		public void deleteUser(HttpServletRequest request,String userid)throws Exception;
 }

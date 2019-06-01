@@ -41,28 +41,50 @@
 					<p><a  href="logout" style=" text-decoration: none;"><i class="fa fa-power-off"></i>Logout</a></p>
 </li>
 	</header> 
+	
+	
+<style>
+	.list-group-item-success{
+	background-color:lightblue;
+	}
+	</style>
+	
 </nav>
 
 	<main class="cd-main-content">
 	
 		<nav class="cd-side-nav">
+		<br>
+		      <div id="MainMenu">
+        <div class="list-group panel">
+         
+         
+          <a href="#demo3" class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Registration<i class="fa fa-angle-double-down" style="font-size:24px;position:absolute;top:16px;left:90%;color:#347C98"></i></a>
+          <div class="collapse" id="demo3">
+          <a href="create_Dealer" class="list-group-item">Dealer Registration</a>
+            <a href="createcity" class="list-group-item">City Registration</a>
+            <a href="role" class="list-group-item">Role Registration</a>
+            <a href="Poscreate" class="list-group-item">POS Registration</a>
+			<a href="userregistration" class="list-group-item">User Registration</a>
+			<a href="warehouseRegistration" class="list-group-item">Warehouse Registration</a>
+			<a href="tyrecreate" class="list-group-item">Item Registration</a>
+			<a href="createroleaccess" class="list-group-item">Resource Role Access</a>
+          </div>
+          <a href="#demo4" class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Pevilleges Assign <i class="fa fa-angle-double-down" style="font-size:24px;position:absolute;top:16px;left:90%;color:#347C98"></i> </a>
+          <div class="collapse" id="demo4">
+           <!--  <a href="warehouseMasterLink" class="list-group-item">Warehouse Assign</a>
+             --><a href="createuserrolemappinglink" class="list-group-item">User Role Assign</a>
+            <a href="createrolmodulemappinglink" class="list-group-item">Role Module Assign</a>
+			<a href="item_price_assign" class="list-group-item">Price Assignment</a>
+          </div>
+		   <a href="Salereport" class="list-group-item list-group-item-success" data-parent="#MainMenu">Reports</a>
+		    <a href="allOrderList" class="list-group-item list-group-item-success" data-parent="#MainMenu">Orders By Dealers</a>
+        <a href="customerenquiry" class="list-group-item list-group-item-success" data-parent="#MainMenu">Inquiry Form</a>
+        
+        </div>
+      </div>
+            
 			
-				<br>
-					<ul>
-					
-					
-					
-					<li><a href="createcity" style=" text-decoration: none;">City Registration</a></li>
-					<li><a href="role" style=" text-decoration: none;">Role Registration</a></li>
-					<li><a href="Poscreate" style=" text-decoration: none;">POS Registration</a></li>
-					<li><a href="userregistration"style=" text-decoration: none;">User Registration</a></li>
-					<li><a href="tyrecreate" style=" text-decoration: none;">Item Registration</a></li>
-					<li><a href="item_price_assign" style=" text-decoration: none;">Price Assignment</a></li>
-					<li><a href="Salereport" style=" text-decoration: none;">Reports</a></li>	
-						
-					</ul>
-				
-
 				</nav>
 			
 				

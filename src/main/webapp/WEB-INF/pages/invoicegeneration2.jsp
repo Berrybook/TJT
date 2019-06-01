@@ -224,6 +224,10 @@ width:100%
 						<li><a href="createinvoice" style=" text-decoration: none;">New Invoice</a></li>
 						<li><a href="saletransaction" style=" text-decoration: none;">Sales Transaction</a></li>
 						<li><a href="priceListByPos" style=" text-decoration: none;">PriceList</a></li>
+						<li><a href="CurrentMonthsalesReport" style=" text-decoration: none;">Month Report</a></li>
+						<li><a href="requestOrderbypos?access=Create Order" style=" text-decoration: none;">Create Order</a></li>
+						<li><a href="CustomerInquaryForm" style=" text-decoration: none;">Inquiry Form</a></li>
+						<!-- <li><a href="viewOrder?access=View Order" style=" text-decoration: none;">view Order</a></li> -->
 						
 					</ul>
 				
@@ -794,7 +798,7 @@ width:100%
                         	            contentType: "application/json; charset=utf-8",
                         	         	  datatype: "json",
                         	            url: "${pageContext.request.contextPath}/tyreprice/"+tyrepattern+","+tyresize+"",
-                        	            
+                	            
                         	            success: function (result) {
                         	            	
                         	             
@@ -914,7 +918,7 @@ width:100%
 <div class="col-md-2"></div>
 <font color='red'> <span id="error"> </span> </font>
 </div>
-           <center>   <input type="submit" class="btn btn-danger" value="submit"></center>
+           <center>   <input type="submit"  class="btn btn-danger" value="submit"></center>
      
 </form>
   

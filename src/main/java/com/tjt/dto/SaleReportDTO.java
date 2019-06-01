@@ -3,6 +3,7 @@ package com.tjt.dto;
 
 public class SaleReportDTO {
 	
+	private String userId;
 	private String saledate;
 	private String tyrepattern;
 	private String tyresize;
@@ -45,6 +46,12 @@ public class SaleReportDTO {
 	}
 	public void setPaymentmode(String paymentmode) {
 		this.paymentmode = paymentmode;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 	
 

@@ -58,6 +58,18 @@ border: 5px solid white;
 <div class="contain">
  <center> <h2 style="color:blue; font-size:25px;"> LOGIN</h2></center>
    <br>
+   <%-- <div class="form-group">
+     
+      <select class="form-control" name="role" id="role">
+                            	<option value=""> choose role</option>
+                                <c:forEach  items="${loginByRole}" var="roles">
+ 									 <option value="${roles}">${roles}</option>
+   								</c:forEach>
+                            </select>
+    </div> --%>
+     <br>
+   
+   
     <div class="form-group">
      
       <input type="text" class="form-control" id="posid"  name="pos">

@@ -44,9 +44,9 @@ p.groove {border:1px solid black;}
 
  <p>TYCHEEJUNO SPECIALITY TYRES PVT. LTD. <br>
 
-4781, 18th street, Vidyut Nagar, New Mig Colony, Ramachandrapuram<br>
+${pos_addresses.posName },${pos_addresses.address1 } ,${pos_addresses.cityname }<br>
 
-Telengana - 517520, India</p>
+${pos_addresses.pincode }, India</p>
 <br>
 <table>
   

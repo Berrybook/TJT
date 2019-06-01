@@ -8,6 +8,7 @@ import com.tjt.dto.InvoiceDTO;
 import com.tjt.dto.Invoice_DTO;
 import com.tjt.dto.Invoice_Items_Dto;
 import com.tjt.dto.Invoice_Vehicle_DTO;
+import com.tjt.dto.POSDTO;
 import com.tjt.dto.Pos_Item_Price_Dto_Responce;
 import com.tjt.dto.UserDTO;
 
@@ -38,5 +39,7 @@ public interface InvoiceGenerationService {
 	
 	//get Invoice detailsById
 	public InvoiceDTO InvoiceDetails(Long invoiceId)throws Exception;
+	
+	public POSDTO getAddressofPOS(String posId)throws Exception;
 	
 }

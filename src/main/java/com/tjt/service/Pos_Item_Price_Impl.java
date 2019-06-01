@@ -26,6 +26,8 @@ public class Pos_Item_Price_Impl implements Pos_Item_Price {
 	@Autowired
 	private CityDAO cityDAO;
 	
+	
+	
 	@Override
 	public String priceAssignmentInPos(Pos_Item_Price_Dto itemPrice) {
 		POS_Item pOS_Item=null;
@@ -90,5 +92,7 @@ public class Pos_Item_Price_Impl implements Pos_Item_Price {
 			}
 		return listPosItem;
 	}
+	
+	
 
 }

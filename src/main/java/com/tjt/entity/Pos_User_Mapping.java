@@ -16,28 +16,31 @@ public class Pos_User_Mapping {
 	@Column(name="pos_user_Id")
 	private Long pos_user_Id;
 	@Column(name="userId")
-	private String userId;
-	@Column(name="posId")
-	private String posId;
+	private String userid;
+	@Column(name="pos")
+	private String pos;
 	
-	public String getUserId() {
-		return userId;
-	}
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-	public String getPosId() {
-		return posId;
-	}
-	public void setPosId(String posId) {
-		this.posId = posId;
-	}
 	public Long getPos_user_Id() {
 		return pos_user_Id;
 	}
 	public void setPos_user_Id(Long pos_user_Id) {
 		this.pos_user_Id = pos_user_Id;
 	}
+	public String getUserid() {
+		return userid;
+	}
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
+	public String getPos() {
+		return pos;
+	}
+	public void setPos(String pos) {
+		this.pos = pos;
+	}
+	
+	
+	
 
 	
 }

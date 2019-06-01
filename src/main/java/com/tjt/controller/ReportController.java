@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -88,6 +88,34 @@ public class ReportController {
 			
 		
 		return responsePage;
+	}
+	
+	
+	@RequestMapping(value="/CurrentMonthsalesReport",method=RequestMethod.GET)
+	public String  currentMonthsalesReport(Map<String,Object> list,HttpServletRequest request){
+		 String responceBody="";
+		 HttpSession session=null;
+		 session=request.getSession(false);
+		  
+		 String posId=(String) session.getAttribute("pos");
+		 
+		
+		List<SaleReportDTO> salelist = null;
+		try{
+		salelist=reportservice.getSalesDetailsByMonth(posId);
+		list.put("listreport", salelist);
+		request.setAttribute("REPORT", "REPORT_LIST");
+		
+		request.setAttribute("POS", posId);
+		responceBody="Sales_Current_Month_Report";
+		}
+		catch(Exception e){
+			request.setAttribute("SALESPREPORT", "SOME iNTERNAL PROBLEM ");
+			responceBody="Sales_Current_Month_Report";
+		}
+			
+		
+		return responceBody;
 	}
 	
 	
