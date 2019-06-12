@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.tjt.main.TjtyrecompanyApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 15.573 s - in com.tjt.main.TjtyrecompanyApplicationTests

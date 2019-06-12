@@ -1,0 +1,147 @@
+{"properties": [
+  {
+    "name": "gmail.username",
+    "type": "java.lang.String",
+    "description": "A description for 'gmail.username'"
+  },
+  {
+    "name": "gmail.password",
+    "type": "java.lang.String",
+    "description": "A description for 'gmail.password'"
+  },
+  {
+    "name": "gmail.username",
+    "type": "java.lang.String",
+    "description": "A description for 'gmail.username'"
+  },
+  {
+    "name": "gmail.password",
+    "type": "java.lang.String",
+    "description": "A description for 'gmail.password'"
+  },
+  {
+    "name": "tjtyres.password",
+    "type": "java.lang.String",
+    "description": "A description for 'tjtyres.password'"
+  },
+  {
+    "name": "tjtyres.username",
+    "type": "java.lang.String",
+    "description": "A description for 'tjtyres.username'"
+  },
+  {
+    "name": "hibernate.hbm2ddl.auto",
+    "type": "java.lang.String",
+    "description": "A description for 'hibernate.hbm2ddl.auto'"
+  },
+  {
+    "name": "org.hibernate.dialect.PostgreSQLDialect\r\n\r\nspring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation",
+    "type": "java.lang.String",
+    "description": "A description for 'org.hibernate.dialect.PostgreSQLDialect\r\n\r\nspring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation'"
+  },
+  {
+    "name": "org.hibernate.dialect.PostgreSQLDialect\r\nspring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation",
+    "type": "java.lang.String",
+    "description": "A description for 'org.hibernate.dialect.PostgreSQLDialect\r\nspring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation'"
+  },
+  {
+    "name": "mailgun.api.username",
+    "type": "java.lang.String",
+    "description": "A description for 'mailgun.api.username'"
+  },
+  {
+    "name": "mailgun.api.password",
+    "type": "java.lang.String",
+    "description": "A description for 'mailgun.api.password'"
+  },
+  {
+    "name": "mail.smtp.port",
+    "type": "java.lang.String",
+    "description": "A description for 'mail.smtp.port'"
+  },
+  {
+    "name": "mail.password",
+    "type": "java.lang.String",
+    "description": "A description for 'mail.password'"
+  },
+  {
+    "name": "mail.smtp.host",
+    "type": "java.lang.String",
+    "description": "A description for 'mail.smtp.host'"
+  },
+  {
+    "name": "mail.smtp.starttls.enable",
+    "type": "java.lang.String",
+    "description": "A description for 'mail.smtp.starttls.enable'"
+  },
+  {
+    "name": "mail.smtp.auth",
+    "type": "java.lang.String",
+    "description": "A description for 'mail.smtp.auth'"
+  },
+  {
+    "name": "mail.smtp.starttls.required",
+    "type": "java.lang.String",
+    "description": "A description for 'mail.smtp.starttls.required'"
+  },
+  {
+    "name": "mail.username",
+    "type": "java.lang.String",
+    "description": "A description for 'mail.username'"
+  },
+  {
+    "name": "starttls",
+    "type": "java.lang.String",
+    "description": "A description for 'starttls'"
+  },
+  {
+    "name": "username",
+    "type": "java.lang.String",
+    "description": "A description for 'username'"
+  },
+  {
+    "name": "password",
+    "type": "java.lang.String",
+    "description": "A description for 'password'"
+  },
+  {
+    "name": "host",
+    "type": "java.lang.String",
+    "description": "A description for 'host'"
+  },
+  {
+    "name": "port",
+    "type": "java.lang.String",
+    "description": "A description for 'port'"
+  },
+  {
+    "name": "auth",
+    "type": "java.lang.String",
+    "description": "A description for 'auth'"
+  },
+  {
+    "name": "mail.starttls",
+    "type": "java.lang.String",
+    "description": "A description for 'mail.starttls'"
+  },
+  {
+    "name": "mail.auth",
+    "type": "java.lang.String",
+    "description": "A description for 'mail.auth'"
+  },
+  {
+    "name": "mail.host",
+    "type": "java.lang.String",
+    "description": "A description for 'mail.host'"
+  },
+  {
+    "name": "mail.port",
+    "type": "java.lang.String",
+    "description": "A description for 'mail.port'"
+  },
+  {
+    "name": "gmai.password",
+    "type": "java.lang.String",
+    "description": "A description for 'gmai.password'"
+  }
+]}

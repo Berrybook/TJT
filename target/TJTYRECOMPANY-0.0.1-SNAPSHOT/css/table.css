@@ -1,0 +1,75 @@
+ .table {
+      width:50%;      
+           
+        }
+            .table td, .table th{
+                border: 1px solid #ddd;
+                padding: 5px;
+            }
+            
+          .table th{
+          background-color:lightblue;
+           font-weight: Bold;
+          text-align:center;
+          }  
+        #heder {
+            background-color: fuchsia;
+        }
+        #header1 {
+            background-color: navy;
+        }
+        .table tr:nth-child(even) {
+            background-color: lightgray;
+        }
+        .table tr:nth-child(odd) {
+            background-color: white;
+        }
+        
+ .header {
+            padding: 20px 20px;
+            background: #44a0c9;
+            height: 85px;
+            color: brown;
+        }
+        .card-header {
+            background-color:lightblue;
+            height: 8%;
+        }
+        ::-webkit-scrollbar {
+            display: none;
+        }
+       
+        
+        
+        a {
+            text-decoration: none;
+            display: inline-block;
+            padding: 8px 16px;
+        }
+        .previous {
+            background-color: #4CAF50;
+            color: black;
+        }
+        .form-group {
+            margin-top: 10px;
+        }
+        .tyre-quantity {
+            display: none;
+        }
+        .submit-button {
+            float: right;
+            margin-right: 1.3em;
+        }
+        
+.button  {
+    background-color:#44a0c9;
+    color:white;
+    border: 2px solid #4CAF50;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration:none;
+    display: inline-block;
+    font-size: 18px;
+   
+}
+
