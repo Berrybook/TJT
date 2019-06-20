@@ -50,8 +50,12 @@
 					<ul>
 					
 					
-					<li><a href="demoadhoc" style=" text-decoration: none;">Adhoc Salesman Assign</a></li>
-						
+					    <li><a href="posmanadhoc" style=" text-decoration: none;">Adhoc Salesman Assign</a></li>
+						<li><a href="custenqposman" style=" text-decoration: none;">All Customer Inquiry Report</a></li>
+                        <li><a href="findbydateposman" style=" text-decoration: none;">Upcoming Customer Inquiry Report</a></li>
+					<li><a href="salesmanwisereportPosmgr" style=" text-decoration: none;">Salesman Tracker</a></li>	
+					
+					<li><a href="datewisereportPosmgr" style=" text-decoration: none;">Summary Tracker</a></li>
 					</ul>
 				
 

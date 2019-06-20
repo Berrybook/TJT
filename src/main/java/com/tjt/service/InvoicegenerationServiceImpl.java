@@ -2,6 +2,7 @@ package com.tjt.service;
 
 import java.rmi.server.UID;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -16,6 +17,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tjt.dao.AdhocAssignmentDao;
 import com.tjt.dao.InvoiceDAO;
 import com.tjt.dao.Invoice_Items_DAO;
 import com.tjt.dao.Templet_DAO;
@@ -60,6 +62,9 @@ public class InvoicegenerationServiceImpl  implements InvoiceGenerationService {
 		
 		@Autowired
 		private User_Detalis_DAO userdao;
+		
+		@Autowired
+		private AdhocAssignmentDao adhocdao;
 		
 	
 	@Override
@@ -304,17 +309,24 @@ public class InvoicegenerationServiceImpl  implements InvoiceGenerationService {
 	public List<UserDTO> allSalesManId(String pos) throws Exception {
 		//all local variable initialize 
 		List<Object[]> listObject=null;
+		List<Object[]> listObject2=null;
 		List<UserDTO> listdto=null;
 		
 		//create ArrayList Object of  SalesManDTO Generic type 
 		listdto=new ArrayList<UserDTO>();
+		
+		LocalDate today=LocalDate.now();
+		Date currentDate=Date.valueOf(today);
+		System.out.println("currentDate"+currentDate);
 		POS_Table pos_table=new POS_Table();
 		pos_table.setPos(pos);
 		String admin="ADMIN";
+		System.out.println("list1");
 		//To get All salesmanId under the particular POS 
 		listObject =userDAO.allSalesmanid(pos_table,admin);
-		
-		//Iterative the ListObejct 
+		listObject2 = adhocdao.allAssignedSalesman(pos,currentDate);
+		System.out.println("list");
+		//Iterative  ListObejct 
 		for(Object[] obj: listObject){
 			
 			UserDTO userDto=null;
@@ -324,6 +336,7 @@ public class InvoicegenerationServiceImpl  implements InvoiceGenerationService {
 			//cast salesmanId  in object 
 			String salesmanid=(String)obj[0];
 			String salesmanname=(String)obj[1];
+		
 			//set salesManDto class In salesmanId and salesmanName
 			userDto.setUserid(salesmanid);
 			userDto.setUserName(salesmanname);
@@ -331,8 +344,21 @@ public class InvoicegenerationServiceImpl  implements InvoiceGenerationService {
 			//Add all SalesManId In list 
 			listdto.add(userDto);
 		}
+		for(Object[] obj2 : listObject2)
+		{
+			
+				UserDTO userDto1=null;
+			//create local Object salesManDTO class Object 
+				userDto1=new UserDTO();
+				System.out.println((String) obj2[0]);
+				userDto1.setUserid((String) obj2[0]);
+				userDto1.setUserName((String) obj2[1]);
+				listdto.add(userDto1);
+			
+		}
 		return listdto;
 	}
+	
 	@Override
 	public Double getPriceByPatternAndSize(String pos,String tyrePattern, String tyreSize) throws Exception {
 		Double price=0.0;

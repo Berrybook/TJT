@@ -132,22 +132,17 @@ td {
 			</nav>
 		</header>
 		<main class="cd-main-content">
-			<nav class="cd-side-nav">
+		   <nav class="cd-side-nav">
 			
 				<br>
 					<ul>
 					
 					
-					
-					<li><a href="createcity" style=" text-decoration: none;">City Registration</a></li>
-					<li><a href="role" style=" text-decoration: none;">Role Registration</a></li>
-					<li><a href="Poscreate" style=" text-decoration: none;">POS Registration</a></li>
-					<li><a href="userregistration"style=" text-decoration: none;">User Registration</a></li>
-					<li><a href="tyrecreate" style=" text-decoration: none;">Item Registration</a></li>
-					<li><a href="item_price_assign" style=" text-decoration: none;">Price Assignment</a></li>
-					<li><a href="Salereport" style=" text-decoration: none;">Reports</a></li>	
-					<li><a href="demoadhoc" style=" text-decoration: none;">Adhoc Salesman Assign</a></li>	
-					<li><a href="customerenquiry" style=" text-decoration: none;" >Customer Inquiries</a></li>
+					    <li><a href="posmanadhoc" style=" text-decoration: none;">Adhoc Salesman Assign</a></li>
+						<li><a href="custenqposman" style=" text-decoration: none;">All Customer Inquiry Report</a></li>
+                        <li><a href="findbydateposman" style=" text-decoration: none;">Upcoming Customer Inquiry Report</a></li>
+					<li><a href="salesmanwisereportPosmgr" style=" text-decoration: none;">Salesman Tracker</a></li>	
+					<li><a href="datewisereportPosmgr" style=" text-decoration: none;">Summary Tracker</a></li>
 					</ul>
 				
 
@@ -170,11 +165,11 @@ td {
 						data-placement="right" title="Export to Excel"
 						class="fa fa-file-excel-o"
 						onclick="tableToExcel('testTable', 'W3C Example Table')"></a>
-					<p>
+					<!-- <p>
 						<a
 							style="color: blue; text-decoration: underline; font-size: 20px;"
-							href="findbydate">Upcoming Tyre Changes</a>
-					</p>
+							href="findbydatepos">Upcoming Tyre Changes</a>
+					</p> -->
 
 					<div class="card-header"
 						style="background-color: lightblue; width: 100%">
@@ -221,7 +216,7 @@ td {
 								</tr>
 							</c:forEach>
 
-						</table>
+						</table> 	
 					</div>
 					<br> <br> <br> <br> <br> <br> <br>
 					<br>

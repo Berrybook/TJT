@@ -60,6 +60,7 @@
 					<li><a href="Salereport" style=" text-decoration: none;">Reports</a></li>	
 					<li><a href="demoadhoc" style=" text-decoration: none;">Adhoc Salesman Assign</a></li>	
 					<li><a href="customerenquiry" style=" text-decoration: none;" >Customer Inquiries</a></li>
+					
 					</ul>
 				
 

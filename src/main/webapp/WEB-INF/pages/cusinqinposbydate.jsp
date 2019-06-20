@@ -132,22 +132,15 @@ td {
 			</nav>
 		</header>
 		<main class="cd-main-content">
-			<nav class="cd-side-nav">
+		   <nav class="cd-side-nav">
 			
 				<br>
 					<ul>
 					
 					
-					
-					<li><a href="createcity" style=" text-decoration: none;">City Registration</a></li>
-					<li><a href="role" style=" text-decoration: none;">Role Registration</a></li>
-					<li><a href="Poscreate" style=" text-decoration: none;">POS Registration</a></li>
-					<li><a href="userregistration"style=" text-decoration: none;">User Registration</a></li>
-					<li><a href="tyrecreate" style=" text-decoration: none;">Item Registration</a></li>
-					<li><a href="item_price_assign" style=" text-decoration: none;">Price Assignment</a></li>
-					<li><a href="Salereport" style=" text-decoration: none;">Reports</a></li>	
-					<li><a href="demoadhoc" style=" text-decoration: none;">Adhoc Salesman Assign</a></li>	
-					<li><a href="customerenquiry" style=" text-decoration: none;" >Customer Inquiries</a></li>
+					<li><a href="demoadhoc" style=" text-decoration: none;">Adhoc Salesman Assign</a></li>
+					<li><a href="customerenquirypos" style=" text-decoration: none;">Customer Inquiry</a></li>
+						
 					</ul>
 				
 
@@ -173,7 +166,7 @@ td {
 					<p>
 						<a
 							style="color: blue; text-decoration: underline; font-size: 20px;"
-							href="findbydate">Upcoming Tyre Changes</a>
+							href="findbydatepos">Upcoming Tyre Changes</a>
 					</p>
 
 					<div class="card-header"
@@ -221,7 +214,7 @@ td {
 								</tr>
 							</c:forEach>
 
-						</table>
+						</table> 	
 					</div>
 					<br> <br> <br> <br> <br> <br> <br>
 					<br>

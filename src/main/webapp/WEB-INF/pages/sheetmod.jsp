@@ -1,5 +1,4 @@
-
- <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
  <%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -72,6 +71,22 @@ color: red;
 #errmsg1{
 color: red;
 }
+@media only screen and (min-width:768px) and (max-width: 1024px) {
+ #cus{
+position:absolute;
+top:5px;
+
+
+}
+} 
+@media only screen and (min-width:768px) and (max-width: 1024px) {
+ #customerapp{
+position:absolute;
+top:40px;
+
+
+}
+} 
 </style>	  
 	
 
@@ -214,7 +229,7 @@ function successMessage(msg) {
                                         </div>
                                         <div class="col-md-4">
 									<div class="form-group">
-                                                <b><label for="noofcustomer">Customer Approach</label></b>
+                                                <b><label id="cus" for="noofcustomer">Customer Approach</label></b>
                                                 <input type="text" class="form-control"  required="required" id="customerapp" placeholder="Enter number of customers" name="customerapp">
 												<span id="errmsg3"></span>
                             
@@ -282,11 +297,20 @@ function successMessage(msg) {
                             
                                             </div>
 									</div>
+									<div class="col-md-4">
+									<div class="form-group">
+                                                <b><label for="comments">Comments</label></b>
+                                              <!--  <input  type="text" class="form-control" placeholder="Comments" name="comments" > -->
+											  <textarea rows="1" cols="1" class="form-control" placeholder="Enter Comments" name="comment"></textarea>
+
+												<span id="errmsg1"></span>
+                            
+                                            </div>
+									</div>
+									</div>
 									
-									
-									
-									
-									<div class="col-md-4" hidden="hidden">
+									<div class="row">
+									<!-- <div class="col-md-4" hidden="hidden">
 									<div class="form-group">
                                                 <b><label for="current time">Current Time</label></b>
                                                 <input type="time" class="form-control" value="now" required="required" id="currenttime" placeholder="Enter time" name="curtime">
@@ -301,13 +325,15 @@ function successMessage(msg) {
                                                 <input type="date" class="form-control"  id="currentdate" required="required" placeholder="Enter Date" name="date">
 												
                                             </div>
-									</div>
+									</div> -->
 									</div>
 									
 									</div>
 									
                                     <br>
                                     <center>
+                                    <input type="time" hidden="hidden" value="now" id="currenttime"  name="curtime">
+                                    <input type="date" hidden="hidden" id="currentdate"  name="date">
                                          <input type="submit" value="Done" class="btn btn-danger">
                                         </center>
                             

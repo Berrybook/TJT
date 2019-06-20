@@ -61,6 +61,18 @@ var tableToExcel = (function() {
 	background-color: lightgray;
 }
 
+.list-group-item-success {
+	background-color: lightblue;
+}
+
+.cd-side-nav {
+	position: absolute;
+	top: -1%;
+}
+</style>
+
+
+<style>
 .search-table {
 	table-layout: fixed;
 	margin: 20px auto 0px auto;
@@ -98,22 +110,14 @@ td {
 		display: block;
 	}
 }
-</style>
 
-</head>
-
-
-<style>
 .list-group-item-success {
 	background-color: lightblue;
 }
-
-.cd-side-nav {
-	position: absolute;
-	top: -1%;
-}
 </style>
 
+
+</head>
 <body>
 	<div id="RoleRegistration">
 		<header class="cd-main-header">
@@ -132,62 +136,51 @@ td {
 			</nav>
 		</header>
 		<main class="cd-main-content">
-			<nav class="cd-side-nav">
-			
-				<br>
-					<ul>
-					
-					
-					
-					<li><a href="createcity" style=" text-decoration: none;">City Registration</a></li>
-					<li><a href="role" style=" text-decoration: none;">Role Registration</a></li>
-					<li><a href="Poscreate" style=" text-decoration: none;">POS Registration</a></li>
-					<li><a href="userregistration"style=" text-decoration: none;">User Registration</a></li>
-					<li><a href="tyrecreate" style=" text-decoration: none;">Item Registration</a></li>
-					<li><a href="item_price_assign" style=" text-decoration: none;">Price Assignment</a></li>
-					<li><a href="Salereport" style=" text-decoration: none;">Reports</a></li>	
-					<li><a href="demoadhoc" style=" text-decoration: none;">Adhoc Salesman Assign</a></li>	
-					<li><a href="customerenquiry" style=" text-decoration: none;" >Customer Inquiries</a></li>
-					</ul>
-				
+		<nav class="cd-side-nav">
 
-				</nav>
+			<br>
+			<ul>
+					
+					
+					    <li><a href="posmanadhoc" style=" text-decoration: none;">Adhoc Salesman Assign</a></li>
+						<li><a href="custenqposman" style=" text-decoration: none;">All Customer Inquiry Report</a></li>
+                        <li><a href="findbydateposman" style=" text-decoration: none;">Upcoming Customer Inquiry Report</a></li>
+                        <li><a href="salesmanwisereportPosmgr" style=" text-decoration: none;">Salesman Tracker</a></li>	
+					<li><a href="datewisereportPosmgr" style=" text-decoration: none;">Summary Tracker</a></li>
+					</ul>
+
+
+		</nav>
+
 		<c:if test="${not empty price_assignment}">
 			<script>popup('${price_assignment}') </script>
 		</c:if>
 		<form action="priceAssignment" method="POST">
 			<div class="content-wrapper">
 				<div class="container">
-
 					<br> <br>
 					<br>
 					<br> <br>
-					<br>
-
-					<!-- 	<button   data-toggle="tooltip" data-placement="right" title="Export to Excel"   onclick="tableToExcel('testTable', 'W3C Example Table')" Export to Excel<i class="fa fa-file-excel-o" style="font-size:40px;color:red;position:absolute;top:18%;left:30%;"></i> </button> <p><a  style="position:absolute;top:17%;left:41%;color:blue;text-decoration:none;font-size:20px;" href="findbydate">Upcomong Tyre Changes</a></p>
- -->
-					<a style="font-size: 36px;" data-toggle="tooltip"
+					<br> <a style="font-size: 36px;" data-toggle="tooltip"
 						data-placement="right" title="Export to Excel"
 						class="fa fa-file-excel-o"
 						onclick="tableToExcel('testTable', 'W3C Example Table')"></a>
-					<p>
+					<!-- <p>
 						<a
 							style="color: blue; text-decoration: underline; font-size: 20px;"
-							href="findbydate">Upcomong Tyre Changes</a>
-					</p>
+							href="findbydatepos">Upcoming Tyre Changes</a>
+					</p> -->
 
-					<div class="card-header"
-						style="background-color: lightblue; width: 100%">
-						<font size="5px" color="white"> Upcoming Inquiries </font>
+					<div class="card-header" style="background-color: lightblue">
+						<font size="5px" color="white"> Customer Inquiry </font>
 					</div>
 					<br>
-					<div class="search-table-outter wrapper">
-						<table border="1" class="search-table inner"  style="position:absolute;width:1030px;height:auto"  id="testTable">
+
+					<table border="1" class="search-table inner"  style="position:absolute;width:1030px;height:auto"  id="testTable">
 
 							<tr id="heder">
 								<th width="10%"><b>Customer Name</b></th>
 								<th><b>Contact</b></th>
-								
 								<th><b>POS</b></th>
 								<th width="10%"><b>Salesman Name</b></th>
 								<th><b>Vehicle</b></th>
@@ -222,13 +215,12 @@ td {
 							</c:forEach>
 
 						</table>
-					</div>
-					<br> <br> <br> <br> <br> <br> <br>
-					<br>
-					<br>
 
 
 
+
+
+					<br> <br> <br>
 					<div class="row">
 						<div class="col-md-4"></div>
 						<div class="col-md-1"></div>
@@ -243,3 +235,7 @@ td {
 		</main>
 		<!-- .cd-main-content -->
 	</div>
+
+
+</body>
+</html>

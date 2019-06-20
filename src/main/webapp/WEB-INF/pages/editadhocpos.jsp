@@ -111,22 +111,18 @@ top:-1%;
 				<br>
 					<ul>
 					
+					  <li><a href="posmanadhoc" style=" text-decoration: none;">Adhoc Salesman Assign</a></li>
+						<li><a href="custenqposman" style=" text-decoration: none;">All Customer Inquiry Report</a></li>
+                        <li><a href="findbydateposman" style=" text-decoration: none;">Upcoming Customer Inquiry Report</a></li>
+					<li><a href="salesmanwisereportPosmgr" style=" text-decoration: none;">Salesman Tracker</a></li>	
 					
-					
-					<li><a href="createcity" style=" text-decoration: none;">City Registration</a></li>
-					<li><a href="role" style=" text-decoration: none;">Role Registration</a></li>
-					<li><a href="Poscreate" style=" text-decoration: none;">POS Registration</a></li>
-					<li><a href="userregistration"style=" text-decoration: none;">User Registration</a></li>
-					<li><a href="tyrecreate" style=" text-decoration: none;">Item Registration</a></li>
-					<li><a href="item_price_assign" style=" text-decoration: none;">Price Assignment</a></li>
-					<li><a href="Salereport" style=" text-decoration: none;">Reports</a></li>	
-					<li><a href="demoadhoc" style=" text-decoration: none;">Adhoc Salesman Assign</a></li>	
+					<li><a href="datewisereportPosmgr" style=" text-decoration: none;">Summary Tracker</a></li> 
 					</ul>
 				
 
 				</nav>
             <c:if test="${not empty price_assignment}"><script>popup('${price_assignment}') </script></c:if>
-            <form action="updateadhoc" name="editadhoc" id="editadhoc" method="POST" id="form1" onSubmit="return validateForm()"> 
+            <form action="updateadhocpos" name="editadhoc" id="editadhoc" method="POST" id="form1" onSubmit="return validateForm()"> 
             <div class="content-wrapper">
             <div class="container">
               
@@ -179,7 +175,7 @@ top:-1%;
                                             <div class="form-group">
                                                 <b><label for="adhocPos">Adhoc Pos</label></b>
 <select class="form-control" name="adhocPos"  id="adhocPos" required="required">
-                        			      <option value="" >Select Adhoc POS</option>
+                        			      <option value="">Select Adhoc POS</option>
                         		      	  <c:forEach var="pos" items="${allpos}">
   											<option value="${pos.pos}">${pos.pos}</option>
  										  </c:forEach>
@@ -192,7 +188,7 @@ top:-1%;
                                             <div class="form-group">
                                                <b><label for="StartDate">Start Date</label></b>
                                   <!--   <input type="date" placeholder="Date" class="form-control"  data-date-format="DD MM YYYY"  placeholder="Enter start Date" id="startDate" name="startDate" required >  -->
-								  <input placeholder="Date" class="form-control" type="text" onfocus="(this.type='date')" name="startDate" id="date" required> 
+								  <input placeholder="Date" class="form-control" type="text" onfocus="(this.type='date')" name="startDate" id="date" required="required"> 
                                             </div>
                                         </div>
 										
@@ -200,7 +196,7 @@ top:-1%;
                                             <div class="form-group">
                                                <b><label for="Enddate">End Date</label></b>
                                   <!--   <input type="date" class="form-control"  data-date-format="YYYY MM DD"  placeholder="Enter End Date" id="endDate" name="endDate" required> -->
-								    <input placeholder="Date" class="form-control" type="text" onfocus="(this.type='date')" name="endDate" id="date1" required> 
+								    <input placeholder="Date" class="form-control" type="text" onfocus="(this.type='date')" name="endDate" id="date1" required="required"> 
                                             </div>
                                         </div>
 									
@@ -239,7 +235,7 @@ top:-1%;
             <div class="row">
 			<div class="col-md-3"></div>
                 <div class="col-md-4">
-				<a href="demoadhoc" id="backk" class="btn btn-danger"><i class="fa fa-arrow-left"></i> Back</a>
+				<a href="posmanadhoc" id="backk" class="btn btn-danger"><i class="fa fa-arrow-left"></i> Back</a>
 				<!-- <input type="submit"   class="btn btn-danger submit-button" value="Back"> -->
 				</div>
 				

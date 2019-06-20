@@ -75,14 +75,30 @@
                     
                         <br>  <br>
                             <div class="row">
-                            <div class="col-md-2"></div>
-							<div class="col-md-4">
+                            
+							
                                  <a class="btn btn-danger" style=" text-decoration: none;" href="Salereportbydate">Report Summary</a>
-                                  </div>     
-							<div class="col-md-4">
+                                 
+						</div>
+						<br>
+						<div class="row">
+						
+						
 							   <a class="btn btn-danger" style=" text-decoration: none;" href="listofstock">Stock  Report</a>
 							</div>
-						<div class="col-md-2"></div>
+							<br>
+							<div class="row">
+							   <a class="btn btn-danger" style=" text-decoration: none;" href="datewisereport">Summary Tracker</a>
+							
+						
+						</div>
+						
+						<br>
+						
+						<div class="row">
+						
+							   <a class="btn btn-danger" style=" text-decoration: none;" href="salesmanwisereport">Salesman Tracker</a>
+							
 						</div>
 						<br>
             <br>

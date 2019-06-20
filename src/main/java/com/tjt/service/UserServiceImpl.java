@@ -197,5 +197,16 @@ public class UserServiceImpl implements UserService {
 		
 		
 			}
+	
+	@Override
+    public UserDTO userByIdhadhoc(String userid) throws Exception {
+            
+            User_Details_Table user=new User_Details_Table();
+            UserDTO dto=new UserDTO();
+            user=userDAO.getOne(userid);
+            BeanUtils.copyProperties(user, dto);
+            System.out.println("pos:"+dto.getPos());
+            return dto;
+    }
 
 }

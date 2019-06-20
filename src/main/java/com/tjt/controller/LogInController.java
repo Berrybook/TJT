@@ -49,6 +49,13 @@ public class LogInController {
 				request.setAttribute("welcome", "WELCOME TO TJTYRE");
 				responsePage= "admin";
 			}
+		 else if(role.equalsIgnoreCase("POS MANAGER") || role.equalsIgnoreCase("POSMANAGER")){
+			 session.setAttribute("pos", userName);
+				 session.setAttribute("POSMANAGER", userName);
+				 request.setAttribute("Username", userName);
+			
+				responsePage= "posmanagerlogin";
+		 }
 		 else{
 			 request.setAttribute("login","Invalid credential");
 			 responsePage= "login";

@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="css\reset.css">
 <link rel="stylesheet" href="css\style.css">
 <link rel="stylesheet" href="css\style1.css">
-<link rel="stylesheet" href="css\table.css">
+<link rel="stylesheet" href="css\table.css">	
 <script src="js\modernizr.js"></script>
 <script src="js\validation.js"></script>
 <link rel="stylesheet"
@@ -164,7 +164,7 @@ td {
 					<br> <br>
 					<br>
 
-					<!-- 	<button   data-toggle="tooltip" data-placement="right" title="Export to Excel"   onclick="tableToExcel('testTable', 'W3C Example Table')" Export to Excel<i class="fa fa-file-excel-o" style="font-size:40px;color:red;position:absolute;top:18%;left:30%;"></i> </button> <p><a  style="position:absolute;top:17%;left:41%;color:blue;text-decoration:none;font-size:20px;" href="findbydate">Upcoming Tyre Changes</a></p>
+					<!-- 	<button   data-toggle="tooltip" data-placement="right" title="Export to Excel"   onclick="tableToExcel('testTable', 'W3C Example Table')" Export to Excel<i class="fa fa-file-excel-o" style="font-size:40px;color:red;position:absolute;top:18%;left:30%;"></i> </button> <p><a  style="position:absolute;top:17%;left:41%;color:blue;text-decoration:none;font-size:20px;" href="findbydate">Upcomiong Tyre Changes</a></p>
  -->
 					<a style="font-size: 36px;" data-toggle="tooltip"
 						data-placement="right" title="Export to Excel"

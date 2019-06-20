@@ -296,7 +296,7 @@ a {
 
   <div class="input-con">
     <i class="fa fa-calendar icon"></i>
-    <input placeholder="Tentative Date" class="form-control" type="text" onfocus="(this.type='date')" name="endDate" name="tentadate" id="date1" required>
+    <input placeholder="Tentative Date" class="form-control" type="text" onfocus="(this.type='date')"  name="tentadate" id="date1" required>
    <!--  <input class="input-field" type="date" style="background-color:#d1d1d1" placeholder="Tentative Date" name="tentadate"  data-toggle="tooltip" data-placement="right" title="Tentative Date For Tyre Change" required>
  -->  </div>
  <!--  <div class="input-con"> -->

@@ -16,4 +16,5 @@ public interface UserService {
 		public UserDTO userById(HttpServletRequest request,String userid)throws Exception;
 		public String UserUpdate(HttpServletRequest request,UserDTO dto)throws Exception;
 		public void deleteUser(HttpServletRequest request,String userid)throws Exception;
+		public UserDTO userByIdhadhoc(String userid) throws Exception;
 }

@@ -19,7 +19,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-<title>Customer Enquiry</title>
+<title>Summary Tracker</title>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -28,7 +28,8 @@
 <!-- Resource jQuery -->
 <script type="js\Ajax.js"> </script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
+<script src="D:\jqueryval\jquery.validate.js"></script>
+	<script src="D:\jqueryval\jquery.validate.min.js"></script>  
 <script>
 $(document).ready(function(){
 $("#choice").change(function(){
@@ -57,6 +58,13 @@ var tableToExcel = (function() {
 </script>
 
 <style>
+ .error {
+    color: #ff0000;;
+  }
+  #errmsg
+{
+color: red;
+}
 .form-control {
 	background-color: lightgray;
 }
@@ -98,6 +106,46 @@ td {
 		display: block;
 	}
 }
+ @media only screen and (max-width: 479px) {
+#search{
+position:absolute;
+bottom:10px;
+
+
+}
+} 
+
+ @media only screen and (min-width:760px) and (max-width: 1024px) {
+ #search{
+position:absolute;
+
+top:40%;
+
+}
+} 
+@media only screen and (min-width:360px) and (max-width: 640px) {
+ #search{
+position:absolute;
+text-wrap:fixed;
+top:40%;
+width:50%;
+height:200%;
+}
+} 
+ @media only screen and (min-width:876px) and (max-width: 1440px) {
+ #search{
+position:absolute;
+
+top:40%;
+
+}
+} 
+@media only screen and (min-width:768px) and (max-width: 1024px) {
+ #search{
+position:absolute;
+
+
+
 </style>
 
 </head>
@@ -132,15 +180,17 @@ td {
 			</nav>
 		</header>
 		<main class="cd-main-content">
-		   <nav class="cd-side-nav">
+		<nav class="cd-side-nav">
 			
 				<br>
 					<ul>
 					
 					
-					<li><a href="demoadhoc" style=" text-decoration: none;">Adhoc Salesman Assign</a></li>
-					<li><a href="customerenquirypos" style=" text-decoration: none;">Customer Inquiry</a></li>
-						
+						  <li><a href="posmanadhoc" style=" text-decoration: none;">Adhoc Salesman Assign</a></li>
+						<li><a href="custenqposman" style=" text-decoration: none;">All Customer Inquiry Report</a></li>
+                        <li><a href="findbydateposman" style=" text-decoration: none;">Upcoming Customer Inquiry Report</a></li>
+					<li><a href="salesmanwisereportPosmgr" style=" text-decoration: none;">Salesman Tracker</a></li>	
+					<li><a href="datewisereportPosmgr" style=" text-decoration: none;">Summary Tracker</a></li>
 					</ul>
 				
 
@@ -148,38 +198,72 @@ td {
 		<c:if test="${not empty price_assignment}">
 			<script>popup('${price_assignment}') </script>
 		</c:if>
-		<form action="priceAssignment" method="POST">
+		<form action="viewreportPosmgr" method="get" name="track" id="track">
 			<div class="content-wrapper">
-				<div class="container">
-
-					<br> <br>
-					<br>
-					<br> <br>
-					<br>
-
-					<!-- 	<button   data-toggle="tooltip" data-placement="right" title="Export to Excel"   onclick="tableToExcel('testTable', 'W3C Example Table')" Export to Excel<i class="fa fa-file-excel-o" style="font-size:40px;color:red;position:absolute;top:18%;left:30%;"></i> </button> <p><a  style="position:absolute;top:17%;left:41%;color:blue;text-decoration:none;font-size:20px;" href="findbydate">Upcomong Tyre Changes</a></p>
- -->
-					<a style="font-size: 36px;" data-toggle="tooltip"
+				<br><br><div class="container">
+				<a style="font-size: 36px;" data-toggle="tooltip"
 						data-placement="right" title="Export to Excel"
 						class="fa fa-file-excel-o"
 						onclick="tableToExcel('testTable', 'W3C Example Table')"></a>
-					<p>
-						<a
-							style="color: blue; text-decoration: underline; font-size: 20px;"
-							href="findbydatepos">Upcomong Tyre Changes</a>
-					</p>
 
 					<div class="card-header"
 						style="background-color: lightblue; width: 100%">
-						<font size="5px" color="white"> Upcoming Inquiries </font>
+						<font size="5px" color="white">Summary Tracker</font>
 					</div>
+
+ <div class="row">
+                                        <div class="col-md-3">
+                                         
+										 <div class="form-group">
+										 
+										<b><label for="pos">POS</label></b>
+   								<select class="form-control" name="pos" id="pos">
+                           		 <option value="">Select POS</option>
+                           		  <option value="allpos">All POS</option>
+                             		      <c:forEach var="pos" items="${listpos}">
+										<option value="${pos.pos}">${pos.pos}</option>
+									</c:forEach>
+                            	</select>
+                            	<br>
+                            	
+                            	 
+                            	
+                                        </div>
+                                        </div>
+										 <div class="col-md-3">
+                                            <div class="form-group">
+                                               <b><label for="Date">Date</label></b>
+                                  <!--   <input type="date" placeholder="Date" class="form-control"  data-date-format="DD MM YYYY"  placeholder="Enter start Date" id="startDate" name="startDate" required >  -->
+								  <input placeholder="Date" class="form-control" type="text" onfocus="(this.type='date')" name="date" id="date"> 
+                                            </div>
+                                        </div>
+										  <div class="col-md-3">
+                       <div class="form-group">
+                    <input type="Submit"  id="search" value="Search" name="Search">
+
+</div>
+									</form>	
+										<div class="col-md-4"></div>
+                                    
+                                        </div>
+										</div>
+					<!-- 	<button   data-toggle="tooltip" data-placement="right" title="Export to Excel"   onclick="tableToExcel('testTable', 'W3C Example Table')" Export to Excel<i class="fa fa-file-excel-o" style="font-size:40px;color:red;position:absolute;top:18%;left:30%;"></i> </button> <p><a  style="position:absolute;top:17%;left:41%;color:blue;text-decoration:none;font-size:20px;" href="findbydate">Upcomong Tyre Changes</a></p>
+ -->
+					
 					<br>
 					<div class="search-table-outter wrapper">
 						<table border="1" class="search-table inner"  style="position:absolute;width:1030px;height:auto"  id="testTable">
 
 							<tr id="heder">
-								<th width="10%"><b>Customer Name</b></th>
-								<th><b>Contact</b></th>
+							<th width="10%"><b>Date</b></th>
+							<th width="10%"><b>Salesman</b></th>
+							<th width="10%"><b>POS</b></th>
+								<th width="10%"><b>Customer Approached</b></th>
+								<th width="10%"><b>Inquiries</b></th>
+								<th width="10%"><b>Tyres Sold</b></th>
+				
+				                
+								<!-- <th><b>Contact</b></th>
 								
 								<th><b>POS</b></th>
 								<th width="10%"><b>Salesman Name</b></th>
@@ -190,31 +274,26 @@ td {
 								<th><b>Inquiry Date</b></th>
 								<th><b>Inquiry Time</b></th>
 								<th width="10%"><b>Tentative Date</b></th>
-								<th width="10%"><b>Comment</b></th>
+								<th width="10%"><b>Comment</b></th> -->
 							</tr>
 							<c:forEach var="val" items="${val}">
 								<tr>
 
 
-									<td>${val.customerName}</td>
-									<td>${val.phoneNumber}</td>
-									<td>${val.pos}</td>
-									<td>${val.salesman}</td>
-									<td>${val.vehicle}</td>
-									<td>${val.vehicleModel}</td>
-									<td>${val.tyreSize}</td>
-									<td>${val.meterReading}</td>
-									<td>${val.dateofinqu}</td>
-									<td>${val.time}</td>
-									<td>${val.tentadate}</td>
-									<td>${val.comments}</td>
-
+									<!-- <%-- <td>${val.activity}</td> --%> -->
+									<td width="10%">${val.date}</td>
+							    <td width="10%">${val.salesman}</td>
+							 	<td width="10%">${val.pos}</td> 
+								<td width="10%">${val.customerapp}</td>
+								<td width="10%">${val.customerinq}</td>
+								<td width="10%">${val.tyresale}</td>
+                                
 
 
 								</tr>
 							</c:forEach>
 
-						</table> 	
+						</table>
 					</div>
 					<br> <br> <br> <br> <br> <br> <br>
 					<br>
@@ -234,5 +313,34 @@ td {
 			<!-- .content-wrapper -->
 		</form>
 		</main>
+		<script>
+$(function() {
+  
+  $("form[name='track']").validate({
+   
+    rules: {
+      
+      pos: "required",
+	  date:"required",
+   
+	  
+    },
+   
+    messages: {
+      pos: "Please choose POS ",
+	   date: "Please enter  Date,
+	   
+      
+     
+      
+    },
+    
+    submitHandler: function(form) {
+      form.submit();
+    }
+  });
+});
+
+</script>
 		<!-- .cd-main-content -->
 	</div>
