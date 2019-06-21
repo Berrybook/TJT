@@ -22,9 +22,64 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>    
         
        
+	 <script type="text/javascript">
+var tableToExcel = (function() {
+  var uri = 'data:application/vnd.ms-excel;base64,'
+    , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+    , base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
+    , format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
+  return function(table, name) {
+    if (!table.nodeType) table = document.getElementById(table)
+    var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+    window.location.href = uri + base64(format(template, ctx))
+  }
+})()
+</script>
 	
 	
-	
+	 <style>
+	.cd-side-nav{
+	position:absolute;
+	top:-1%;
+	}
+	.search-table {
+	table-layout: fixed;
+	margin: 20px auto 0px auto;
+	overflow-x: scroll;
+}
+
+.search-table, td, th {
+	border-collapse: collapse;
+	border: 1px solid #777;
+}
+
+th {
+	padding: 20px 7px;
+	font-size: 15px;
+	color: #444;
+	background: lightblue;
+}
+
+td {
+	padding: 5px 10px;
+	height: 35px;
+}
+
+td {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-wrap: break-word;
+	width: auto;
+}
+
+@media only screen and (max-width: 480px) {
+	/* horizontal scrollbar for tables if mobile screen */
+	.tablemobile {
+		overflow-x: auto;
+		display: block;
+	}
+}
+	</style> 
 	
 </head>
 <body>
@@ -64,6 +119,10 @@
 		<div class="content-wrapper">
 		<br><br>
            <div class="container">
+		   <a  style="font-size: 36px;" data-toggle="tooltip"
+						data-placement="right" title="Export to Excel"
+						class="fa fa-file-excel-o"
+						onclick="tableToExcel('testTable', 'W3C Example Table')"></a>
                <form action="listofsalebydate" method="post" name="salereportform" onsubmit="return salereport()">
                 
                    <div class="card-header" style="background-color:lightblue">
@@ -124,8 +183,9 @@
                                         <div class="row">
 										
                                          <c:choose>
-                                         <c:when  test="${REPORT=='REPORT_LIST'}">   
-                                        <table class="table" >
+                                         <c:when  test="${REPORT=='REPORT_LIST'}">  
+<div class="search-table-outter wrapper">										 
+                                        <table class="table" id="testTable" border="1" class="search-table inner"  style="position:absolute;width:10%;height:auto;" >
                                         <c:choose>
                                          <c:when  test="${!empty listreport}">  
     <thead>
@@ -142,7 +202,7 @@
     <c:forEach var="report"  items="${listreport}">
     <tr>
     <td>${POS} </td>
-       <td style="width:50px;">${report.saledate}</td>
+       <td >${report.saledate}</td>
         <td>${report.tyrepattern}</td>
         <td>${report.tyresize}</td>
         <td>${report.quantity}</td>
@@ -162,6 +222,7 @@
     </c:otherwise>
   </c:choose>
   </table>
+  </div>
   </c:when>
   </c:choose>
 

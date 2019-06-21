@@ -80,25 +80,6 @@ public class AdhocAssignmentController {
 		return listCity;
 	}
 
-//@ResponseBody
-//		@RequestMapping(value="salesmanByCity/{cityname}",method=RequestMethod.GET)	
-//		public List<AdhocAssignmentDto> allSalesmanByCity(@PathVariable("cityname") String cityname) throws Exception{
-//			System.out.println(cityname);
-//			List<AdhocAssignmentDto> listadhoc = null;
-//				listadhoc = adhocService.allSalesmanByCity(cityname);
-//				System.out.println(listadhoc);
-//			return 	listadhoc;
-//			}
-
-//@GetMapping("salesmanById/{uid}")
-//public List<AdhocAssignmentDto> findbysalemanid(@PathVariable("uid") String uid)
-//{
-//	List<AdhocAssignmentDto> list=new ArrayList<AdhocAssignmentDto>();
-//	
-//	list=adhocService.findsalemanbyid(uid);
-//
-//	return list;
-//}
 
 	@RequestMapping(value = "adhocAllList", method = RequestMethod.GET)
 	public String allAssignedAdhoc(HttpServletRequest req) {
@@ -141,7 +122,7 @@ public class AdhocAssignmentController {
 		listadhoc = adhocService.allSalesmanByCity(cityname);
 		System.out.println(listadhoc);
 		req.setAttribute("listadhoc", listadhoc);
-		return "adhocdemo";
+		return "adhocsalesmancity";
 	}
 
 	@ResponseBody
@@ -162,7 +143,7 @@ public class AdhocAssignmentController {
 		List<City_DTO> listCity = null;
 		listCity = adhocService.allCity();
 		req.setAttribute("listpos", listCity);
-		return "adhocdemo";
+		return "adhocsalesmancity";
 	}
 
 	@PostMapping("updateadhoc")
