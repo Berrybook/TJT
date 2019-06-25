@@ -57,7 +57,7 @@ var tableToExcel = (function() {
 			<nav class="cd-side-nav">
 			
 				<br>
-							<ul>
+								<ul>
 					
 					
 
@@ -124,7 +124,7 @@ var tableToExcel = (function() {
  									<div class=col-md-4></div>
  									<div class=col-md-4>
                                             <b><label for="date"></label></b>
-                                            <a href="Salereport"><input type="button"  class="btn btn-danger" value="Back"></a>
+                                            <a href="subadminSalereport"><input type="button"  class="btn btn-danger" value="Back"></a>
                                    </div>
                                    <div class=col-md-4></div>
                                     </div>

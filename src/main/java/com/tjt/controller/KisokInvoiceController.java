@@ -400,6 +400,7 @@ public class KisokInvoiceController {
 	 @RequestMapping(value="/send",method=RequestMethod.GET)
 	 public String sendma(HttpServletRequest request) throws Exception {
 		 	HttpSession session=null;
+		 	System.out.println("in send controller");
 		 	String responsePage="";
 		 	InvoiceDTO invoiceDTO=null;
 		 	//get Session attribute

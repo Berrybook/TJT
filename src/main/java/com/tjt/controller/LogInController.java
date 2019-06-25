@@ -56,6 +56,11 @@ public class LogInController {
 			
 				responsePage= "posmanagerlogin";
 		 }
+		 else if(role.equalsIgnoreCase("subadmin")) {
+			 session.setAttribute("pos", userName);
+			 session.setAttribute("channelexecutive", userName);
+			 responsePage= "subadminpage";
+		 }
 		 else{
 			 request.setAttribute("login","Invalid credential");
 			 responsePage= "login";

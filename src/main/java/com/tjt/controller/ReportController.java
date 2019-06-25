@@ -161,4 +161,97 @@ public class ReportController {
 		return posdto;
 	}
 
+	
+	@RequestMapping(value="/subadminSalereport",method=RequestMethod.GET)
+	public String subadminshow(HttpServletRequest request){
+		String responsePage="";
+		
+		try{
+		
+		//RETURN report link JSP PAGES 
+		responsePage= "subadminreportmain";
+		}
+		catch(Exception e){
+			request.setAttribute("SessionTimeOut", "Should enter Username and Password");
+			//RETURN LOGIN JSP PAGES 
+			responsePage= "login";
+		}
+		return responsePage;
+	}
+	
+	
+	@RequestMapping(value="/subadminSalereportbydate")
+	public String subadminsalereport(HttpServletRequest request){
+		
+		String responsePage="";
+	
+	
+		try{
+		
+		//RETURN report link JSP PAGES 
+		responsePage= "subadminreport";
+		}
+		catch(Exception e){
+			request.setAttribute("SessionTimeOut", "Should enter Username and Password");
+			//RETURN LOGIN JSP PAGES 
+			responsePage= "login";
+		}
+		return responsePage;
+	}
+	
+	@RequestMapping(value="/subadminlistofsalebydate",method=RequestMethod.POST)
+	public String subadminlistofaslebydate(Map<String,Object> list,HttpServletRequest request){
+		
+		String responsePage="";
+		List<SaleReportDTO> salelist = null;
+		String pos = request.getParameter("posid");
+		String saledate = request.getParameter("saledate");
+		String sadledateto = request.getParameter("saledatesecond");
+		
+		Date date = Date.valueOf(saledate);
+		Date dateto = Date.valueOf(sadledateto);
+		
+		try{
+		salelist=reportservice.getSalesDetailsByDate(date,dateto,pos);
+		list.put("listreport", salelist);
+		request.setAttribute("REPORT", "REPORT_LIST");
+		request.setAttribute("POS", pos);
+	
+		responsePage= "subadminreport";	
+		}
+		catch(Exception e){
+			request.setAttribute("SALESPREPORT", "SOME iNTERNAL PROBLEM ");
+			responsePage= "admin";
+		}
+			
+		
+		return responsePage;
+	}
+	
+	
+	@RequestMapping(value="/subadminlistofstock",method=RequestMethod.GET)
+	public String  subadminlistofstock(Map<String,Object >map,HttpServletRequest request){
+		
+		String responsePage="";
+	
+		List<POS_Item_DTO> list=null;
+		
+		
+		try{
+		
+		request.setAttribute("REPORT","STOCK REPORT");
+		list= reportservice.getStockDetails();
+		map.put("listreport", list);
+	
+		//RETURN TYREREG JSP PAGES 
+		responsePage= "subadminstockreport";
+		}
+		catch(Exception e){
+			
+			request.setAttribute("REPORT", "SOME iNTERNAL PROBLEM ");
+			responsePage= "admin";
+		}
+		return responsePage;
+		
+	}
 }

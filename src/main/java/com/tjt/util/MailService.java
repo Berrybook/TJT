@@ -25,9 +25,10 @@ public class MailService {
 	
 	
 	 //attachment send in mail 
-		public  void sendmail(HttpServletRequest request ,List<byte[]> listbytes,MailConnectionproperties propertie) throws Exception{
+		public  void sendmail(HttpServletRequest request ,List<byte[]> listbytes,MailConnectionproperties propertie) throws Exception	{
 			HttpSession session=null;
 			InvoiceDTO invoiceDTO=null;
+			System.out.println("in mail service");
 			mailConnection mailconnection=null;
 			Multipart multipart=null;
 			session=request.getSession(false);
@@ -40,6 +41,8 @@ public class MailService {
 			Session mailSession=mailconnection.mailConnect( propertie);
 			Message msg=new MimeMessage(mailSession);
 			msg.setFrom(new InternetAddress("invoice@tjtyres.com",false));
+//			msg.setFrom(new InternetAddress("pradipta.m1993@gmail.com",false));
+			System.out.println("To mail:"+mailid[0]);
 			msg.addRecipients(Message.RecipientType.TO, InternetAddress.parse(mailid[0]));
 			msg.addRecipients(Message.RecipientType.BCC, InternetAddress.parse(mailid[1]));
 			msg.setSubject("TJTyre Invoice and Warrenty ");
@@ -58,9 +61,16 @@ public class MailService {
 		        i++;
 			}
 			msg.setContent(multipart);
+			System.out.println("from:---"+msg.getFrom());
 			msg.setDescription("invoice message ");
 			//send the mail
-
+try {
 			Transport.send(msg);
+}
+catch(Throwable e)
+
+{
+	e.printStackTrace();
+	}
 		}
 }

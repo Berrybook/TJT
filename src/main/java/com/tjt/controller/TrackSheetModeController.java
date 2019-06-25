@@ -190,4 +190,45 @@ public class TrackSheetModeController {
 				return "trackgrid_posmanager";
 			}
 			
+			//subadmin
+			@GetMapping("subadmindatewisereport")
+			public String subadminrecordbydate(HttpServletRequest req) throws Exception
+			{
+				List<POSDTO> listdto=null;
+				listdto=posService.listPos();
+//				req.setAttribute("val", trackmodecon.recordbydate());
+				req.setAttribute("listpos", listdto);
+				return "trackgrid_subadmin";
+			}
+			
+			//sum of report grid
+			@GetMapping("subadminviewreport")
+			public String subadminviewreport(HttpServletRequest req,@RequestParam String date,@RequestParam String pos) throws Exception
+			{
+				List<POSDTO> listdto=null;
+				listdto=posService.listPos();
+				req.setAttribute("val", trackmodecon.recordbydate(date,pos));
+				req.setAttribute("listpos", listdto);
+				return "trackgrid_subadmin";
+			}
+			
+			@GetMapping("subadminsalesmanwisereport")
+			public String subadminrecordbysalesman(HttpServletRequest req) throws Exception
+			{
+				List<POSDTO> listdto=null;
+				listdto=posService.listPos();
+//				req.setAttribute("val", trackmodecon.recordbydate());
+				req.setAttribute("listpos", listdto);
+				return "trackgridsalesman_subadmin";
+			}
+			
+			@GetMapping("subadminviewreportsalesman")
+			public String subadminviewreportsalesman(HttpServletRequest req,@RequestParam String date,@RequestParam String pos,@RequestParam String salesman) throws Exception
+			{
+				List<POSDTO> listdto=null;
+				listdto=posService.listPos();
+				req.setAttribute("val", trackmodecon.recordbydatesalesman(date,pos,salesman));
+				req.setAttribute("listpos", listdto);
+				return "trackgridsalesman_subadmin";
+			}
 }
